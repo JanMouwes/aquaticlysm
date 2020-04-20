@@ -16,10 +16,7 @@ public class CameraController : MonoBehaviour
     public float maxHeight;
 
     private float _zoom;
-    private void Start()
-    {
-        
-    }
+    private void Start() { }
 
     private void Update()
     {
@@ -34,11 +31,7 @@ public class CameraController : MonoBehaviour
         Zoom();
 
         // Only rotate camera when within rotationheight range
-        if (transform.position.y <= rotationHeight)
-        {
-            ZoomRotate();
-        }
-
+        if (transform.position.y <= rotationHeight) { ZoomRotate(); }
     }
 
     /// <summary>
@@ -51,15 +44,10 @@ public class CameraController : MonoBehaviour
             0, _zoom * rotateSpeed * 100f * Time.deltaTime, 0
         );
 
-        transform.position = new Vector3(transform.position.x,
-            Mathf.Clamp(
-                transform.position.y,
-                minHeight,
-                maxHeight
-            ),
-            transform.position.z
-        );
+        Vector3 oldPosition = transform.position;
+        float newY = Mathf.Clamp(oldPosition.y, minHeight, maxHeight);
 
+        transform.position = new Vector3(oldPosition.x, newY, oldPosition.z);
     }
 
     /// <summary>
@@ -68,12 +56,11 @@ public class CameraController : MonoBehaviour
     private void ZoomRotate()
     {
         camera.transform.Rotate(Vector3.right, _zoom * rotateSpeed);
-       
+
         Vector3 currentRotation = camera.transform.localRotation.eulerAngles;
-        if (currentRotation.x > maxRotation + (maxRotation - minRotation) / (rotationHeight - minHeight))
-        {
-            currentRotation.x = 0f;
-        }
+
+        if (currentRotation.x > maxRotation + (maxRotation - minRotation) / (rotationHeight - minHeight)) { currentRotation.x = 0f; }
+
         currentRotation.x = Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
         camera.transform.localRotation = Quaternion.Euler(currentRotation);
 
