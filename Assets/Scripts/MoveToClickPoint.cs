@@ -5,22 +5,24 @@ using UnityEngine.AI;
 
 public class MoveToClickPoint : MonoBehaviour
 {
-    NavMeshAgent ship;
+    NavMeshAgent agent;
 
     void Start()
     {
-        ship = GetComponent<NavMeshAgent>();
+        // Get the agent
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
+        // Use a raycast to register the position of the mouse click and set the agents new destination
         if (Input.GetMouseButton(0))
         {
             RaycastHit hit;
 
+            // Range for the raycast is set to 100
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-                ship.destination = hit.point;
+                agent.destination = hit.point;
         }
-
     }
 }
