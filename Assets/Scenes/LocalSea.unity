@@ -120,13 +120,82 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: ca15caf8e904ef049a8e7f4d5b0e7e2d, type: 2}
 --- !u!1 &197033998 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8792990206135812465, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
     type: 3}
   m_PrefabInstance: {fileID: 856407701}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &313149562
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.744586
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.084138654
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 1031c9288a517384a86de3eae3bd6eb9,
+        type: 3}
+      propertyPath: m_Name
+      value: Boat
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1031c9288a517384a86de3eae3bd6eb9, type: 3}
 --- !u!1 &482390195
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +382,46 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 120, y: 0, z: 0}
+--- !u!1 &699367601 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 1031c9288a517384a86de3eae3bd6eb9,
+    type: 3}
+  m_PrefabInstance: {fileID: 313149562}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &699367602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699367601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a92647e8637afb41854d1f745f7f516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &699367603
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699367601}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &856407701
 PrefabInstance:
   m_ObjectHideFlags: 0
