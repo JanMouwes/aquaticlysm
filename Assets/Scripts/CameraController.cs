@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     public float maxHeight;
 
     private float _zoom;
+    private float stepheight;
     private void Start() { }
 
     private void Update()
@@ -40,10 +41,10 @@ public class CameraController : MonoBehaviour
     private void Zoom()
     {
         _zoom = -Input.GetAxis("Mouse ScrollWheel");
+        stepheight = _zoom * rotateSpeed * 100f * Time.deltaTime;
         transform.Translate(
-            0, _zoom * rotateSpeed * 100f * Time.deltaTime, 0
+            0, stepheight, 0
         );
-
         Vector3 oldPosition = transform.position;
         float newY = Mathf.Clamp(oldPosition.y, minHeight, maxHeight);
 
@@ -55,15 +56,20 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void ZoomRotate()
     {
-        camera.transform.Rotate(Vector3.right, _zoom * rotateSpeed);
-
-        Vector3 currentRotation = camera.transform.localRotation.eulerAngles;
-
-        if (currentRotation.x > maxRotation + (maxRotation - minRotation) / (rotationHeight - minHeight)) { currentRotation.x = 0f; }
-
-        currentRotation.x = Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
-        camera.transform.localRotation = Quaternion.Euler(currentRotation);
-
-        Debug.Log(currentRotation.x);
+        if (_zoom != 0)
+        {
+            var slope = (maxRotation - minRotation) / (rotationHeight - minHeight);
+            camera.transform.Rotate(Vector3.right, _zoom * (maxRotation - minRotation) / (rotationHeight - minHeight) * stepheight);
+            Vector3 currentRotation = camera.transform.localRotation.eulerAngles;
+            if (currentRotation.x > maxRotation + rotateSpeed)
+            {
+                currentRotation.x = 0f;
+            }
+            currentRotation.x              = Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
+            camera.transform.localRotation = Quaternion.Euler(currentRotation);
+            Debug.Log(_zoom * rotateSpeed * 100f * Time.deltaTime);
+            Debug.Log(_zoom);
+            Debug.Log(_zoom * (maxRotation - minRotation) / ((rotationHeight - minHeight)) * _zoom * rotateSpeed * 100f * Time.deltaTime);
+        }
     }
 }
