@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour
     private void Zoom()
     {
         _zoom = -Input.GetAxis("Mouse ScrollWheel");
-        stepheight = _zoom * rotateSpeed * 100f * Time.deltaTime;
+        stepheight = _zoom * rotateSpeed;
         transform.Translate(
             0, stepheight, 0
         );
@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviour
         if (_zoom != 0)
         {
             var slope = (maxRotation - minRotation) / (rotationHeight - minHeight);
-            camera.transform.Rotate(Vector3.right, _zoom * (maxRotation - minRotation) / (rotationHeight - minHeight) * stepheight);
+            camera.transform.Rotate(Vector3.right, (maxRotation - minRotation) / (rotationHeight - minHeight) * stepheight);
             Vector3 currentRotation = camera.transform.localRotation.eulerAngles;
             if (currentRotation.x > maxRotation + rotateSpeed)
             {
@@ -67,9 +67,6 @@ public class CameraController : MonoBehaviour
             }
             currentRotation.x              = Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
             camera.transform.localRotation = Quaternion.Euler(currentRotation);
-            Debug.Log(_zoom * rotateSpeed * 100f * Time.deltaTime);
-            Debug.Log(_zoom);
-            Debug.Log(_zoom * (maxRotation - minRotation) / ((rotationHeight - minHeight)) * _zoom * rotateSpeed * 100f * Time.deltaTime);
         }
     }
 }
