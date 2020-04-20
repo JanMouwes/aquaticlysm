@@ -49,11 +49,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
 
-        float deltaOrbit = 0;
-
-        if (Input.GetKey(KeyCode.E)) { deltaOrbit += orbitSpeed * Time.deltaTime; }
-
-        if (Input.GetKey(KeyCode.Q)) { deltaOrbit -= orbitSpeed * Time.deltaTime; }
+        float deltaOrbit = Input.GetAxis("Orbit") * this.orbitSpeed * Time.deltaTime;
 
         this.gameObject.transform.RotateAround(mapTarget, Vector3.up, deltaOrbit);
     }
