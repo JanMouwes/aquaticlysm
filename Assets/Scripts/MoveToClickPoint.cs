@@ -16,7 +16,8 @@ public class MoveToClickPoint : MonoBehaviour
     void Update()
     {
         // Use a raycast to register the position of the mouse click and set the agents new destination
-        if (Input.GetMouseButton(0))
+        // Input.GetAxis... "nameofthemouseclick"
+        if (Input.GetButtonDown("LeftMouseButton"))
         {
             RaycastHit hit;
 
