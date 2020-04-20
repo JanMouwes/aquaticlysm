@@ -2,8 +2,8 @@ Definition of done
 (as of 20-04-2020)
 
 - Where appropriate, a unit test should be written to test the feature
-- The written unit tests must pass (5.1)
-- The code must be written according to the predefined coding conventions (6.3)
+- The written unit tests must pass
+- The code must be written according to the predefined coding conventions (see coding_conventions.md)
 - The code must be provided with sufficient and appropriate comments
 - The implementation must fulfill all of the corresponding user story’s acceptance
 criteria
