@@ -314,60 +314,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2026555834690264742, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.6427876
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026555834690264742, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026555834690264742, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026555834690264742, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7660445
-      objectReference: {fileID: 0}
-    - target: {fileID: 2026555834690264742, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
         type: 3}
-      propertyPath: rotationHeight
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: maxHeight
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: minRotation
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: rotateSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: maxRotation
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 3589199104821426868, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
-        type: 3}
-      propertyPath: minHeight
-      value: 2
+      propertyPath: movementSpeed
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4638615744347175048, guid: 93d8af3c2b66b5747aeebb19c5597ff1,
         type: 3}
