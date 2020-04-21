@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class CameraController : MonoBehaviour
     /// Camera movement speed per second
     /// </summary>
     public float movementSpeed;
+    public float orbitSpeed = 90f;
+    public GameObject innerCamera;
 
     /// <summary>
     /// Camera zoom speed (y-change)
@@ -53,11 +54,14 @@ public class CameraController : MonoBehaviour
             Input.GetAxisRaw("Vertical") * movementSpeed * Time.deltaTime
         );
 
+
         // Zoom camera based on scroll wheel input
         Zoom();
 
         // Determine rotation according to zoom
         ZoomRotate();
+        
+        UpdateCameraOrbit();
     }
 
     /// <summary>
@@ -111,5 +115,38 @@ public class CameraController : MonoBehaviour
         float newRotation = GetRotationForY(currentHeight);
 
         SetRotation(newRotation);
+
+        
+    }
+
+    private static Vector3 CalculateMapTarget(Vector3 cameraPosition, Vector3 cameraRotation)
+    {
+        // Calculate x-offset from the ground in radians
+        float thetaX = (90f - cameraRotation.x) * Mathf.Deg2Rad;
+        float thetaY = (cameraRotation.y)       * Mathf.Deg2Rad;
+
+        double localTargetDist = cameraPosition.y * Math.Tan(thetaX);
+
+        double localTargetZ = localTargetDist * Math.Cos(thetaY);
+        double localTargetX = localTargetDist * Math.Sin(thetaY);
+
+        return new Vector3
+        {
+            x = cameraPosition.x + (float) localTargetX,
+            y = 0,
+            z = cameraPosition.z + (float) localTargetZ
+        };
+    }
+
+    private void UpdateCameraOrbit()
+    {
+        Vector3 cameraPosition = this.gameObject.transform.position;
+        Vector3 cameraRotation = this.innerCamera.transform.rotation.eulerAngles;
+
+        Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
+
+        float deltaOrbit = Input.GetAxis("Orbit") * this.orbitSpeed * Time.deltaTime;
+
+        this.gameObject.transform.RotateAround(mapTarget, Vector3.up, deltaOrbit);
     }
 }
