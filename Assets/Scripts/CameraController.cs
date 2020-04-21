@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -6,14 +6,13 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// Inner camera object
     /// </summary>
-    public new GameObject camera;
+    public new GameObject innercamera;
 
     /// <summary>
     /// Camera movement speed per second
     /// </summary>
     public float movementSpeed;
     public float orbitSpeed = 90f;
-    public GameObject innerCamera;
 
     /// <summary>
     /// Camera zoom speed (y-change)
@@ -84,10 +83,10 @@ public class CameraController : MonoBehaviour
     /// <param name="newRotation">New rotation in degrees</param>
     private void SetRotation(float newRotation)
     {
-        Vector3 rotationVector = this.camera.transform.rotation.eulerAngles;
+        Vector3 rotationVector = innercamera.transform.rotation.eulerAngles;
         rotationVector.x = newRotation;
 
-        camera.transform.eulerAngles = rotationVector;
+        innercamera.transform.eulerAngles = rotationVector;
     }
 
     /// <summary>
@@ -141,7 +140,7 @@ public class CameraController : MonoBehaviour
     private void UpdateCameraOrbit()
     {
         Vector3 cameraPosition = this.gameObject.transform.position;
-        Vector3 cameraRotation = this.innerCamera.transform.rotation.eulerAngles;
+        Vector3 cameraRotation = innercamera.transform.rotation.eulerAngles;
 
         Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
 
