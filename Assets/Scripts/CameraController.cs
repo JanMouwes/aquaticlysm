@@ -8,16 +8,14 @@ public class CameraController : MonoBehaviour
     public float movementSpeed;
     public float rotateSpeed;
 
-    public float minRotation = -45;
-    public float maxRotation = 45;
+    public float minRotation = 15;
+    public float maxRotation = 80;
     public float rotationHeight;
 
     public float minHeight;
     public float maxHeight;
 
     private float _zoom;
-    private float stepheight;
-    private void Start() { }
 
     private void Update()
     {
@@ -41,9 +39,9 @@ public class CameraController : MonoBehaviour
     private void Zoom()
     {
         _zoom = -Input.GetAxis("Mouse ScrollWheel");
-        stepheight = _zoom * rotateSpeed;
+        float heightChange = this._zoom * this.rotateSpeed;
         transform.Translate(
-            0, stepheight, 0
+            0, heightChange, 0
         );
         Vector3 oldPosition = transform.position;
         float newY = Mathf.Clamp(oldPosition.y, minHeight, maxHeight);
@@ -51,22 +49,40 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(oldPosition.x, newY, oldPosition.z);
     }
 
+    private void SetRotation(float rotation)
+    {
+        Vector3 newRotation = this.camera.transform.rotation.eulerAngles;
+        newRotation.x = rotation;
+
+        camera.transform.eulerAngles = newRotation;
+    }
+
     /// <summary>
     ///
     /// </summary>
     private void ZoomRotate()
     {
-        if (_zoom != 0)
+        float GetRotationForY(float y)
         {
-            var slope = (maxRotation - minRotation) / (rotationHeight - minHeight);
-            camera.transform.Rotate(Vector3.right, (maxRotation - minRotation) / (rotationHeight - minHeight) * stepheight);
-            Vector3 currentRotation = camera.transform.localRotation.eulerAngles;
-            if (currentRotation.x > maxRotation + rotateSpeed)
-            {
-                currentRotation.x = 0f;
-            }
-            currentRotation.x              = Mathf.Clamp(currentRotation.x, minRotation, maxRotation);
-            camera.transform.localRotation = Quaternion.Euler(currentRotation);
+            if (y < this.minHeight) { return this.minRotation; }
+
+            if (y > this.maxHeight) { return this.maxRotation; }
+
+            float rotationRange = this.maxRotation - this.minRotation;
+
+            float rotationHeightRange = this.rotationHeight - this.minHeight;
+
+            float slope = rotationRange / rotationHeightRange;
+
+            return this.minRotation + (slope * (y - this.minHeight));
+        }
+
+        float currentHeight = this.transform.position.y;
+
+        if (currentHeight <= this.maxHeight && currentHeight >= this.minHeight)
+        {
+            float zoomRotation = GetRotationForY(currentHeight);
+            SetRotation(zoomRotation);
         }
     }
 }
