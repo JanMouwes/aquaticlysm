@@ -6,12 +6,16 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// Inner camera object
     /// </summary>
-    public new GameObject innercamera;
+    public new GameObject innerCamera;
 
     /// <summary>
     /// Camera movement speed per second
     /// </summary>
     public float movementSpeed;
+
+    /// <summary>
+    /// Orbit speed in degrees per second
+    /// </summary>
     public float orbitSpeed = 90f;
 
     /// <summary>
@@ -59,7 +63,7 @@ public class CameraController : MonoBehaviour
 
         // Determine rotation according to zoom
         ZoomRotate();
-        
+
         UpdateCameraOrbit();
     }
 
@@ -83,10 +87,10 @@ public class CameraController : MonoBehaviour
     /// <param name="newRotation">New rotation in degrees</param>
     private void SetRotation(float newRotation)
     {
-        Vector3 rotationVector = innercamera.transform.rotation.eulerAngles;
+        Vector3 rotationVector = this.innerCamera.transform.rotation.eulerAngles;
         rotationVector.x = newRotation;
 
-        innercamera.transform.eulerAngles = rotationVector;
+        this.innerCamera.transform.eulerAngles = rotationVector;
     }
 
     /// <summary>
@@ -102,7 +106,7 @@ public class CameraController : MonoBehaviour
             if (y > this.rotationHeight) { return this.maxRotation; }
 
             float rotationRange = this.maxRotation - this.minRotation;
-            
+
             float rotationHeightRange = this.rotationHeight - this.minHeight;
 
             float slope = rotationRange / rotationHeightRange;
@@ -114,8 +118,6 @@ public class CameraController : MonoBehaviour
         float newRotation = GetRotationForY(currentHeight);
 
         SetRotation(newRotation);
-
-        
     }
 
     private static Vector3 CalculateMapTarget(Vector3 cameraPosition, Vector3 cameraRotation)
@@ -140,7 +142,7 @@ public class CameraController : MonoBehaviour
     private void UpdateCameraOrbit()
     {
         Vector3 cameraPosition = this.gameObject.transform.position;
-        Vector3 cameraRotation = innercamera.transform.rotation.eulerAngles;
+        Vector3 cameraRotation = this.innerCamera.transform.rotation.eulerAngles;
 
         Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
 
