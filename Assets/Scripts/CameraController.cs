@@ -4,23 +4,11 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     /// <summary>
-    /// Inner camera object
+    /// Child camera object
     /// </summary>
-    public new GameObject innerCamera;
-
-    /// <summary>
-    /// Camera movement speed per second
-    /// </summary>
+    public GameObject childCamera;
     public float movementSpeed;
-
-    /// <summary>
-    /// Orbit speed in degrees per second
-    /// </summary>
     public float orbitSpeed = 90f;
-
-    /// <summary>
-    /// Camera zoom speed (y-change)
-    /// </summary>
     public float zoomSpeed = 10;
 
     /// <summary>
@@ -34,18 +22,10 @@ public class CameraController : MonoBehaviour
     public float maxRotation = 80;
 
     /// <summary>
-    /// Height below which the camera should rotate
+    /// Below this point the camera should rotate
     /// </summary>
     public float rotationHeight;
-
-    /// <summary>
-    /// Minimum camera height
-    /// </summary>
     public float minHeight;
-
-    /// <summary>
-    /// Maximum camera height
-    /// </summary>
     public float maxHeight;
 
     private void Update()
@@ -64,6 +44,7 @@ public class CameraController : MonoBehaviour
         // Determine rotation according to zoom
         ZoomRotate();
 
+        // Update the orbit of the camera
         UpdateCameraOrbit();
     }
 
@@ -87,14 +68,14 @@ public class CameraController : MonoBehaviour
     /// <param name="newRotation">New rotation in degrees</param>
     private void SetRotation(float newRotation)
     {
-        Vector3 rotationVector = this.innerCamera.transform.rotation.eulerAngles;
+        Vector3 rotationVector = this.childCamera.transform.rotation.eulerAngles;
         rotationVector.x = newRotation;
 
-        this.innerCamera.transform.eulerAngles = rotationVector;
+        this.childCamera.transform.eulerAngles = rotationVector;
     }
 
     /// <summary>
-    /// Updates zoom-rotation
+    /// Updates the rotation of the camera when camera is below the rotationHeight
     /// </summary>
     private void ZoomRotate()
     {
@@ -113,13 +94,17 @@ public class CameraController : MonoBehaviour
 
             return this.minRotation + (slope * (y - this.minHeight));
         }
-
+        // The current height of CameraController
         float currentHeight = this.transform.position.y;
+        // the rotation of the camera based on the currentHeight
         float newRotation = GetRotationForY(currentHeight);
 
         SetRotation(newRotation);
     }
 
+    /// <summary>
+    /// calcutalates the target what the will camera orbits
+    /// </summary>
     private static Vector3 CalculateMapTarget(Vector3 cameraPosition, Vector3 cameraRotation)
     {
         // Calculate x-offset from the ground in radians
@@ -139,10 +124,13 @@ public class CameraController : MonoBehaviour
         };
     }
 
+    /// <summary>
+    /// Updates The Orbit of the Camera
+    /// </summary>
     private void UpdateCameraOrbit()
     {
         Vector3 cameraPosition = this.gameObject.transform.position;
-        Vector3 cameraRotation = this.innerCamera.transform.rotation.eulerAngles;
+        Vector3 cameraRotation = this.childCamera.transform.rotation.eulerAngles;
 
         Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
 
