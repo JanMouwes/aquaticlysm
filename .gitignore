@@ -71,3 +71,4 @@ crashlytics-build.properties
 
 # JetBrains IDE-folder
 /.idea/
+.vscode/
