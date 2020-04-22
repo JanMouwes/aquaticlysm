@@ -1,36 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class SpawnController : MonoBehaviour
 {
-    private List<GameObject> entities;
+    //private List<GameObject> entities;
+    private Dictionary<string, GameObject> entities;
+    public static SpawnController Instance;
     private void Awake()
     {
-        entities = new List<GameObject>();
+        //entities = new List<GameObject>();
+        Instance = this;
+        entities = new Dictionary<string, GameObject>();
     }
 
-    private int _index = -1;
-    public int Spawn(GameObject gameObject, Vector3 spawnPosition, Quaternion rotation)
+    
+
+    int i=0;
+    public string Spawn(GameObject gameObject, Vector3 spawnPosition, Quaternion rotation)
     {
-        _index++;
-        string Objectname = "test " + _index;
-        entities.Add(Instantiate(gameObject, spawnPosition, rotation));
-        entities[_index].name = Objectname;
-        return _index;
+        GameObject temp = Instantiate(gameObject, spawnPosition, rotation);
+        string Objectname = temp.name + i;
+        entities.Add(Objectname, temp);
+        temp.name = Objectname;
+        i++;
+        return Objectname;
     }
 
-    public GameObject GetGameObject(int Index){
-        return entities[Index];
+    public GameObject GetGameObject(string Name){
+        return entities[Name];
     }
 
-    public int Spawn(GameObject gameObject, Vector3 spawnPosition){
+    public string Spawn(GameObject gameObject, Vector3 spawnPosition){
         return Spawn(gameObject,spawnPosition,new Quaternion(0, 0, 0, 1));
     }
 
-    public void DestroyGameObject(int Index)
+    public void DestroyGameObject(string Name)
     {
-        Destroy(entities[Index]);
-        //entities.RemoveAt(Index);
+        Destroy(entities[Name]);
+        entities.Remove(Name);
     }
 }
