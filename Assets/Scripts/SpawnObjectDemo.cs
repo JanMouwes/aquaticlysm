@@ -27,9 +27,9 @@ public class SpawnObjectDemo : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            foreach (var i in _test)
+            foreach (int current in _test)
             {
-                SpawnController.Instance.DestroyGameObject(i);
+                SpawnController.Instance.DestroyGameObject(current);
             }
             _test.Clear();
         }
