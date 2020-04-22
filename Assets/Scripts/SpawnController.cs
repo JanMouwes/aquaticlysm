@@ -50,7 +50,7 @@ public class SpawnController : MonoBehaviour
     /// <summary>
     /// Retrieve a GameObject that exists at a specific index.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">ID integer that belongs to the selected GameObject</param>
     /// <returns>A GameObject</returns>
     public GameObject GetGameObject(int id){
         return _objects[id];
@@ -59,7 +59,7 @@ public class SpawnController : MonoBehaviour
     /// <summary>
     /// Destroy a GameObject inside the world and inside the container.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">ID integer that belongs to the selected GameObject</param>
     public void DestroyGameObject(int id)
     {
         Destroy(_objects[id]);
