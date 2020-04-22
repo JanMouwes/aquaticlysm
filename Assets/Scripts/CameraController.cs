@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     /// Child camera object
     /// </summary>
     public GameObject childCamera;
+
     public float movementSpeed;
     public float orbitSpeed = 90f;
     public float zoomSpeed = 10;
@@ -25,18 +26,13 @@ public class CameraController : MonoBehaviour
     /// Below this point the camera should rotate
     /// </summary>
     public float rotationHeight;
+
     public float minHeight;
     public float maxHeight;
 
     private void Update()
     {
-        // X, Z axis movement of CameraController
-        transform.Translate(
-            Input.GetAxisRaw("Horizontal") * movementSpeed * Time.deltaTime,
-            0,
-            Input.GetAxisRaw("Vertical") * movementSpeed * Time.deltaTime
-        );
-
+        UpdateLocation();
 
         // Zoom camera based on scroll wheel input
         Zoom();
@@ -48,13 +44,27 @@ public class CameraController : MonoBehaviour
         UpdateCameraOrbit();
     }
 
+    private void UpdateLocation()
+    {
+        float GetMovementSpeedForHeight(float height) => (height < this.rotationHeight) ? this.rotationHeight : height;
+
+        float adjustedMovementSpeed = GetMovementSpeedForHeight(this.transform.position.y);
+
+        // X, Z axis movement of CameraController
+        transform.Translate(
+            Input.GetAxisRaw("Horizontal") * adjustedMovementSpeed * Time.deltaTime,
+            0,
+            Input.GetAxisRaw("Vertical") * adjustedMovementSpeed * Time.deltaTime
+        );
+    }
+
     /// <summary>
     /// Determines y-level according to zoom-input
     /// </summary>
     private void Zoom()
     {
         float zoom = -Input.GetAxisRaw("Mouse ScrollWheel") * Time.deltaTime * 100;
-        float heightChange = zoom * this.zoomSpeed;
+        float heightChange = zoom                                            * this.zoomSpeed;
         transform.Translate(0, heightChange, 0);
         Vector3 oldPosition = transform.position;
         float newY = Mathf.Clamp(oldPosition.y, minHeight, maxHeight);
@@ -94,6 +104,7 @@ public class CameraController : MonoBehaviour
 
             return this.minRotation + (slope * (y - this.minHeight));
         }
+
         // The current height of CameraController
         float currentHeight = this.transform.position.y;
         // the rotation of the camera based on the currentHeight
