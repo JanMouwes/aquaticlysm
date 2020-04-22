@@ -13,25 +13,25 @@ public class SpawnObjectDemo : MonoBehaviour
     /**
      * OBJECT LISTS
      */
-    List<int> test;
+    private List<int> _test = new List<int>();
     // Update is called once per frame
     private void Update()
     {
         if (Input.GetKey(KeyCode.V))
         {
-            test.Add(SpawnController.Instance.Spawn(capsuleJesus, new Vector3(0,0,0)));
+            _test.Add(SpawnController.Instance.Spawn(capsuleJesus, Vector3.zero));
         }
         if (Input.GetKey(KeyCode.B))
         {
-            test.Add(SpawnController.Instance.Spawn(boat, new Vector3(0, 0, 0)));
+            _test.Add(SpawnController.Instance.Spawn(boat, Vector3.zero));
         }
         if (Input.GetKeyDown(KeyCode.G))
         {
-            for (int i = 0; i < test.Count; i++)
+            foreach (var i in _test)
             {
-                SpawnController.Instance.DestroyGameObject(test[i]);
+                SpawnController.Instance.DestroyGameObject(i);
             }
-            test.Clear();
+            _test.Clear();
         }
     }
 }
