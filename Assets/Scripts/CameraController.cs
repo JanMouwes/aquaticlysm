@@ -44,6 +44,9 @@ public class CameraController : MonoBehaviour
         UpdateCameraOrbit();
     }
 
+    /// <summary>
+    /// Updates camera's location according to input
+    /// </summary>
     private void UpdateLocation()
     {
         float GetMovementSpeedForHeight(float height) => (height < this.rotationHeight) ? this.rotationHeight : height;
