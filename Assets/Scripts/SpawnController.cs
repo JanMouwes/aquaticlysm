@@ -4,40 +4,65 @@ using UnityEngine;
 [System.Serializable]
 public class SpawnController : MonoBehaviour
 {
-    //private List<GameObject> entities;
-    private Dictionary<string, GameObject> entities;
+    // All of the spawned GameObjects
+    private Dictionary<int, GameObject> _objects;
+    // Current iteration of objects used as index
+    private int _iteration;
+
     public static SpawnController Instance;
+
     private void Awake()
     {
-        //entities = new List<GameObject>();
         Instance = this;
-        entities = new Dictionary<string, GameObject>();
+        _objects = new Dictionary<int, GameObject>();
+        _iteration = 0;
     }
-
-    
-
-    int i=0;
-    public string Spawn(GameObject gameObject, Vector3 spawnPosition, Quaternion rotation)
+    /// <summary>
+    /// Spawn a GameObject in the world at the designated position with a designated rotation.
+    /// </summary>
+    /// <param name="gameObject">The prefab to spawn</param>
+    /// <param name="spawnPosition">Vector3 position to spawn the object</param>
+    /// <param name="rotation">Start rotation at spawn.</param>
+    /// <returns>Returns the index of the gameobject inside the container.</returns>
+    public int Spawn(GameObject gameObject, Vector3 spawnPosition, Quaternion rotation)
     {
         GameObject temp = Instantiate(gameObject, spawnPosition, rotation);
-        string Objectname = temp.name + i;
-        entities.Add(Objectname, temp);
+        string Objectname = temp.name + "_" + _iteration;
+        _objects.Add(_iteration, temp);
         temp.name = Objectname;
-        i++;
-        return Objectname;
+        int toReturn = _iteration;
+        _iteration++;
+
+        return toReturn;
     }
 
-    public GameObject GetGameObject(string Name){
-        return entities[Name];
-    }
-
-    public string Spawn(GameObject gameObject, Vector3 spawnPosition){
-        return Spawn(gameObject,spawnPosition,new Quaternion(0, 0, 0, 1));
-    }
-
-    public void DestroyGameObject(string Name)
+    /// <summary>
+    /// Spawn a GameObject in the world at the designated position.
+    /// </summary>
+    /// <param name="gameObject">The prefab to spawn.</param>
+    /// <param name="spawnPosition">Vector3 position to spawn the object.</param>
+    /// <returns>Returns the index of the gameobject inside the container.</returns>
+    public int Spawn(GameObject gameObject, Vector3 spawnPosition)
     {
-        Destroy(entities[Name]);
-        entities.Remove(Name);
+        return Spawn(gameObject, spawnPosition, new Quaternion(0, 0, 0, 1));
+    }
+
+    /// <summary>
+    /// Retrieve a GameObject that exists at a specific index.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns>A GameObject</returns>
+    public GameObject GetGameObject(int index){
+        return _objects[index];
+    }
+
+    /// <summary>
+    /// Destroy a GameObject inside the world and inside the container.
+    /// </summary>
+    /// <param name="index"></param>
+    public void DestroyGameObject(int index)
+    {
+        Destroy(_objects[index]);
+        _objects.Remove(index);
     }
 }
