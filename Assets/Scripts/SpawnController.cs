@@ -27,9 +27,9 @@ public class SpawnController : MonoBehaviour
     public int Spawn(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
     {
         GameObject temp = Instantiate(prefab, spawnPosition, startRotation);
-        string objectname = temp.name + "_" + _iteration;
+        string objectName = temp.name + "_" + _iteration;
         _objects.Add(_iteration, temp);
-        temp.name = objectname;
+        temp.name = objectName;
         int toReturn = _iteration;
         _iteration++;
 
