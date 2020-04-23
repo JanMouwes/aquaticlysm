@@ -11,6 +11,9 @@ public class UnitSelection : MonoBehaviour
     [Tooltip("The image that will represent the selection box.")]
     public RectTransform selectionBox;
 
+    // All selected units
+    public static List<Selectable> Selected = new List<Selectable>();
+
     // The start position of the mouseclick inside of the canvas
     private Vector2 startScreenPosition;
 
@@ -38,10 +41,15 @@ public class UnitSelection : MonoBehaviour
         // Return true when the left mouse button is pressed and the raycast (range 300) hits the floor
         if (Input.GetButtonDown("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 300))
         {
+            ClearSelected();
+            Selectable s = hit.collider.GetComponentInParent<Selectable>();
+            if (s != null)
+            {
+                s.SetSelected(true);
+                Selected.Add(s);
+            }
+
             startScreenPosition = Input.mousePosition;
-            Debug.Log(Input.mousePosition);
-            Debug.Log(hit.point);
-            Debug.Log(hit);
         }
 
         // Return true when the left mouse button is held down and the raycast (range 300) hits the floor
@@ -51,6 +59,12 @@ public class UnitSelection : MonoBehaviour
         // Return true when the left mouse button is released
         if (Input.GetButtonUp("LeftMouseButton"))
             selectionBox.gameObject.SetActive(false);
+    }
+
+    private void ClearSelected() 
+    {
+        Selected.ForEach(s => s.SetSelected(false));
+        Selected.Clear();
     }
 
     /// <summary>
