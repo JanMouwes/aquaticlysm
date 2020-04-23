@@ -1,21 +1,27 @@
-﻿Shader "Textures/Outline"
+﻿/// <summary>
+/// Unlit shader, without any lighting for highlighting selected units
+/// </summary>
+
+Shader "Textures/Outline"
 {
     Properties
     {
-        _Color("Main color", Color) = (0.5, 0.5, 0.5, 1.0)
+        _Color("Main color", Color) = (0.5, 0.5, 0.5, 1.0) // default color
         _MainTex ("Texture", 2D) = "white" {}
-        _OutlineColor("Outline color", Color) = (0, 0, 0, 1) // default color
+        _OutlineColor("Outline color", Color) = (0, 0, 0, 1) // default outlinecolor
         _OutlineWidth("Outline width", Range(1.0, 5.0)) = 1.01 // default width of the outline
     }
 
     CGINCLUDE
     #include "Unitycg.cginc"
 
+        // vertex shader input
         struct appdata{
             float4 vertex : POSITION;
             float3 normal : NORMAL;
         };
 
+        // vertex to fragment
         struct v2f{
             float4 pos : POSITION;
             float3 normal : NORMAL;
@@ -24,12 +30,13 @@
         float4 _OutlineColor;
         float _OutlineWidth;
 
+        // vertex shader
         v2f vert(appdata v) 
         {
             v.vertex.xyz *= _OutlineWidth;
 
             v2f object;
-            // Tranfer back to world space
+            // Transfer back to world space
             object.pos = UnityObjectToClipPos(v.vertex);
 
             return object;
@@ -39,9 +46,14 @@
 
             SubShader
         {
-            Pass // Render the outline
+            // Make sure this shader is rendered before the background of the object.
+            Tags{ "Queue" = "Transparent" } 
+
+            //Render the outline, execution of the vertex and fragment code
+            Pass
             {
-                ZWrite off // Don't write into buffer, so other things can appear on top of this
+                // Don't write into buffer, so the outlined object can appear on top of this
+                ZWrite off
 
                 CGPROGRAM
                 #pragma vertex vert
