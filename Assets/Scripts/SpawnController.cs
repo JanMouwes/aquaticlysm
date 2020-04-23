@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -36,6 +37,13 @@ public class SpawnController : MonoBehaviour
         return toReturn;
     }
 
+    public Tuple<int, GameObject> SpawnTuple(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
+    {
+        int id = Spawn(prefab, spawnPosition, startRotation);
+        GameObject go = GetGameObject(id);
+        return new Tuple<int, GameObject>(id,go);
+    }
+
     /// <summary>
     /// Spawn a GameObject in the world at the designated position.
     /// </summary>
@@ -62,7 +70,7 @@ public class SpawnController : MonoBehaviour
     /// <param name="id">ID integer that belongs to the selected GameObject</param>
     public void DestroyGameObject(int id)
     {
-        Destroy(_objects[id]);
+        DestroyImmediate(_objects[id]);
         _objects.Remove(id);
     }
 }
