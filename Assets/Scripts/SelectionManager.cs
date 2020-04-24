@@ -114,7 +114,7 @@ public class SelectionManager : MonoBehaviour
             selectionBox.gameObject.SetActive(true);
 
         // Create a bounding box with the positions in the localspace
-        Bounds boundingBox = CreateBoudingBox(startScreenPosition, mousePosition);
+        Bounds boundingBox = CreateBoundingBox(startScreenPosition, mousePosition);
 
         // Set the position of the selection box
         selectionBox.position = boundingBox.center;

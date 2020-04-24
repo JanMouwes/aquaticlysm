@@ -6,6 +6,7 @@ public class Selectable : MonoBehaviour
 
     public void SetSelected(bool selection)
     {
+        Debug.Log(selection);
         // Set if it's selected or not
         isSelected = selection;
 
