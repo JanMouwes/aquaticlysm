@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
@@ -21,7 +20,7 @@ public class SelectionManager : MonoBehaviour
     private Vector2 startWorldSpace;
     private Vector2 endWorldSpace;
 
-    // The positions where the raycast hits
+    // The position where the raycast hits
     private RaycastHit raycastHit;
 
     // Start is called before the first frame update
@@ -85,7 +84,7 @@ public class SelectionManager : MonoBehaviour
             selectionBox.gameObject.SetActive(false);
 
             // Create a bounding box with the positions in the worldspace
-            Bounds boundingBox = CreateBoudingBox(startWorldSpace, endWorldSpace);
+            Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
             
             // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat
             foreach (Selectable selectable in selectables)
@@ -124,8 +123,8 @@ public class SelectionManager : MonoBehaviour
         selectionBox.sizeDelta = canvas.transform.InverseTransformVector(boundingBox.size);
     }
 
-    // Create bounds (AABB or just a rectangle if your not familiar with it)
-    private Bounds CreateBoudingBox(Vector2 startPos, Vector2 endPos) 
+    // Create bounds (AABB, a rectangle if your not familiar with it)
+    private Bounds CreateBoundingBox(Vector2 startPos, Vector2 endPos) 
     {
         Bounds boundingBox = new Bounds();
 

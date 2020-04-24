@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class MoveToClickPoint : MonoBehaviour
 {
     NavMeshAgent agent;
+
     void Start()
     {
         // Get the agent

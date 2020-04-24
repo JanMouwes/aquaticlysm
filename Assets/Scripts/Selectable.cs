@@ -2,12 +2,14 @@
 
 public class Selectable : MonoBehaviour
 {
-    private bool isSelected = false;
+    public bool isSelected;
 
     public void SetSelected(bool selection)
     {
         // Set if it's selected or not
         isSelected = selection;
+
+        // Here we would set other stuff like highlighting the object
     }
 
     void OnEnable()
