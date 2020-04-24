@@ -1,41 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class AgentPatrol : MonoBehaviour
 {
+    private NavMeshAgent _agent;
+    private int          _destPoint;
+    private Vector3 _target;
     public  Transform[]  points;
-    private int          destPoint = 0;
-    private NavMeshAgent agent;
-
-    private Vector3 target;
-
+    
     // Start is called before the first frame update
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
         GotoNextPoint();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
             GotoNextPoint();
     }
 
-    void GotoNextPoint()
+    private void GotoNextPoint()
     {
         // Returns if no points have been set up
         if (points.Length == 0)
             return;
 
         // Set the agent to go to the currently selected destination.
-        agent.destination = points[destPoint].position;
+        _agent.destination = points[_destPoint].position;
 
         // Choose the next point in the array as the destination,
         // cycling to the start if necessary.
-        destPoint = (destPoint + 1) % points.Length;
+        _destPoint = (_destPoint + 1) % points.Length;
     }
-
 }
