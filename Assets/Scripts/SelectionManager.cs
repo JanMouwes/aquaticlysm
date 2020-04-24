@@ -88,7 +88,7 @@ public class SelectionManager : MonoBehaviour
             
             // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat
             foreach (Selectable selectable in selectables)
-                if ((selectable.tag == "unit" || selectable.tag == "boat")  
+                if ((selectable.tag == "Character" || selectable.tag == "Boat")  
                     && boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
                     selectable.SetSelected(true);
         }
