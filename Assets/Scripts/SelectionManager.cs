@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class UnitSelection : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
-    // All selected units
-    public static List<Selectable> SelectedEntities = new List<Selectable>();
+    // All selectable entities
+    public static List<Selectable> selectables = new List<Selectable>();
+
+    // All selected entities
+    public List<Selectable> selectedEntities;
 
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
@@ -25,6 +27,7 @@ public class UnitSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        selectedEntities = new List<Selectable>();
         startWorldSpace = new Vector2();
         endWorldSpace = new Vector2();
 
@@ -53,7 +56,7 @@ public class UnitSelection : MonoBehaviour
             if (s != null)
             {
                 s.SetSelected(true);
-                SelectedEntities.Add(s);
+                selectedEntities.Add(s);
             }
 
             // Register the mouse coordinates within the canvas
@@ -84,9 +87,10 @@ public class UnitSelection : MonoBehaviour
             // Create a bounding box with the positions in the worldspace
             Bounds boundingBox = CreateBoudingBox(startWorldSpace, endWorldSpace);
             
-            // Foreach through all selectables and check if it's inside of the bounding box
-            foreach (Selectable selectable in SelectedEntities)
-                if (boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
+            // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat
+            foreach (Selectable selectable in selectables)
+                if ((selectable.tag == "unit" || selectable.tag == "boat")  
+                    && boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
                     selectable.SetSelected(true);
         }
     }
@@ -96,8 +100,8 @@ public class UnitSelection : MonoBehaviour
     /// </summary>
     private void ClearSelected() 
     {
-        SelectedEntities.ForEach(s => s.SetSelected(false));
-        SelectedEntities.Clear();
+        selectedEntities.ForEach(s => s.SetSelected(false));
+        selectedEntities.Clear();
     }
 
     /// <summary>
@@ -110,6 +114,7 @@ public class UnitSelection : MonoBehaviour
         if (!selectionBox.gameObject.activeInHierarchy)
             selectionBox.gameObject.SetActive(true);
 
+        // Create a bounding box with the positions in the localspace
         Bounds boundingBox = CreateBoudingBox(startScreenPosition, mousePosition);
 
         // Set the position of the selection box

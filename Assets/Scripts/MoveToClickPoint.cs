@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-
 public class MoveToClickPoint : MonoBehaviour
 {
     NavMeshAgent agent;
