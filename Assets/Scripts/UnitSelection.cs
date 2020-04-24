@@ -46,7 +46,7 @@ public class UnitSelection : MonoBehaviour
         if (Input.GetButtonDown("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 300))
         {
             // Clear all selected items
-            //ClearSelected();
+            ClearSelected();
 
             // Select a single unit
             Selectable s = raycastHit.collider.GetComponentInParent<Selectable>();
