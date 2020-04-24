@@ -16,14 +16,17 @@ public class UnitSelection : MonoBehaviour
 
     // The start position of the mouseclick inside of the canvas
     private Vector2 startScreenPosition;
+    private Vector2 startWorldSpace;
+    private Vector2 endWorldSpace;
 
     // The positions where the raycast hits
-    private RaycastHit startPosition;
-    private RaycastHit endPosition;
+    private RaycastHit raycastHit;
 
     // Start is called before the first frame update
     void Start()
     {
+        startWorldSpace = new Vector2();
+        endWorldSpace = new Vector2();
 
         // Initialize the selection box
         if (selectionBox != null)
@@ -40,13 +43,13 @@ public class UnitSelection : MonoBehaviour
     void Update()
     {
         // Return true when the left mouse button is pressed and the raycast (range 300) hits the floor
-        if (Input.GetButtonDown("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out startPosition, 300))
+        if (Input.GetButtonDown("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 300))
         {
             // Clear all selected items
             //ClearSelected();
 
             // Select a single unit
-            Selectable s = startPosition.collider.GetComponentInParent<Selectable>();
+            Selectable s = raycastHit.collider.GetComponentInParent<Selectable>();
             if (s != null)
             {
                 s.SetSelected(true);
@@ -55,13 +58,21 @@ public class UnitSelection : MonoBehaviour
 
             // Register the mouse coordinates within the canvas
             startScreenPosition = Input.mousePosition;
+
+            // Set the pos of the raycasthit
+            startWorldSpace.x = raycastHit.point.x;
+            startWorldSpace.y = raycastHit.point.z;
         }
 
         // Return true when the left mouse button is held down and the raycast (range 300) hits the floor
-        if (Input.GetButton("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out endPosition, 1000))
+        if (Input.GetButton("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000))
         {
             // Update the seleciton box with the new mousecoordinates
             UpdateSelectionBox(Input.mousePosition);
+
+            // Set the pos of the raycasthit
+            endWorldSpace.x = raycastHit.point.x;
+            endWorldSpace.y = raycastHit.point.z;
         }
 
         // Return true when the left mouse button is released
@@ -70,20 +81,13 @@ public class UnitSelection : MonoBehaviour
             // Close the selection box
             selectionBox.gameObject.SetActive(false);
 
-            Bounds boundingBox = CreateBoudingBox(new Vector2(startPosition.point.x, startPosition.point.z), new Vector2(endPosition.point.x, endPosition.point.z));
-
-            //Debug.Log(boundingBox.size);
-
+            // Create a bounding box with the positions in the worldspace
+            Bounds boundingBox = CreateBoudingBox(startWorldSpace, endWorldSpace);
+            
+            // Foreach through all selectables and check if it's inside of the bounding box
             foreach (Selectable selectable in SelectedEntities)
-            {
-                //Debug.Log(boundingBox.size);
-                //Debug.Log(boundingBox.Contains(selectable.transform.position));
-
-                Debug.Log((Vector2)selectable.position);
-
-                if (boundingBox.Contains((Vector2)selectable.transform.position))
+                if (boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
                     selectable.SetSelected(true);
-            }
         }
     }
 
