@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MoveToClickPoint : MonoBehaviour
 {
     NavMeshAgent agent;
-
     void Start()
     {
         // Get the agent
@@ -19,11 +20,14 @@ public class MoveToClickPoint : MonoBehaviour
         // Input.GetAxis... "nameofthemouseclick"
         if (Input.GetButtonDown("LeftMouseButton"))
         {
-            RaycastHit hit;
-
-            // Range for the raycast is set to 100
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-                agent.destination = hit.point;
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                RaycastHit hit;
+                // Range for the raycast is set to 100
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+                    agent.destination = hit.point;
+            }
+            
         }
     }
 }
