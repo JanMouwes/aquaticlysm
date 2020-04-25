@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
     public float minHeight;
     public float maxHeight;
 
+    public Vector3 mapTarget;
+
     private void Update()
     {
         UpdateLocation();
@@ -148,7 +150,7 @@ public class CameraController : MonoBehaviour
         Vector3 cameraPosition = this.gameObject.transform.position;
         Vector3 cameraRotation = this.childCamera.transform.rotation.eulerAngles;
 
-        Vector3 mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
+        mapTarget = CalculateMapTarget(cameraPosition, cameraRotation);
 
         float deltaOrbit = Input.GetAxis("Orbit") * this.orbitSpeed * Time.deltaTime;
 
