@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entity;
 using UnityEngine;
 
 [Serializable]
 public class SpawnController : MonoBehaviour
 {
+    private EntitySystem _entitySystem;
+
     public static SpawnController Instance { get; private set; }
-
-    // Current iteration of objects used as index
-    private int _iteration;
-
-    // All of the spawned GameObjects
-    private Dictionary<int, GameObject> _objects;
 
     private void Awake()
     {
-        Instance   = this;
-        _objects   = new Dictionary<int, GameObject>();
-        _iteration = 0;
+        Instance = this;
+
+        // Save the entity system to avoid continuous retrieval
+        this._entitySystem = EntitySystem.Instance;
     }
 
     /// <summary>
@@ -26,24 +24,20 @@ public class SpawnController : MonoBehaviour
     /// <param name="prefab">The prefab to spawn</param>
     /// <param name="spawnPosition">Vector3 position to spawn the object</param>
     /// <param name="startRotation">Start rotation at spawn.</param>
-    /// <returns>Returns the index of the gameobject inside the container.</returns>
+    /// <returns>New entity's id</returns>
     public int Spawn(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
     {
-        GameObject temp       = Instantiate(prefab, spawnPosition, startRotation);
-        string     objectName = temp.name + "_" + _iteration;
-        _objects.Add(_iteration, temp);
-        temp.name = objectName;
-        int toReturn = _iteration;
-        _iteration++;
+        GameObject entity = Instantiate(prefab, spawnPosition, startRotation);
 
-        return toReturn;
+        return this._entitySystem.RegisterEntity(entity, prefab.name);
     }
 
-    public Tuple<int, GameObject> SpawnTuple(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
+    public (int id, GameObject entity) SpawnTuple(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
     {
-        int        id = Spawn(prefab, spawnPosition, startRotation);
+        int id = Spawn(prefab, spawnPosition, startRotation);
         GameObject go = GetGameObject(id);
-        return new Tuple<int, GameObject>(id, go);
+
+        return (id, go);
     }
 
     /// <summary>
@@ -62,10 +56,7 @@ public class SpawnController : MonoBehaviour
     /// </summary>
     /// <param name="id">ID integer that belongs to the selected GameObject</param>
     /// <returns>A GameObject</returns>
-    public GameObject GetGameObject(int id)
-    {
-        return _objects[id];
-    }
+    public GameObject GetGameObject(int id) => this._entitySystem.GetEntity(id);
 
     /// <summary>
     ///     Destroy a GameObject inside the world and inside the container.
@@ -73,7 +64,8 @@ public class SpawnController : MonoBehaviour
     /// <param name="id">ID integer that belongs to the selected GameObject</param>
     public void DestroyGameObject(int id)
     {
-        DestroyImmediate(_objects[id]);
-        _objects.Remove(id);
+        GameObject entity = GetGameObject(id);
+        DestroyImmediate(entity);
+        this._entitySystem.RemoveEntity(id);
     }
 }
