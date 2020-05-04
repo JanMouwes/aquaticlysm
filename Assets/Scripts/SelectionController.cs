@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionManager : MonoBehaviour
+public class SelectionController : MonoBehaviour
 {
     // All selectable entities
     public static List<Selectable> selectables = new List<Selectable>();
@@ -24,7 +24,7 @@ public class SelectionManager : MonoBehaviour
     private RaycastHit raycastHit;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         selectedEntities = new List<Selectable>();
         startWorldSpace = new Vector2();
@@ -42,10 +42,11 @@ public class SelectionManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Return true when the left mouse button is pressed and the raycast (range 300) hits the floor
-        if (Input.GetButtonDown("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 300))
+        if (Input.GetButtonDown("LeftMouseButton") && 
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 300))
         {
             // Clear all selected items
             ClearSelected();
@@ -67,9 +68,10 @@ public class SelectionManager : MonoBehaviour
         }
 
         // Return true when the left mouse button is held down and the raycast (range 300) hits the floor
-        if (Input.GetButton("LeftMouseButton") && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000))
+        if (Input.GetButton("LeftMouseButton") && 
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000))
         {
-            // Update the seleciton box with the new mousecoordinates
+            // Update the selection box with the new mousecoordinates
             UpdateSelectionBox(Input.mousePosition);
 
             // Set the pos of the raycasthit
@@ -106,7 +108,7 @@ public class SelectionManager : MonoBehaviour
     /// <summary>
     /// Update the shape of the selection box inside of the canvas
     /// </summary>
-    /// <param name="curMousePosition">The current mouse position</param>
+    /// <param name="mousePosition">The current mouse position</param>
     private void UpdateSelectionBox(Vector2 mousePosition)
     {
         // Open the selection box if its closed

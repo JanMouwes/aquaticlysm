@@ -6,22 +6,19 @@ public class Selectable : MonoBehaviour
 
     public void SetSelected(bool selection)
     {
-        Debug.Log(selection);
         // Set if it's selected or not
         isSelected = selection;
-
-        // Here we would set other stuff like highlighting the object
     }
 
     void OnEnable()
     {
-        // Add the selectable to a list of selecectable entities
-        SelectionManager.selectables.Add(this);
+        // Add the selectable to a list of selectable entities
+        SelectionController.selectables.Add(this);
     }
 
     void OnDisable()
     {
-        // Remove the selectable of the list of selecectable entities
-        SelectionManager.selectables.Remove(this);
+        // Remove the selectable of the list of selectable entities
+        SelectionController.selectables.Remove(this);
     }
 }
