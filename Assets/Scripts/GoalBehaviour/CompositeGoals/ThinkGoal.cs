@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -36,12 +37,9 @@ public class ThinkGoal : CompositeGoal
         
         
         // Make sure all completed and failed subgoals are removed from the subgoal list
-        foreach (var subGoal in subGoals)
+        foreach (BaseGoal subGoal in subGoals.Where(subGoal => subGoal.GoalStatus == GoalStatus.Completed || subGoal.GoalStatus == GoalStatus.Failed))
         {
-            if (subGoal.GoalStatus == GoalStatus.Completed || subGoal.GoalStatus == GoalStatus.Failed)
-            {
-                subGoal.Terminate();
-            }
+            subGoal.Terminate();
         }
         subGoals.RemoveAll(sg => sg.GoalStatus == GoalStatus.Completed || sg.GoalStatus == GoalStatus.Failed);
 
