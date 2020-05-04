@@ -30,7 +30,7 @@ namespace Entity
         /// All entities, tuple-bound with their ids
         /// </summary>
         public IEnumerable<(int id, GameObject entity)> Entities => this._entities.Select(kvp => (kvp.Key, kvp.Value.entity));
-        
+
         private EntitySystem() { }
 
         /// <summary>
@@ -62,7 +62,8 @@ namespace Entity
         /// <returns>All entities tuple-bound with their ids</returns>
         public IEnumerable<(int id, GameObject entity)> GetPrefabEntities(string prefabName)
         {
-            return this._entities.Where(keyValue => keyValue.Value.prefab == prefabName)
+            return this._entities
+                       .Where(keyValue => keyValue.Value.prefab == prefabName)
                        .Select(pair => (pair.Key, pair.Value.entity));
         }
 

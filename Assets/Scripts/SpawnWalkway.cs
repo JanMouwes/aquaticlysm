@@ -21,7 +21,7 @@ public class SpawnWalkway : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y) && this._entity == null)
         {
-            (int id, GameObject entity) = SpawnController.Instance.SpawnTuple(
+            (int id, GameObject entity) = SpawnController.Instance.Spawn(
                 this.walkwayGameObject,
                 new Vector3(8.5f, 0, 0),
                 Quaternion.Euler(0, 90, 0)
@@ -36,7 +36,7 @@ public class SpawnWalkway : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U) && this._entity != null)
         {
-            SpawnController.Instance.DestroyGameObject(this._entityId);
+            SpawnController.Instance.DestroyEntity(this._entityId);
             this._entity = null;
             this._navMeshSurface.BuildNavMesh();
         }
