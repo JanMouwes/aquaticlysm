@@ -10,9 +10,8 @@ public abstract class CompositeGoal : BaseGoal
     // List for holding all activated goals waiting to be met
     public List<BaseGoal> subGoals { get; set; }
 
-    public CompositeGoal(GameObject entity)
+    public CompositeGoal()
     {
-        gameObject = entity;
         subGoals = new List<BaseGoal>();
     }
 

@@ -7,13 +7,16 @@ using UnityEngine;
 /// </summary>
 public abstract class BaseGoal : MonoBehaviour
 {
-    public GameObject gameObject;
-
     // Status to keep a record of the status of the goal
     public GoalStatus GoalStatus { get; set; }
 
     // Helper to print goal name if needed
     public string goalName;
+
+    public BaseGoal()
+    {
+        GoalStatus = GoalStatus.Inactive;
+    }
 
     public abstract void Activate();
 
