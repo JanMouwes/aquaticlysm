@@ -10,6 +10,7 @@ using UnityEngine;
 public class ThinkGoal : CompositeGoal
 {
     private PlayerScript _playerScript;
+
     public ThinkGoal()
     {
         goalName = "Think";
@@ -24,29 +25,22 @@ public class ThinkGoal : CompositeGoal
 
     public override GoalStatus Process()
     {
+        // Activate, if goalstatus not yet active
+        if (GoalStatus == GoalStatus.Inactive)
+            Activate();
+
+        // Check if there is need for resting and also that the agent is not currently taking care of it
         if (_playerScript.energyLevel < 10 && gameObject.GetComponent<RestGoal>() == null)
         {
             RestGoal restGoal = gameObject.AddComponent<RestGoal>();
             AddSubGoal(restGoal);
         }
-
-        
-        // Activate, if goalstatus not yet active
-        if (GoalStatus == GoalStatus.Inactive)
-            Activate();
-        
         
         // Make sure all completed and failed subgoals are removed from the subgoal list
-        foreach (BaseGoal subGoal in subGoals.Where(subGoal => subGoal.GoalStatus == GoalStatus.Completed || subGoal.GoalStatus == GoalStatus.Failed))
-        {
-            subGoal.Terminate();
-        }
         subGoals.RemoveAll(sg => sg.GoalStatus == GoalStatus.Completed || sg.GoalStatus == GoalStatus.Failed);
 
         // Process new subgoals
         subGoals.ForEach(sg => sg.Process());
-
-        
         
         return GoalStatus;
     }
