@@ -5,7 +5,6 @@ using UnityEngine.AI;
 public class SpawnWalkway : MonoBehaviour
 {
     private GameObject _entity;
-    private int _entityId;
     private NavMeshSurface _navMeshSurface;
     public GameObject walkwayGameObject;
 
@@ -21,14 +20,13 @@ public class SpawnWalkway : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y) && this._entity == null)
         {
-            (int id, GameObject entity) = SpawnController.Instance.Spawn(
+            GameObject entity = SpawnController.Instance.Spawn(
                 this.walkwayGameObject,
                 new Vector3(8.5f, 0, 0),
                 Quaternion.Euler(0, 90, 0)
             );
 
             this._entity = entity;
-            this._entityId = id;
 
             this._entity.transform.parent = this.transform;
             this._navMeshSurface.BuildNavMesh();
@@ -36,7 +34,7 @@ public class SpawnWalkway : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.U) && this._entity != null)
         {
-            SpawnController.Instance.DestroyEntity(this._entityId);
+            SpawnController.Instance.DestroyEntity(this._entity.GetInstanceID());
             this._entity = null;
             this._navMeshSurface.BuildNavMesh();
         }

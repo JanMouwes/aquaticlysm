@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entity;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class SpawnController : MonoBehaviour
 {
-    private EntitySystem _entitySystem;
-
     public static SpawnController Instance { get; private set; }
+
+    private readonly Dictionary<int, GameObject> _gameObjectsById = new Dictionary<int, GameObject>();
 
     private void Awake()
     {
         Instance = this;
-
-        // Save the entity system to avoid continuous retrieval
-        this._entitySystem = EntitySystem.Instance;
     }
 
     /// <summary>
@@ -25,14 +22,15 @@ public class SpawnController : MonoBehaviour
     /// <param name="spawnPosition">Vector3 position to spawn the object</param>
     /// <param name="startRotation">Start rotation at spawn.</param>
     /// <returns>New entity's id</returns>
-    public (int id, GameObject entity) Spawn(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
+    public GameObject Spawn(GameObject prefab, Vector3 spawnPosition, Quaternion startRotation)
     {
         GameObject entity = Instantiate(prefab, spawnPosition, startRotation);
 
-        int id = this._entitySystem.RegisterEntity(entity, prefab.name);
-        GameObject go = this._entitySystem.GetEntity(id);
+        int id = entity.GetInstanceID();
 
-        return (id, go);
+        this._gameObjectsById.Add(id, entity);
+
+        return entity;
     }
 
 
@@ -42,7 +40,7 @@ public class SpawnController : MonoBehaviour
     /// <param name="prefab">The prefab to spawn.</param>
     /// <param name="spawnPosition">Vector3 position to spawn the object.</param>
     /// <returns>Returns the index of the gameobject inside the container.</returns>
-    public (int id, GameObject entity) Spawn(GameObject prefab, Vector3 spawnPosition)
+    public GameObject Spawn(GameObject prefab, Vector3 spawnPosition)
     {
         return Spawn(prefab, spawnPosition, Quaternion.identity);
     }
@@ -52,7 +50,7 @@ public class SpawnController : MonoBehaviour
     /// </summary>
     /// <param name="id">ID integer that belongs to the selected GameObject</param>
     /// <returns>A GameObject</returns>
-    public GameObject GetEntity(int id) => this._entitySystem.GetEntity(id);
+    public GameObject GetEntity(int id) => this._gameObjectsById[id];
 
     /// <summary>
     ///     Destroy a GameObject inside the world and inside the container.
@@ -62,6 +60,6 @@ public class SpawnController : MonoBehaviour
     {
         GameObject entity = GetEntity(id);
         DestroyImmediate(entity);
-        this._entitySystem.RemoveEntity(id);
+        this._gameObjectsById.Remove(id);
     }
 }

@@ -15,7 +15,7 @@ public class SpawnObjectDemo : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V)) { this._test.Add(SpawnController.Instance.Spawn(this.capsuleJesus, new Vector3(0, 0, 0)).id); }
+        if (Input.GetKeyDown(KeyCode.V)) { this._test.Add(SpawnController.Instance.Spawn(this.capsuleJesus, new Vector3(0, 0, 0)).GetInstanceID()); }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
