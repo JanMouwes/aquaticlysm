@@ -19,14 +19,15 @@ public class ThinkGoal : CompositeGoal
 
     public override void Activate()
     {
-        GoalStatus = GoalStatus.Active;
+        goalStatus = GoalStatus.Active;
         _playerScript = GetComponent<PlayerScript>();
     }
 
     public override GoalStatus Process()
     {
+        Debug.Log(goalName);
         // Activate, if goalstatus not yet active
-        if (GoalStatus == GoalStatus.Inactive)
+        if (goalStatus == GoalStatus.Inactive)
             Activate();
 
         // Check if there is need for resting and also that the agent is not currently taking care of it
@@ -37,14 +38,14 @@ public class ThinkGoal : CompositeGoal
         }
         
         // Make sure all completed and failed subgoals are removed from the subgoal list
-        subGoals.RemoveAll(sg => sg.GoalStatus == GoalStatus.Completed || sg.GoalStatus == GoalStatus.Failed);
+        subGoals.RemoveAll(sg => sg.goalStatus == GoalStatus.Completed || sg.goalStatus == GoalStatus.Failed);
 
         // Process new subgoals
         subGoals.ForEach(sg => sg.Process());
         
-        return GoalStatus;
+        return goalStatus;
     }
-
+    
     public override void Terminate()
     {
         throw new System.NotImplementedException();

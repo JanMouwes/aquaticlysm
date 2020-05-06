@@ -2,20 +2,20 @@
 using UnityEngine.AI;
 
 /// <summary>
-/// Basescript for agents to determine, initialize and update decisionmaking and needs.
+///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
 public class PlayerScript : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public Vector3      target;
-    public ThinkGoal compositeGoal;
+    public ThinkGoal    compositeGoal;
 
-    public float        energyLevel = 100;
-    
+    public float   energyLevel = 100;
+    public Vector3 target;
+
     // Start is called before the first frame update
     private void Start()
     {
-        agent     = GetComponent<NavMeshAgent>();
+        agent         = GetComponent<NavMeshAgent>();
         compositeGoal = GetComponent<ThinkGoal>();
     }
 

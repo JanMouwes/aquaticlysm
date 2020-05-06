@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 /// <summary>
-/// Base class for composite goals constructed of multiple goals
+///     Base class for composite goals constructed of multiple goals
 /// </summary>
 public abstract class CompositeGoal : BaseGoal
 {
@@ -19,5 +17,4 @@ public abstract class CompositeGoal : BaseGoal
     {
         subGoals.Add(goal);
     }
-
 }
