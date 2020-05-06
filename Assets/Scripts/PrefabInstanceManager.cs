@@ -4,11 +4,11 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class SpawnController : MonoBehaviour
+public class PrefabInstanceManager : MonoBehaviour
 {
-    public static SpawnController Instance { get; private set; }
-
     private readonly Dictionary<int, GameObject> _gameObjectsById = new Dictionary<int, GameObject>();
+
+    public static PrefabInstanceManager Instance { get; private set; }
 
     private void Awake()
     {
