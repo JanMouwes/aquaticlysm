@@ -9,9 +9,8 @@ using UnityEngine;
 /// </summary>
 public class ThinkGoal : CompositeGoal
 {
-    private PlayerScript _playerScript;
 
-    public ThinkGoal()
+    public ThinkGoal(GameObject owner) : base(owner)
     {
         goalName = "Think";
         // To be continued...
@@ -20,28 +19,39 @@ public class ThinkGoal : CompositeGoal
     public override void Activate()
     {
         goalStatus = GoalStatus.Active;
-        _playerScript = GetComponent<PlayerScript>();
+    }
+
+    /// <summary>
+    /// Checks if there is a need for a new goal.
+    /// </summary>
+    public void Evaluate()
+    {
+        // Check if there is need for resting and also that the agent is not currently taking care of it
+        if (character.energyLevel < 10)
+        {
+            RestGoal restGoal = new RestGoal(character.gameObject);
+            AddSubGoal(restGoal);
+        }
     }
 
     public override GoalStatus Process()
     {
         Debug.Log(goalName);
+
         // Activate, if goalstatus not yet active
         if (goalStatus == GoalStatus.Inactive)
             Activate();
 
-        // Check if there is need for resting and also that the agent is not currently taking care of it
-        if (_playerScript.energyLevel < 10 && gameObject.GetComponent<RestGoal>() == null)
-        {
-            RestGoal restGoal = gameObject.AddComponent<RestGoal>();
-            AddSubGoal(restGoal);
-        }
-        
-        // Make sure all completed and failed subgoals are removed from the subgoal list
-        subGoals.RemoveAll(sg => sg.goalStatus == GoalStatus.Completed || sg.goalStatus == GoalStatus.Failed);
+        if (subGoals.Count < 1)
+            Evaluate();
 
-        // Process new subgoals
-        subGoals.ForEach(sg => sg.Process());
+        if (subGoals.Count >= 1)
+        {
+            CheckAndRemoveCompletedSubgoals();
+
+            // Process new subgoal
+            currentGoal.Process();
+        }
         
         return goalStatus;
     }

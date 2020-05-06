@@ -1,20 +1,62 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 ///     Base class for composite goals constructed of multiple goals
 /// </summary>
-public abstract class CompositeGoal : BaseGoal
+public class CompositeGoal : BaseGoal
 {
-    // List for holding all activated goals waiting to be met
-    public List<BaseGoal> subGoals { get; set; }
+    public Character character;
 
-    public CompositeGoal()
+    public string goalName;
+
+    // For holding the currentGoal
+    public BaseGoal currentGoal;
+
+    // List for holding all activated goals waiting to be met
+    public Queue<BaseGoal> subGoals { get; set; }
+    public GoalStatus goalStatus { get; set; }
+
+
+    public CompositeGoal(GameObject owner)
     {
-        subGoals = new List<BaseGoal>();
+        subGoals = new Queue<BaseGoal>();
+        character = owner.gameObject.GetComponent<Character>();
     }
 
     public void AddSubGoal(BaseGoal goal)
     {
-        subGoals.Add(goal);
+        subGoals.Enqueue(goal);
+    }
+
+    public void RemoveSubGoal(BaseGoal goal)
+    {
+        subGoals.Dequeue();
+    }
+
+    public virtual void Activate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual GoalStatus Process()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual void Terminate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// Make sure the processed goal is not already completed or failed
+    /// </summary>
+    public void CheckAndRemoveCompletedSubgoals()
+    {
+       if (currentGoal.goalStatus == GoalStatus.Completed || currentGoal.goalStatus == GoalStatus.Failed)
+       {
+          currentGoal = subGoals.Dequeue();
+       }
     }
 }
