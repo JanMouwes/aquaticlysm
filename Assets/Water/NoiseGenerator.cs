@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class NoiseGenerator : MonoBehaviour
 {
-    public float power = 0;
-    public float scale = 0;
-    public float timeScale = 1;
+    [Tooltip("The amplification of the PerlinNoise.")]
+    public float power = 1.5f;
+
+    [Tooltip("The size of the PerlinNoise from 0 to 1.")]
+    public float scale = 1;
+
+    [Tooltip("How fast the noise changes.")]
+    public float timeScale = 0.5f;
+
 
     private float xOffset;
     private float yOffset;
@@ -15,6 +21,7 @@ public class NoiseGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Initialize the mesh
         meshFilter = GetComponent<MeshFilter>();
     }
 
@@ -22,6 +29,8 @@ public class NoiseGenerator : MonoBehaviour
     void Update()
     {
         GenerateNoise();
+
+        // Calculate the offset with physics (aka time hehe)
         xOffset += Time.deltaTime * timeScale;
         //yOffset += Time.deltaTime * timeScale;
 
@@ -38,7 +47,10 @@ public class NoiseGenerator : MonoBehaviour
 
         for (int i = 0; i < vertices.Length; i++)
         {
+            // Calculate the perlin noise
             float perlinNoise = Mathf.PerlinNoise(vertices[i].x * scale + xOffset, vertices[i].z * scale + yOffset);
+            
+            // Set and amplificate the perlin noise
             vertices[i].y = perlinNoise * power;
         }
 
