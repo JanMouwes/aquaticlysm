@@ -14,7 +14,6 @@ public class CompositeGoal : BaseGoal
     public Queue<BaseGoal> subGoals { get; set; }
     public GoalStatus goalStatus { get; set; }
 
-
     public CompositeGoal(GameObject owner)
     {
         subGoals = new Queue<BaseGoal>();

@@ -19,7 +19,7 @@ public class RestGoal : CompositeGoal
     public override void Activate()
     {
         goalStatus = GoalStatus.Active;
-        target = character.GetTarget(goalName);
+        target = GameObject.FindGameObjectWithTag("Rest").transform.position;
         character.agent.destination = target;
     }
 

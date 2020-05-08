@@ -28,6 +28,11 @@ public class Character : MonoBehaviour
         compositeGoal.Process();
     }
 
+    /// <summary>
+    /// Get gameobjects, like needed positions from the gameworld
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public Vector3 GetTarget(string name)
     {
         switch (name)
