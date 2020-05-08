@@ -31,7 +31,7 @@ public class RestGoal : CompositeGoal
             Activate();
 
         // Terminating condition, if energylevel 100 the goal is met.
-        if (isRested())
+        if (isRested(character.energyLevel))
             Terminate();
 
         // Check, if the agent has arrived to the resting place
@@ -49,11 +49,10 @@ public class RestGoal : CompositeGoal
         character.agent.SetDestination(new Vector3(0, 1.63f, 0));
     }
 
-    bool isRested()
-    {
-        if (character.energyLevel >= 100.0f)
-            return true;
-        else
-            return false;
-    }
+    /// <summary>
+    /// Check, if energylevel has been met or not.
+    /// </summary>
+    /// <param name="energyLevel"></param>
+    /// <returns></returns>
+    private static bool isRested(float energyLevel) => energyLevel >= 100.0f;
 }
