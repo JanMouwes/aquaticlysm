@@ -53,9 +53,8 @@ public class ThinkGoal : CompositeGoal
 
         return status;
     }
-    
+
     public override void Terminate()
     {
-        throw new System.NotImplementedException();
     }
 }
