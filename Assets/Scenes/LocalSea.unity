@@ -980,13 +980,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1024146927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d666d473eeb49274a8f434275073fd63, type: 3}
+  m_Script: {fileID: 11500000, guid: bd50d79367cdafc45819cf0db91767d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
-  - {fileID: 514482196}
-  - {fileID: 1426921069}
-  - {fileID: 1064196543}
+  agent: {fileID: 1024146928}
+  energyLevel: 100
+  target: {x: 0, y: 0, z: 0}
 --- !u!1 &1064196539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,8 +999,8 @@ GameObject:
   - component: {fileID: 1064196541}
   - component: {fileID: 1064196540}
   m_Layer: 0
-  m_Name: Target 3
-  m_TagString: Untagged
+  m_Name: RestPlace
+  m_TagString: Rest
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

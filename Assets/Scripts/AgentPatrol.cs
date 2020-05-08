@@ -5,9 +5,9 @@ public class AgentPatrol : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private int          _destPoint;
-    private Vector3 _target;
+    private Vector3      _target;
     public  Transform[]  points;
-    
+
     // Start is called before the first frame update
     private void Start()
     {
