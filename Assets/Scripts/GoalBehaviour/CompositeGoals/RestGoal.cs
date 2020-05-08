@@ -44,9 +44,6 @@ public class RestGoal : CompositeGoal
     public override void Terminate()
     {
         goalStatus = GoalStatus.Completed;
-
-        // Set other destination for the agent to see, if terminating this goal works.
-        character.agent.SetDestination(new Vector3(0, 1.63f, 0));
     }
 
     /// <summary>
