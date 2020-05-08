@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 ///     Base class for composite goals constructed of multiple goals
 /// </summary>
-public class CompositeGoal : IBaseGoal
+public abstract class CompositeGoal : IBaseGoal
 {
     public Character character;
 
