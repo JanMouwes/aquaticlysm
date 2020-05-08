@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class WaterPlane : MonoBehaviour
+public class ProceduralGrid : MonoBehaviour
 {
     // Plane size
     public int size;
@@ -27,7 +27,7 @@ public class WaterPlane : MonoBehaviour
     {
         // Create mesh
         Mesh mesh = new Mesh();
-        mesh.name = "Procedural Water Grid";
+        mesh.name = "Procedural Grid";
 
         // Create mesh data
         Vector3[] vertices = new Vector3[(size) * (size)];
