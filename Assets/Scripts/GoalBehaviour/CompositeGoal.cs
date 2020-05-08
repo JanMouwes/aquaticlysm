@@ -50,4 +50,5 @@ public class CompositeGoal : BaseGoal
             subGoals.Dequeue();
         }
     }
+
 }
