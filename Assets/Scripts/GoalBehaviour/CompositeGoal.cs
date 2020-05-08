@@ -29,11 +29,6 @@ public class CompositeGoal : BaseGoal
         subGoals.Enqueue(goal);
     }
 
-    public void RemoveSubGoal(BaseGoal goal)
-    {
-        subGoals.Dequeue();
-    }
-
     public virtual void Activate()
     {
         throw new System.NotImplementedException();
@@ -54,9 +49,12 @@ public class CompositeGoal : BaseGoal
     /// </summary>
     public void CheckAndRemoveCompletedSubgoals()
     {
-       if (currentGoal.goalStatus == GoalStatus.Completed || currentGoal.goalStatus == GoalStatus.Failed)
-       {
-          currentGoal = subGoals.Dequeue();
-       }
+        if (currentGoal.goalStatus == GoalStatus.Completed || currentGoal.goalStatus == GoalStatus.Failed)
+        {
+            if(subGoals.Count >= 1)
+                currentGoal = subGoals.Dequeue();
+            else
+                currentGoal = null;
+        }
     }
 }

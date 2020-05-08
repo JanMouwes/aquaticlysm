@@ -45,14 +45,14 @@ public class ThinkGoal : CompositeGoal
         if (subGoals.Count < 1)
             Evaluate();
 
-        if (subGoals.Count >= 1)
+        if (currentGoal != null)
         {
             CheckAndRemoveCompletedSubgoals();
 
             // Process new subgoal
             currentGoal.Process();
         }
-        
+
         return goalStatus;
     }
     
