@@ -7,9 +7,9 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public ThinkGoal    compositeGoal;
+    public ThinkGoal compositeGoal;
 
-    public float   energyLevel = 100;
+    public float energyLevel = 100;
     public Vector3 target;
 
     // Start is called before the first frame update
@@ -26,21 +26,5 @@ public class Character : MonoBehaviour
         energyLevel -= 8 * Time.deltaTime;
 
         compositeGoal.Process();
-    }
-
-    /// <summary>
-    /// Get gameobjects, like needed positions from the gameworld
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public Vector3 GetTarget(string name)
-    {
-        switch (name)
-        {
-            case "Rest":
-                return GameObject.FindGameObjectWithTag(name).transform.position;
-            default:
-                return Vector3.zero;
-        }
     }
 }

@@ -4,23 +4,23 @@ using UnityEngine;
 /// <summary>
 ///     Base class for composite goals constructed of multiple goals
 /// </summary>
-public class CompositeGoal : BaseGoal
+public class CompositeGoal : IBaseGoal
 {
     public Character character;
 
     public string goalName;
 
     // List for holding all activated goals waiting to be met
-    public Queue<BaseGoal> subGoals { get; set; }
+    public Queue<IBaseGoal> subGoals { get; set; }
     public GoalStatus goalStatus { get; set; }
 
     public CompositeGoal(GameObject owner)
     {
-        subGoals = new Queue<BaseGoal>();
+        subGoals = new Queue<IBaseGoal>();
         character = owner.gameObject.GetComponent<Character>();
     }
 
-    public void AddSubGoal(BaseGoal goal)
+    public void AddSubGoal(IBaseGoal goal)
     {
         subGoals.Enqueue(goal);
     }

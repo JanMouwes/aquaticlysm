@@ -1,7 +1,7 @@
 ﻿/// <summary>
 ///     Base class for Goal Driven Behaviour
 /// </summary>
-public interface BaseGoal
+public interface IBaseGoal
 {
     // Status to keep a record of the status of the goal
     GoalStatus goalStatus { get; set; }
