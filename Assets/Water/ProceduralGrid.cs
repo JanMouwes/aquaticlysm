@@ -6,18 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class ProceduralGrid : MonoBehaviour
 {
-    // Plane size
+    [Tooltip("Grid size (x and y).")]
     public int size;
 
     // Mesh filter
-    private MeshFilter filter;
+    private MeshFilter _filter;
 
     // Awake is called before Start
     void Awake()
     {
+        if (size <= 0)
+            size = 1;
+
         // Initialize filter
-        filter = GetComponent<MeshFilter>();
-        filter.mesh = GenerateMesh();
+        _filter = GetComponent<MeshFilter>();
+        _filter.mesh = GenerateMesh();
     }
 
     /// <summary>

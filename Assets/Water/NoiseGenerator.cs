@@ -14,47 +14,48 @@ public class NoiseGenerator : MonoBehaviour
     public float timeScale = 0.5f;
 
 
-    private float xOffset;
-    private float yOffset;
-    private MeshFilter meshFilter;
+    private float _xOffset;
+    private float _yOffset;
+    private MeshFilter _meshFilter;
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialize the mesh
-        meshFilter = GetComponent<MeshFilter>();
+        _meshFilter = GetComponent<MeshFilter>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GenerateNoise();
+        _meshFilter.mesh.vertices = GenerateNoise();
 
         // Calculate the offset with physics (aka time hehe)
-        xOffset += Time.deltaTime * timeScale;
+        _xOffset += Time.deltaTime * timeScale;
+
+        // Also a possibility so I left this
         //yOffset += Time.deltaTime * timeScale;
 
-        if (yOffset <= 0.1) 
-            yOffset += Time.deltaTime * timeScale;
-        if (yOffset >= power)
-            yOffset -= Time.deltaTime * timeScale;
-
+        if (_yOffset <= 0.1) 
+            _yOffset += Time.deltaTime * timeScale;
+        if (_yOffset >= power)
+            _yOffset -= Time.deltaTime * timeScale;
     }
 
-    void GenerateNoise() 
+    Vector3[] GenerateNoise() 
     {
-        Vector3[] vertices = meshFilter.mesh.vertices;
+        Vector3[] vertices = _meshFilter.mesh.vertices;
 
         for (int i = 0; i < vertices.Length; i++)
         {
             // Calculate the perlin noise
-            float perlinNoise = Mathf.PerlinNoise(vertices[i].x * scale + xOffset, vertices[i].z * scale + yOffset);
+            float perlinNoise = Mathf.PerlinNoise(vertices[i].x * scale + _xOffset, vertices[i].z * scale + _yOffset);
             
             // Set and amplificate the perlin noise
             vertices[i].y = perlinNoise * power;
         }
 
-        // Replace vertices
-        meshFilter.mesh.vertices = vertices;
+        // Return the vertices
+        return vertices;
     }
 }
