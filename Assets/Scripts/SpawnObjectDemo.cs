@@ -11,18 +11,17 @@ public class SpawnObjectDemo : MonoBehaviour
     public GameObject capsuleJesus;
 
     #endregion
-    
+
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-            _test.Add(SpawnController.Instance.Spawn(capsuleJesus, new Vector3(0, 0, 0)));
+        if (Input.GetKeyDown(KeyCode.V)) { this._test.Add(PrefabInstanceManager.Instance.Spawn(this.capsuleJesus, new Vector3(0, 0, 0)).GetInstanceID()); }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            foreach (int current in _test)
-                SpawnController.Instance.DestroyGameObject(current);
-            _test.Clear();
+            foreach (int current in this._test) { PrefabInstanceManager.Instance.DestroyEntity(current); }
+
+            this._test.Clear();
         }
     }
 }
