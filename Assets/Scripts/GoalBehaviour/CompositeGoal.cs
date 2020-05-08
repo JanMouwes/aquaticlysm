@@ -12,7 +12,7 @@ public abstract class CompositeGoal : IBaseGoal
 
     // List for holding all activated goals waiting to be met
     public Queue<IBaseGoal> subGoals { get; set; }
-    public GoalStatus goalStatus { get; set; }
+    public GoalStatus status { get; set; }
 
     public CompositeGoal(GameObject owner)
     {
@@ -45,7 +45,7 @@ public abstract class CompositeGoal : IBaseGoal
     /// </summary>
     public void CheckAndRemoveCompletedSubgoals()
     {
-        if (subGoals.Peek().goalStatus == GoalStatus.Completed || subGoals.Peek().goalStatus == GoalStatus.Failed)
+        if (subGoals.Peek().status == GoalStatus.Completed || subGoals.Peek().status == GoalStatus.Failed)
         {
             subGoals.Dequeue();
         }

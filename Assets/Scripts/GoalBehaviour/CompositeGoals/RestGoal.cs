@@ -18,7 +18,7 @@ public class RestGoal : CompositeGoal
 
     public override void Activate()
     {
-        goalStatus = GoalStatus.Active;
+        status = GoalStatus.Active;
         target = GameObject.FindGameObjectWithTag("Rest").transform.position;
         character.agent.destination = target;
     }
@@ -27,7 +27,7 @@ public class RestGoal : CompositeGoal
     {
         Debug.Log(goalName);
 
-        if (goalStatus == GoalStatus.Inactive)
+        if (status == GoalStatus.Inactive)
             Activate();
 
         // Terminating condition, if energylevel 100 the goal is met.
@@ -38,12 +38,12 @@ public class RestGoal : CompositeGoal
         if (character.agent.remainingDistance < 0.01f)
             character.energyLevel += 20 * Time.deltaTime;
 
-        return goalStatus;
+        return status;
     }
 
     public override void Terminate()
     {
-        goalStatus = GoalStatus.Completed;
+        status = GoalStatus.Completed;
     }
 
     /// <summary>

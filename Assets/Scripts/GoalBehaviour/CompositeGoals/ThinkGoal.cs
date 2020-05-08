@@ -18,7 +18,7 @@ public class ThinkGoal : CompositeGoal
 
     public override void Activate()
     {
-        goalStatus = GoalStatus.Active;
+        status = GoalStatus.Active;
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public class ThinkGoal : CompositeGoal
         Debug.Log(goalName);
 
         // Activate, if goalstatus not yet active
-        if (goalStatus == GoalStatus.Inactive)
+        if (status == GoalStatus.Inactive)
             Activate();
 
         if (subGoals.Count == 0)
@@ -51,7 +51,7 @@ public class ThinkGoal : CompositeGoal
              subGoals.Peek().Process();
         }
 
-        return goalStatus;
+        return status;
     }
     
     public override void Terminate()

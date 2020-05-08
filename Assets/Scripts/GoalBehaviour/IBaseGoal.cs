@@ -4,7 +4,7 @@
 public interface IBaseGoal
 {
     // Status to keep a record of the status of the goal
-    GoalStatus goalStatus { get; set; }
+    GoalStatus status { get; set; }
 
     void Activate();
 
