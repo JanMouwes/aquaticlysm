@@ -30,9 +30,9 @@ public class ProceduralGrid : MonoBehaviour
         mesh.name = "Procedural Grid";
 
         // Create mesh data
-        Vector3[] vertices = new Vector3[(size) * (size)];
-        Vector3[] normals = new Vector3[(size) * (size)];
-        Vector2[] uvs = new Vector2[(size) * (size )];
+        Vector3[] vertices = new Vector3[size * size];
+        Vector3[] normals = new Vector3[size * size];
+        Vector2[] uvs = new Vector2[size * size];
         float negativeOffset = -size * 0.5f;
 
         // Generate vetices, normals and the uv
@@ -40,7 +40,7 @@ public class ProceduralGrid : MonoBehaviour
             for (int y = 0; y < size; y++, i++)
             {
                 vertices[i] = new Vector3(negativeOffset + size * (x / (float)size), 0 , negativeOffset + size * (y / (float)size));
-                normals[i] = (Vector3.up);
+                normals[i] = Vector3.up;
                 uvs[i] = new Vector2(x / (float)size, y / (float)size);
             }
 
