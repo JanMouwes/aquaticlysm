@@ -25,20 +25,11 @@ public abstract class CompositeGoal : IBaseGoal
         subGoals.Enqueue(goal);
     }
 
-    public virtual void Activate()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void Activate();
 
-    public virtual GoalStatus Process()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract GoalStatus Process();
 
-    public virtual void Terminate()
-    {
-        throw new System.NotImplementedException();
-    }
+    public abstract void Terminate();
 
     /// <summary>
     /// Make sure the processed goal is not already completed or failed
