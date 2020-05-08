@@ -10,7 +10,6 @@ public class Character : MonoBehaviour
     public ThinkGoal thinkGoal;
 
     public float energyLevel = 100;
-    public Vector3 target;
 
     // Start is called before the first frame update
     private void Start()
