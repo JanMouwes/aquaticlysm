@@ -47,7 +47,7 @@ public class UserLog
 
 ***Why: consistent with the Microsoft's .NET Framework and easy to read.***
 
-#### 3. Do not use Hungarian notation or any other type identification in identifiers
+#### 3. Do **not** use Hungarian notation or any other type identification in identifiers
 
 ```csharp
 // Correct
@@ -60,7 +60,7 @@ string strName;
 
 ***Why: consistent with the Microsoft's .NET Framework and Visual Studio IDE makes determining types very easy (via tooltips). In general you want to avoid type indicators in any identifier.***
 
-#### 4. Do not use Screaming Caps for constants or readonly variables:
+#### 4. Do **not** use Screaming Caps for constants or readonly variables:
 
 ```csharp
 // Correct
@@ -74,7 +74,7 @@ public const string SHIPPINGTYPE = "DropShip";
 #### 5. Use meaningful names for variables. The following example uses seattleCustomers for customers who are located in Seattle:
 
 ```csharp
-var seattleCustomers = from customer in customers
+IEnumerable<string> seattleCustomers = from customer in customers
   where customer.City == "Seattle" 
   select customer.Name;
 ```
@@ -109,7 +109,7 @@ UIControl uiControl;
 
 ***Why: consistent with the Microsoft's .NET Framework. Caps would grab visually too much attention.***
 
-#### 8. Do not use Underscores in identifiers. Exception: you can prefix private fields with an underscore:
+#### 8. Do **not** use Underscores in identifiers. Exception: you can prefix private fields with an underscore:
 
 ```csharp 
 // Correct
@@ -143,11 +143,11 @@ int index = int.Parse(input);
 
 ***Why: consistent with the Microsoft's .NET Framework and makes code more natural to read.*** 
 
-#### 10. Do use implicit type var for local variable declarations. Exception: primitive types (int, string, double, etc) use predefined names. 
+#### 10. Do **not** use implicit type var for local variable declarations. 
 
 ```csharp 
-var stream = File.Create(path);
-var customers = new Dictionary();
+FileStream stream = File.Create(path);
+Dictionary customers = new Dictionary();
 // Exceptions
 int index = 100;
 string timeSheet;
@@ -284,7 +284,7 @@ public enum Dockings
 
 ***Why: consistent with the Microsoft's .NET Framework and makes the code more natural to read. Plural flags because enum can hold multiple values (using bitwise 'OR').***
 
-#### 18. Do not explicitly specify a type of an enum or values of enums (except bit fields):
+#### 18. Do **not** explicitly specify a type of an enum or values of enums (except bit fields):
 
 ```csharp 
 // Don't
@@ -307,7 +307,7 @@ public enum Direction
 
 ***Why: can create confusion when relying on actual types and values.***
 
-#### 19. Do not use an "Enum" suffix in enum type names:
+#### 19. Do **not** use an "Enum" suffix in enum type names:
 
 ```csharp     
 // Don't
@@ -332,7 +332,7 @@ public enum Coin
 
 ***Why: consistent with the Microsoft's .NET Framework and consistent with prior rule of no type indicators in identifiers.***
 
-#### 20. Do not use "Flag" or "Flags" suffixes in enum type names:
+#### 20. Do **not** use "Flag" or "Flags" suffixes in enum type names:
 
 ```csharp 
 // Don't
@@ -378,7 +378,7 @@ public delegate void ReadBarcodeEventHandler(object sender, ReadBarcodeEventArgs
 
 ***Why: consistent with the Microsoft's .NET Framework and easy to read.***
 
-#### 23. Do not create names of parameters in methods (or constructors) which differ only by the register:
+#### 23. Do **not** create names of parameters in methods (or constructors) which differ only by the register:
 
 ```csharp 
 // Avoid
