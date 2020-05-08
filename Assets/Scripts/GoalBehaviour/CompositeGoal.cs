@@ -10,9 +10,6 @@ public class CompositeGoal : BaseGoal
 
     public string goalName;
 
-    // For holding the currentGoal
-    public BaseGoal currentGoal;
-
     // List for holding all activated goals waiting to be met
     public Queue<BaseGoal> subGoals { get; set; }
     public GoalStatus goalStatus { get; set; }
@@ -49,12 +46,9 @@ public class CompositeGoal : BaseGoal
     /// </summary>
     public void CheckAndRemoveCompletedSubgoals()
     {
-        if (currentGoal.goalStatus == GoalStatus.Completed || currentGoal.goalStatus == GoalStatus.Failed)
+        if (subGoals.Peek().goalStatus == GoalStatus.Completed || subGoals.Peek().goalStatus == GoalStatus.Failed)
         {
-            if(subGoals.Count >= 1)
-                currentGoal = subGoals.Dequeue();
-            else
-                currentGoal = null;
+            subGoals.Dequeue();
         }
     }
 }
