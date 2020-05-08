@@ -1,55 +1,59 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 ///     Test goal for trying out goal behaviour. Meeting the energy need of the agent.
 /// </summary>
-public class RestGoal : CompositeGoal
+public class RestGoal : IGoal
 {
+    public Character Owner { get; set; }
+    public GoalStatus Status { get; set; }
+    public string Name { get; set; }
+
     // Position of the resting place
     public Vector3 target;
-    private GameObject _owner;
 
-    public RestGoal(GameObject owner) : base(owner)
+    public RestGoal( Character owner)
     {
-        goalName = "Rest";
-        _owner = owner;
+        this.Owner = owner;
     }
-
-    public override void Activate()
+    
+    public void Activate()
     {
-        status = GoalStatus.Active;
+        Status = GoalStatus.Active;
         target = GameObject.FindGameObjectWithTag("Rest").transform.position;
-        character.agent.destination = target;
+        Owner.agent.destination = target;
     }
 
-    public override GoalStatus Process()
+    public GoalStatus Process()
     {
-        Debug.Log(goalName);
+        Debug.Log(Name);
 
-        if (status == GoalStatus.Inactive)
+        if (Status == GoalStatus.Inactive)
             Activate();
 
         // Terminating condition, if energylevel 100 the goal is met.
-        if (isRested(character.energyLevel))
+        if (isRested(Owner.energyLevel))
             Terminate();
 
         // Check, if the agent has arrived to the resting place
-        if (character.agent.remainingDistance < 0.01f)
-            character.energyLevel += 20 * Time.deltaTime;
+        if (Owner.agent.remainingDistance < 0.01f)
+            Owner.energyLevel += 20 * Time.deltaTime;
 
-        return status;
+        return Status;
     }
 
-    public override void Terminate()
+    public void Terminate()
     {
-        status = GoalStatus.Completed;
+        Status = GoalStatus.Completed;
     }
 
     /// <summary>
-    /// Check, if energylevel has been met or not.
+    ///     Check, if energylevel has been met or not.
     /// </summary>
     /// <param name="energyLevel"></param>
     /// <returns></returns>
-    private static bool isRested(float energyLevel) => energyLevel >= 100.0f;
+    private static bool isRested(float energyLevel)
+    {
+        return energyLevel >= 100.0f;
+    }
 }

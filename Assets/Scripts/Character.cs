@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Character : MonoBehaviour
 {
     public NavMeshAgent agent;
-    public ThinkGoal compositeGoal;
+    public ThinkGoal thinkGoal;
 
     public float energyLevel = 100;
     public Vector3 target;
@@ -16,7 +16,7 @@ public class Character : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        compositeGoal = new ThinkGoal(gameObject);
+        thinkGoal = new ThinkGoal(this);
     }
 
     // Update is called once per frame
@@ -25,6 +25,6 @@ public class Character : MonoBehaviour
         // Check, that energylevel does not get lower during resting
         energyLevel -= 8 * Time.deltaTime;
 
-        compositeGoal.Process();
+        thinkGoal.Process();
     }
 }

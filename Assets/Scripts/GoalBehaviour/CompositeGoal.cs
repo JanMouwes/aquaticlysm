@@ -4,23 +4,22 @@ using UnityEngine;
 /// <summary>
 ///     Base class for composite goals constructed of multiple goals
 /// </summary>
-public abstract class CompositeGoal : IBaseGoal
+public abstract class CompositeGoal : IGoal
 {
-    public Character character;
-
-    public string goalName;
+    public Character Owner { get; set; }
+    public GoalStatus Status { get; set; }
+    public string     Name   { get; set; }
 
     // List for holding all activated goals waiting to be met
-    public Queue<IBaseGoal> subGoals { get; set; }
-    public GoalStatus status { get; set; }
-
-    public CompositeGoal(GameObject owner)
+    public Queue<IGoal> subGoals { get; set; }
+   
+    public CompositeGoal(Character owner)
     {
-        subGoals = new Queue<IBaseGoal>();
-        character = owner.gameObject.GetComponent<Character>();
+        subGoals = new Queue<IGoal>();
+        Owner = owner;
     }
 
-    public void AddSubGoal(IBaseGoal goal)
+    public void AddSubGoal(IGoal goal)
     {
         subGoals.Enqueue(goal);
     }
@@ -36,7 +35,7 @@ public abstract class CompositeGoal : IBaseGoal
     /// </summary>
     public void CheckAndRemoveCompletedSubgoals()
     {
-        if (subGoals.Peek().status == GoalStatus.Completed || subGoals.Peek().status == GoalStatus.Failed)
+        while (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)
         {
             subGoals.Dequeue();
         }

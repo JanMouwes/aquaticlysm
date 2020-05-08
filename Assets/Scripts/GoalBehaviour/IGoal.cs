@@ -1,11 +1,12 @@
 ﻿/// <summary>
 ///     Base class for Goal Driven Behaviour
 /// </summary>
-public interface IBaseGoal
+public interface IGoal
 {
     // Status to keep a record of the status of the goal
-    GoalStatus status { get; set; }
-
+    Character Owner { get; }
+    GoalStatus Status { get; }
+    string Name { get; }
     void Activate();
 
     GoalStatus Process();
