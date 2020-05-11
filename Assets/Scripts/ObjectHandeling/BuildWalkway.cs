@@ -34,7 +34,7 @@ public class BuildWalkway : MonoBehaviour
             {
                 RaycastHit hit;
 
-                // Use a raycast (range 100) to register the position of the mouse
+                // Get mouse position
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
                 {
 
