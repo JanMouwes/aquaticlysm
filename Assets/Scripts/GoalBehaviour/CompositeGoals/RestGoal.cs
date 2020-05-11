@@ -15,6 +15,7 @@ public class RestGoal : IGoal
     public RestGoal( Character owner)
     {
         this.Owner = owner;
+        this.Name = "Rest";
     }
     
     public void Activate()

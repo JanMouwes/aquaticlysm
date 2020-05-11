@@ -15,7 +15,7 @@ public class MoveToClickPoint : MonoBehaviour
 
     void Update()
     {
-        // Return true when the right mouse button is pressed
+        // Return true when the right mouse button is pressed TODO: if selected, then move to position
         if (Input.GetButtonDown("RightMouseButton"))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
