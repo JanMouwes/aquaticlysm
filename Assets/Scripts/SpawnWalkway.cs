@@ -7,6 +7,7 @@ public class SpawnWalkway : MonoBehaviour
     private GameObject _entity;
     private NavMeshSurface _navMeshSurface;
     public GameObject walkwayGameObject;
+    public Material newMaterial;
 
     // Start is called before the first frame update
     private void Awake()
@@ -29,6 +30,8 @@ public class SpawnWalkway : MonoBehaviour
             this._entity = entity;
 
             this._entity.transform.parent = this.transform;
+            MeshRenderer gameObjectRenderer = entity.GetComponent<MeshRenderer>();
+            gameObjectRenderer.material = newMaterial ;
             this._navMeshSurface.BuildNavMesh();
         }
 
