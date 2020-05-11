@@ -158,6 +158,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1338494073858213276, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -763,7 +768,7 @@ GameObject:
   - component: {fileID: 823195567}
   - component: {fileID: 823195569}
   - component: {fileID: 823195568}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Docks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,7 +836,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkwayGameObject: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
     type: 3}
-  newMaterial: {fileID: 2100000, guid: 94dddd6cd2728f542a8e46ab30b47e68, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 94dddd6cd2728f542a8e46ab30b47e68, type: 2}
+  normalMaterial: {fileID: 2100000, guid: 1aebc326dc7c5eb4590266aa06eb9ba4, type: 2}
 --- !u!1 &1024146927
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water
       objectReference: {fileID: 0}
+    - target: {fileID: 7166368612852141477, guid: c1d35d4c5a9d6ca418625521efaccc7f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1d35d4c5a9d6ca418625521efaccc7f, type: 3}
 --- !u!1 &1238437679
@@ -1226,6 +1237,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4392353862200853331, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1299,6 +1315,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4392353862200853331, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
@@ -1469,7 +1490,7 @@ GameObject:
   - component: {fileID: 1703614757}
   - component: {fileID: 1703614756}
   - component: {fileID: 1703614755}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Seabed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1639,7 +1660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1761289267}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,6 +1705,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Walkway
+      objectReference: {fileID: 0}
+    - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4392353862200853331, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}

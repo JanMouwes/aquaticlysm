@@ -32,7 +32,6 @@ public class ThinkGoal : CompositeGoal
 
     public override GoalStatus Process()
     {
-        Debug.Log(Name);
 
         // Activate, if goalstatus not yet active
         if (Status == GoalStatus.Inactive)

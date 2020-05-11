@@ -27,7 +27,6 @@ public class RestGoal : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
 
         if (Status == GoalStatus.Inactive)
             Activate();
