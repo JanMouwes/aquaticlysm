@@ -87,12 +87,15 @@ public class SelectionController : MonoBehaviour
 
             // Create a bounding box with the positions in the worldspace
             Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
-            
+
             // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat
             foreach (Selectable selectable in selectables)
-                if ((selectable.tag == "Character" || selectable.tag == "Boat")  
+                if ((selectable.tag == "Character" || selectable.tag == "Boat")
                     && boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
+                {
                     selectable.SetSelected(true);
+                    selectedEntities.Add(selectable);
+                }
         }
     }
 
