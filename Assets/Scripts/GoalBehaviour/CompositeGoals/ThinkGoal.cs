@@ -44,6 +44,7 @@ public class ThinkGoal : CompositeGoal
         else
         {
             CheckAndRemoveCompletedSubgoals();
+
             // Process new subgoal
             subGoals.Peek().Process();
         }

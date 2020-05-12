@@ -131,18 +131,14 @@ public class BuildWalkway : MonoBehaviour
     /// <returns></returns>
     private bool CheckForCollision()
     {
-        // Collect all hits from the raycast
-        RaycastHit[] hits;
-        hits = Physics.RaycastAll(Camera.main.ScreenPointToRay(Input.mousePosition));
+        GameObject[] allWalkways = GameObject.FindGameObjectsWithTag("Walkway");
 
-        for (int i = 0; i < hits.Length; i++)
+        foreach (GameObject walkway in allWalkways)
         {
-            RaycastHit hit = hits[i];
-
-            // If gameObject is in layer "Building", cannot build here.
-            if (hits[i].collider.gameObject.layer == _layer)
+            if (walkway != _entity)
             {
-                return false;
+                if (walkway.GetComponent<BoxCollider>().bounds.Intersects(_entity.GetComponent<BoxCollider>().bounds))
+                    return false;
             }
         }
         return true;
