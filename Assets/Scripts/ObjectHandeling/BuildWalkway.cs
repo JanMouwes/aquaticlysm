@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -54,10 +55,10 @@ public class BuildWalkway : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
                 GameObject entity = PrefabInstanceManager.Instance.Spawn(
-                    this.walkwayPrefab,
-                    new Vector3(hit.point.x, 0, hit.point.z),
-                    Quaternion.Euler(0, 90, 0)
-                );
+                                                              this.walkwayPrefab,
+                                                              new Vector3(hit.point.x, 0, hit.point.z),
+                                                              Quaternion.Euler(0, 90, 0)
+                                                          );
 
                 this._currentEntity = entity;
                 SwitchToMaterial(this.selectedMaterial);
@@ -65,6 +66,34 @@ public class BuildWalkway : MonoBehaviour
         }
 
         this._currentEntity.transform.parent = this.transform;
+    }
+
+    private bool IsNearSnappingPoint(Vector3 point, float nearDistance, out Vector3 snapPoint)
+    {
+        IEnumerable<GameObject> walkways = GameObject.FindGameObjectsWithTag("Walkway");
+
+        Vector3? possibleSnapPoint = GetNearestSnapPoint(point, walkways);
+
+        if (possibleSnapPoint == null)
+        {
+            snapPoint = Vector3.zero;
+
+            return false;
+        }
+
+        snapPoint = (Vector3) possibleSnapPoint;
+
+        return Vector3.Distance(snapPoint, point) < nearDistance;
+    }
+
+    private Vector3? GetNearestSnapPoint(Vector3 toPoint, IEnumerable<GameObject> walkways)
+    {
+        IEnumerable<Vector3> snapPoints = walkways.Where(walkway => walkway != this._currentEntity)
+                                                  .Select(walkway => walkway.GetComponent<BoxCollider>().ClosestPoint(toPoint))
+                                                  .OrderBy(snapPoint => Vector3.Distance(snapPoint, toPoint))
+                                                  .ToList();
+
+        return snapPoints.Any() ? (Vector3?) snapPoints.FirstOrDefault() : null;
     }
 
     /// <summary>
@@ -117,7 +146,14 @@ public class BuildWalkway : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) { this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z); }
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            {
+                Vector3 target = hit.point;
+
+                if (IsNearSnappingPoint(target, 3, out Vector3 newTarget)) { target = newTarget; }
+                
+                this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
+            }
         }
     }
 
