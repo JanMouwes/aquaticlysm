@@ -151,7 +151,7 @@ PrefabInstance:
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Name
-      value: Walkway (3)
+      value: Walkway
       objectReference: {fileID: 0}
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
@@ -1057,7 +1057,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1064196539}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.71, z: 5.86}
+  m_LocalPosition: {x: 12.11, y: 1.71, z: 5.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 415194277}
@@ -1230,7 +1230,7 @@ PrefabInstance:
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Name
-      value: Walkway (1)
+      value: Walkway
       objectReference: {fileID: 0}
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
@@ -1309,7 +1309,7 @@ PrefabInstance:
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Name
-      value: Walkway (2)
+      value: Walkway
       objectReference: {fileID: 0}
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
