@@ -16,7 +16,7 @@ public class BuildWalkway : MonoBehaviour
     public GameObject walkwayPrefab;
 
     /// <summary>
-    /// Highlights when hovering the entity
+    /// Material to highlight current entity
     /// </summary>
     public Material selectedMaterial;
 
