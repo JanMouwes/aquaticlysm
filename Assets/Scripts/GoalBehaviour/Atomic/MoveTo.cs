@@ -11,7 +11,7 @@ public class MoveTo : IGoal
     // Target position
     private Vector3 _target;
 
-    MoveTo(Character owner, Vector3 position)
+    public MoveTo(Character owner, Vector3 position)
     {
         Owner = owner;
         Status = GoalStatus.Inactive;

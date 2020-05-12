@@ -7,7 +7,7 @@ public class SelectionController : MonoBehaviour
     public static List<Selectable> selectables = new List<Selectable>();
 
     // All selected entities
-    public List<Selectable> selectedEntities;
+    public static List<Selectable> selectedEntities = new List<Selectable>();
 
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
@@ -26,7 +26,6 @@ public class SelectionController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        selectedEntities = new List<Selectable>();
         startWorldSpace = new Vector2();
         endWorldSpace = new Vector2();
 

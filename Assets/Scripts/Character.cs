@@ -13,16 +13,16 @@ public class Character : MonoBehaviour
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public int Age { get; private set; }
+    public Think Brain { get; private set; }
 
     public float energyLevel;
     public NavMeshAgent agent;
-    private Think _brain;
     
     // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _brain = new Think(this);
+        Brain = new Think(this);
     }
 
     // Update is called once per frame
@@ -31,6 +31,6 @@ public class Character : MonoBehaviour
         // Check, that energylevel does not get lower during resting
         energyLevel -= 8 * Time.deltaTime;
 
-        _brain.Process();
+        Brain.Process();
     }
 }
