@@ -23,7 +23,7 @@ public class ThinkGoal : CompositeGoal
     public void Evaluate()
     {
         // Check if there is need for resting and also that the agent is not currently taking care of it
-        if (Owner.energyLevel < 10)
+        if (needsRest(Owner.energyLevel))
         {
             RestGoal restGoal = new RestGoal(Owner);
             AddSubGoal(restGoal);
@@ -43,7 +43,7 @@ public class ThinkGoal : CompositeGoal
         }
         else
         {
-            CheckAndRemoveCompletedSubgoals();
+            RemoveCompletedSubgoals();
 
             // Process new subgoal
             subGoals.Peek().Process();
@@ -55,4 +55,6 @@ public class ThinkGoal : CompositeGoal
     public override void Terminate()
     {
     }
+
+    private static bool needsRest(float energyLevel) => energyLevel < 10;
 }
