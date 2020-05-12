@@ -4,9 +4,9 @@
 ///     Highest level of goal managing, makes decisions between strategies to
 ///     fulfill agents pressing needs.
 /// </summary>
-public class ThinkGoal : CompositeGoal
+public class Think : CompositeGoal
 {
-    public ThinkGoal(Character owner) : base(owner)
+    public Think(Character owner) : base(owner)
     {
         Name = "Think";
         // To be continued...
@@ -25,7 +25,7 @@ public class ThinkGoal : CompositeGoal
         // Check if there is need for resting and also that the agent is not currently taking care of it
         if (Owner.energyLevel < 10)
         {
-            RestGoal restGoal = new RestGoal(Owner);
+            Rest restGoal = new Rest(Owner);
             AddSubGoal(restGoal);
         }
     }

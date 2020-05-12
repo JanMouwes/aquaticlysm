@@ -16,13 +16,13 @@ public class Character : MonoBehaviour
 
     public float energyLevel;
     public NavMeshAgent agent;
-    private ThinkGoal _brain;
+    private Think _brain;
     
     // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _brain = new ThinkGoal(this);
+        _brain = new Think(this);
     }
 
     // Update is called once per frame

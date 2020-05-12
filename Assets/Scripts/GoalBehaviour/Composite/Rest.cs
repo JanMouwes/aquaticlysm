@@ -3,7 +3,7 @@
 /// <summary>
 ///     Test goal for trying out goal behaviour. Meeting the energy need of the agent.
 /// </summary>
-public class RestGoal : IGoal
+public class Rest : IGoal
 {
     public Character Owner { get; set; }
     public GoalStatus Status { get; set; }
@@ -12,7 +12,7 @@ public class RestGoal : IGoal
     // Position of the resting place
     public Vector3 target;
 
-    public RestGoal( Character owner)
+    public Rest( Character owner)
     {
         this.Owner = owner;
     }
