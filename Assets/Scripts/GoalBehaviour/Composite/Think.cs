@@ -9,7 +9,6 @@ public class Think : CompositeGoal
     public Think(Character owner) : base(owner)
     {
         Name = "Think";
-        // To be continued...
     }
 
     public override void Activate()

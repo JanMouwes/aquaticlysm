@@ -5,9 +5,7 @@ using UnityEngine;
 public class Sleep : IGoal
 {
     public Character Owner { get; private set; }
-
     public GoalStatus Status { get; private set; }
-
     public string Name { get; private set; }
 
     public Sleep(Character owner) 

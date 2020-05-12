@@ -5,10 +5,6 @@
 /// </summary>
 public class Rest : CompositeGoal
 {
-    public Character Owner { get; private set; }
-    public GoalStatus Status { get; private set; }
-    public string Name { get; private set; }
-
     private Vector3 _target;
 
     public Rest(Character owner, Vector3 target) : base(owner)
