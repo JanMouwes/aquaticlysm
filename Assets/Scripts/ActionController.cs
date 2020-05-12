@@ -33,7 +33,12 @@ public class ActionController : MonoBehaviour
                                 if (current.name == "Character")
                                 {
                                     Character character = current.GetComponent<Character>();
-                                    character.Brain.PrioritizeSubGoal(new MoveTo(character, hit.point));
+                                    
+                                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                                        character.Brain.AddSubGoal(new MoveTo(character, hit.point));
+                                    else
+                                        character.Brain.PrioritizeSubGoal(new MoveTo(character, hit.point));
+
                                 }
                             }
                             break;
