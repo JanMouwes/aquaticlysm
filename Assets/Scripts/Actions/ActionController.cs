@@ -30,12 +30,12 @@ public class ActionController : MonoBehaviour
                 {
                     foreach (Selectable current in SelectionController.selectedEntities)
                     {
-                        switch (current.name)
+                        switch (current.tag)
                         {
                             case "Character":
                                 GlobalActions.CharacterDoAction(hit.point, 
                                                                 current.GetComponent<Character>(), 
-                                                                hit.collider.gameObject.name, shift);
+                                                                hit.collider.gameObject.tag, shift);
                                 break;
                             case "Boat":
                                 
@@ -44,31 +44,6 @@ public class ActionController : MonoBehaviour
                                 break;
                         }
                     }
-                    // switch (hit.collider.gameObject.name)
-                    // {
-                    //     case "Walkway":
-                    //         foreach (Selectable current in SelectionController.selectedEntities)
-                    //         {
-                    //             if (current.name == "Character")
-                    //             {
-                    //                 Character character = current.GetComponent<Character>();
-                    //                 
-                    //                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                    //                     character.Brain.AddSubGoal(new MoveTo(character, hit.point));
-                    //                 else
-                    //                     character.Brain.PrioritizeSubGoal(new MoveTo(character, hit.point));
-                    //
-                    //             }
-                    //         }
-                    //         break;
-                    //     case "Character":
-                    //         
-                    //         break;
-                    //     default:
-                    //         break;
-                    // }
-
-
                 }
             }
         }
