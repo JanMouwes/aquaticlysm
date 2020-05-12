@@ -43,8 +43,6 @@ public class Think : CompositeGoal
         {
             // Process new subgoal
             subGoals.Peek().Process();
-            Debug.Log(subGoals.Count);
-            Debug.Log(subGoals.Peek().Status);
             CheckAndRemoveCompletedSubgoals();
         }
 

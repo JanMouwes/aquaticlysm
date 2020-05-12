@@ -26,10 +26,12 @@ public class MoveTo : IGoal
 
     public GoalStatus Process()
     {
+        Debug.Log(Name);
+
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (Owner.agent.remainingDistance < 0.01f)
+        if (Vector3.Distance(Owner.transform.position, _target) < 2f)
             Terminate();
 
         return Status;

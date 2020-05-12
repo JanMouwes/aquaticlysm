@@ -22,6 +22,26 @@ public abstract class CompositeGoal : IGoal
     public void AddSubGoal(IGoal goal)
     {
         subGoals.Enqueue(goal);
+    }    
+    
+    public void PrioritizeSubGoal(IGoal goal)
+    {
+        ClearAllGoals();
+        subGoals.Enqueue(goal);
+    }
+
+    public void ClearAllGoals()
+    {
+        if (subGoals.Count > 0)
+        {
+            foreach (IGoal subGoal in subGoals)
+            {
+                if (subGoal.GetType() == typeof(CompositeGoal))
+                    ((CompositeGoal)subGoal).ClearAllGoals();
+            }
+
+            subGoals.Clear();
+        }
     }
 
     public abstract void Activate();
@@ -35,7 +55,7 @@ public abstract class CompositeGoal : IGoal
     /// </summary>
     public void CheckAndRemoveCompletedSubgoals()
     {
-        while (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)
+        if (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)
         {
             subGoals.Dequeue();
         }
