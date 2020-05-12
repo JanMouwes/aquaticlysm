@@ -32,20 +32,20 @@ public class Think : CompositeGoal
 
     public override GoalStatus Process()
     {
-
-        //Debug.Log(Name);
-
         // Activate, if goalstatus not yet active
         if (Status == GoalStatus.Inactive)
             Activate();
 
         if (subGoals.Count == 0)
+        {
             Evaluate();
+        }
         else
         {
             // Process new subgoal
             subGoals.Peek().Process();
-
+            Debug.Log(subGoals.Count);
+            Debug.Log(subGoals.Peek().Status);
             CheckAndRemoveCompletedSubgoals();
         }
 

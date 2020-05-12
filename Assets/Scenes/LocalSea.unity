@@ -1107,7 +1107,7 @@ PrefabInstance:
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Name
-      value: Walkway (1)
+      value: Walkway
       objectReference: {fileID: 0}
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
@@ -1714,6 +1714,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566643657360843193, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
+        type: 3}
+      propertyPath: energyLevel
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 566643657360843199, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
         type: 3}

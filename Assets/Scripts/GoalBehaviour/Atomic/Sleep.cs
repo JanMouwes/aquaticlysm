@@ -13,7 +13,6 @@ public class Sleep : IGoal
     public Sleep(Character owner) 
     {
         Owner = owner;
-        Status = GoalStatus.Inactive;
         Name = "Sleep";
     }
 
@@ -24,12 +23,10 @@ public class Sleep : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
-
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (isRested(Owner.energyLevel))
+        if (!isRested(Owner.energyLevel))
             Owner.energyLevel += 20 * Time.deltaTime;
         else
             Terminate();

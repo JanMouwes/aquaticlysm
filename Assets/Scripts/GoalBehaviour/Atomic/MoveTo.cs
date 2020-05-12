@@ -14,7 +14,6 @@ public class MoveTo : IGoal
     public MoveTo(Character owner, Vector3 position)
     {
         Owner = owner;
-        Status = GoalStatus.Inactive;
         Name = "MoveTo";
         _target = position;
     }
@@ -27,8 +26,6 @@ public class MoveTo : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
-
         if (Status == GoalStatus.Inactive)
             Activate();
 
