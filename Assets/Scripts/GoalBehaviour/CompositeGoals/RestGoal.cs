@@ -52,8 +52,5 @@ public class RestGoal : IGoal
     /// </summary>
     /// <param name="energyLevel"></param>
     /// <returns></returns>
-    private static bool isRested(float energyLevel)
-    {
-        return energyLevel >= 100.0f;
-    }
+    private static bool isRested(float energyLevel) => energyLevel >= 100.0f;
 }
