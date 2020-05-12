@@ -32,8 +32,11 @@ public class ActionController : MonoBehaviour
                         case "Walkway":
                             foreach (Selectable current in SelectionController.selectedEntities)
                             {
-                                Character character = current.GetComponent<Character>();
-                                character.Brain.AddSubGoal(new MoveTo(character, hit.point));
+                                if (current.name == "Character")
+                                {
+                                    Character character = current.GetComponent<Character>();
+                                    character.Brain.AddSubGoal(new MoveTo(character, hit.point));
+                                }
                             }
                             
                             Debug.Log(hit.point);
