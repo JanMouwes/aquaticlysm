@@ -68,7 +68,7 @@ public class BuildWalkway : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
     private void UpdateCurrentEntity()
     {
