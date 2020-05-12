@@ -26,7 +26,7 @@ public class Rest : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
+        //Debug.Log(Name);
 
         if (Status == GoalStatus.Inactive)
             Activate();

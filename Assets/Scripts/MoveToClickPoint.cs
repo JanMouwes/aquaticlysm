@@ -23,8 +23,8 @@ public class MoveToClickPoint : MonoBehaviour
                 RaycastHit hit;
                 
                 // Use a raycast (range 100) to register the position of the mouse click and set the agents new destination
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-                    agent.destination = hit.point;
+                //if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+                //    agent.destination = hit.point;
             }
             
         }

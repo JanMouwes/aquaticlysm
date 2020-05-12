@@ -4,29 +4,40 @@ using UnityEngine;
 
 public class MoveTo : IGoal
 {
-    public Character Owner => throw new System.NotImplementedException();
+    public Character Owner { get; private set; }
+    public GoalStatus Status { get; private set; }
+    public string Name { get; private set; }
 
-    public GoalStatus Status => throw new System.NotImplementedException();
+    // Target position
+    private Vector3 _target;
 
-    public string Name => throw new System.NotImplementedException();
-
-    MoveTo(Vector3 position)
+    MoveTo(Character owner, Vector3 position)
     {
-    
+        Owner = owner;
+        Status = GoalStatus.Inactive;
+        Name = "MoveTo";
+        _target = position;
     }
 
     public void Activate()
     {
-        throw new System.NotImplementedException();
+        Owner.agent.destination = _target;
+        Status = GoalStatus.Active;
     }
 
     public GoalStatus Process()
     {
-        throw new System.NotImplementedException();
+        if (Status == GoalStatus.Inactive)
+            Activate();
+
+        if (Owner.agent.remainingDistance < 0.01f)
+            Terminate();
+
+        return Status;
     }
 
     public void Terminate()
     {
-        throw new System.NotImplementedException();
+        Status = GoalStatus.Completed;
     }
 }
