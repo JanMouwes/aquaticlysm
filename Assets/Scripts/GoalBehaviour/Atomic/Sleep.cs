@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTo : IGoal
+public class Sleep : IGoal
 {
     public Character Owner { get; private set; }
+
     public GoalStatus Status { get; private set; }
+
     public string Name { get; private set; }
 
-    // Target position
-    private Vector3 _target;
-
-    public MoveTo(Character owner, Vector3 position)
+    public Sleep(Character owner) 
     {
         Owner = owner;
         Status = GoalStatus.Inactive;
-        Name = "MoveTo";
-        _target = position;
+        Name = "Sleep";
     }
 
     public void Activate()
     {
-        Owner.agent.destination = _target;
         Status = GoalStatus.Active;
     }
 
@@ -32,7 +29,9 @@ public class MoveTo : IGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (Owner.agent.remainingDistance < 0.01f)
+        if (isRested(Owner.energyLevel))
+            Owner.energyLevel += 20 * Time.deltaTime;
+        else
             Terminate();
 
         return Status;
@@ -41,5 +40,15 @@ public class MoveTo : IGoal
     public void Terminate()
     {
         Status = GoalStatus.Completed;
+    }
+
+    /// <summary>
+    ///     Check, if energylevel has been met or not.
+    /// </summary>
+    /// <param name="energyLevel"></param>
+    /// <returns></returns>
+    private static bool isRested(float energyLevel)
+    {
+        return energyLevel >= 100.0f;
     }
 }

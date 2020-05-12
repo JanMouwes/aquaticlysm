@@ -3,46 +3,51 @@
 /// <summary>
 ///     Test goal for trying out goal behaviour. Meeting the energy need of the agent.
 /// </summary>
-public class Rest : IGoal
+public class Rest : CompositeGoal
 {
     public Character Owner { get; set; }
     public GoalStatus Status { get; set; }
     public string Name { get; set; }
 
-    // Position of the resting place
-    public Vector3 target;
+    private Vector3 _target;
 
-    public Rest( Character owner)
+    public Rest(Character owner, Vector3 target) : base(owner)
     {
-        this.Owner = owner;
+        Owner = owner;
+        Status = GoalStatus.Inactive;
+        Name = "Rest";
     }
     
-    public void Activate()
+    public override void Activate()
     {
         Status = GoalStatus.Active;
-        target = GameObject.FindGameObjectWithTag("Rest").transform.position;
-        Owner.agent.destination = target;
+        _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
+        AddSubGoal(new MoveTo(Owner, _target));
+        AddSubGoal(new Sleep(Owner));
     }
 
-    public GoalStatus Process()
+    public override GoalStatus Process()
     {
-        //Debug.Log(Name);
+        Debug.Log(Name);
+        Debug.Log(subGoals.Count);
 
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        // Terminating condition, if energylevel 100 the goal is met.
-        if (isRested(Owner.energyLevel))
+        if (subGoals.Count == 0)
             Terminate();
+        else
+        {
+            // Process new subgoal
+            subGoals.Peek().Process();
 
-        // Check, if the agent has arrived to the resting place
-        if (Owner.agent.remainingDistance < 0.01f)
-            Owner.energyLevel += 20 * Time.deltaTime;
+            CheckAndRemoveCompletedSubgoals();
+        }
 
         return Status;
     }
 
-    public void Terminate()
+    public override void Terminate()
     {
         Status = GoalStatus.Completed;
     }

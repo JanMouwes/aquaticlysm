@@ -25,13 +25,14 @@ public class Think : CompositeGoal
         // Check if there is need for resting and also that the agent is not currently taking care of it
         if (Owner.energyLevel < 10)
         {
-            Rest restGoal = new Rest(Owner);
-            AddSubGoal(restGoal);
+            Vector3 restLocation = GameObject.FindGameObjectWithTag("Rest").transform.position;
+            AddSubGoal(new Rest(Owner, restLocation));
         }
     }
 
     public override GoalStatus Process()
     {
+
         //Debug.Log(Name);
 
         // Activate, if goalstatus not yet active
@@ -39,14 +40,13 @@ public class Think : CompositeGoal
             Activate();
 
         if (subGoals.Count == 0)
-        {
             Evaluate();
-        }
         else
         {
-            CheckAndRemoveCompletedSubgoals();
             // Process new subgoal
             subGoals.Peek().Process();
+
+            CheckAndRemoveCompletedSubgoals();
         }
 
         return Status;
