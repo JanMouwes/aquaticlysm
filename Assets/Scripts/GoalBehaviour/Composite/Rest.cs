@@ -33,7 +33,7 @@ public class Rest : CompositeGoal
         {
             // Process new subgoal
             subGoals.Peek().Process();
-            CheckAndRemoveCompletedSubgoals();
+            RemoveCompletedSubgoals();
         }
 
         return Status;
