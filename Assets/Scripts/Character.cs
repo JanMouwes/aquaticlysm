@@ -33,4 +33,5 @@ public class Character : MonoBehaviour
 
         Brain.Process();
     }
+
 }

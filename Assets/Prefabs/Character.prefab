@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95cd93309ad7634c9a533e1d42bfc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyLevel: 0
+  energyLevel: 10
   agent: {fileID: 0}
 --- !u!114 &566643657360843192
 MonoBehaviour:
