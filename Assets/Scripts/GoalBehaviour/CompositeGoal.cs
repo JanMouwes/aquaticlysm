@@ -36,8 +36,8 @@ public abstract class CompositeGoal : IGoal
         {
             foreach (IGoal subGoal in subGoals)
             {
-                if (subGoal.GetType() == typeof(CompositeGoal))
-                    ((CompositeGoal)subGoal).ClearAllGoals();
+                if (subGoal is CompositeGoal compositeGoal)
+                    compositeGoal.ClearAllGoals();
             }
 
             subGoals.Clear();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalActions
+public static class GlobalActions
 {
     public static void CharacterDoAction(Vector3 clickPosition, 
                                Character character,
@@ -16,7 +16,6 @@ public class GlobalActions
                     character.Brain.AddSubGoal(new MoveTo(character, clickPosition));
                 else
                     character.Brain.PrioritizeSubGoal(new MoveTo(character, clickPosition));
-                
                 break;
             case "RestPlace":
                 if (shiftClick)
