@@ -834,7 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ee8089c2bd098428ebaf3f15cb1e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkwayGameObject: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+  walkwayPrefab: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
     type: 3}
   selectedMaterial: {fileID: 2100000, guid: 94dddd6cd2728f542a8e46ab30b47e68, type: 2}
   normalMaterial: {fileID: 2100000, guid: 1aebc326dc7c5eb4590266aa06eb9ba4, type: 2}
