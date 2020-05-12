@@ -3,7 +3,11 @@ guid: a4ee8089c2bd098428ebaf3f15cb1e74
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - walkwayPrefab: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
+      type: 3}
+  - selectedMaterial: {instanceID: 0}
+  - normalMaterial: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

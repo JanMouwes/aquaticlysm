@@ -15,6 +15,7 @@ public class RestGoal : IGoal
     public RestGoal( Character owner)
     {
         this.Owner = owner;
+        this.Name = "Rest";
     }
     
     public void Activate()
@@ -26,7 +27,6 @@ public class RestGoal : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
 
         if (Status == GoalStatus.Inactive)
             Activate();
@@ -52,8 +52,5 @@ public class RestGoal : IGoal
     /// </summary>
     /// <param name="energyLevel"></param>
     /// <returns></returns>
-    private static bool isRested(float energyLevel)
-    {
-        return energyLevel >= 100.0f;
-    }
+    private static bool isRested(float energyLevel) => energyLevel >= 100.0f;
 }
