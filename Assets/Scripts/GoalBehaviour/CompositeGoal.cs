@@ -11,7 +11,7 @@ public abstract class CompositeGoal : IGoal
     public string Name { get; set; }
 
     // List for holding all activated goals waiting to be met
-    public Queue<IGoal> subGoals { get; set; }
+    protected Queue<IGoal> subGoals { get; set; }
    
     public CompositeGoal(Character owner)
     {
@@ -53,7 +53,7 @@ public abstract class CompositeGoal : IGoal
     /// <summary>
     /// Make sure the processed goal is not already completed or failed
     /// </summary>
-    public void CheckAndRemoveCompletedSubgoals()
+    public void RemoveCompletedSubgoals()
     {
         if (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)
         {
