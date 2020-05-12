@@ -60,7 +60,7 @@ public class BuildWalkway : MonoBehaviour
                 );
 
                 this._currentEntity = entity;
-                SwitchMaterial(true);
+                SwitchToMaterial(this.selectedMaterial);
             }
         }
 
@@ -100,7 +100,7 @@ public class BuildWalkway : MonoBehaviour
         {
             if (DoesEntityCollide())
             {
-                SwitchMaterial(false);
+                SwitchToMaterial(this.normalMaterial);
                 this._currentEntity = null;
                 this._navMeshSurface.BuildNavMesh();
             }
@@ -124,13 +124,13 @@ public class BuildWalkway : MonoBehaviour
     /// <summary>
     /// Emphasize with an orange highlighter, if currently raycasted gameObject is selected or not.
     /// </summary>
-    /// <param name="selected"></param>
-    private void SwitchMaterial(bool selected)
+    /// <param name="material">Material to switch to</param>
+    private void SwitchToMaterial(Material material)
     {
         MeshRenderer gameObjectRenderer = this._currentEntity.GetComponent<MeshRenderer>();
 
         // If gameObject is created just now, use highlighted material.
-        gameObjectRenderer.material = selected ? this.selectedMaterial : this.normalMaterial;
+        gameObjectRenderer.material = material;
     }
 
     /// <summary>
