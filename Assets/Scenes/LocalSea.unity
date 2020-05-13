@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_EndPoint.z
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 21848066, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 770009193089003840, guid: f9f1bc0906a1eaa439f5ff7a0a07d55a,
         type: 3}
       propertyPath: m_Name
@@ -821,7 +825,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 4b4f2034e7eb1410d9abfdd3e799e297, type: 2}
 --- !u!114 &823195569
 MonoBehaviour:
   m_ObjectHideFlags: 0
