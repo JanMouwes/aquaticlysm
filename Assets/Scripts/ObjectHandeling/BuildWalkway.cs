@@ -61,7 +61,8 @@ public class BuildWalkway : MonoBehaviour
                 );
 
                 this._currentEntity = entity;
-                SwitchToMaterial(this.selectedMaterial);
+                Debug.Log(selectedMaterial.ToString() + " " + normalMaterial.ToString());
+                this._currentEntity.GetComponent<Selectable>().SetSelected(true, this._currentEntity, selectedMaterial, normalMaterial);
             }
         }
 
@@ -174,14 +175,13 @@ public class BuildWalkway : MonoBehaviour
     }
 
     /// <summary>
-    /// Emphasize with an orange highlighter, if currently raycasted gameObject is selected or not.
+    /// Emphasize with an orange highlighter, if currently raycasted gameObject is selected.
     /// </summary>
     /// <param name="material">Material to switch to</param>
     private void SwitchToMaterial(Material material)
     {
         MeshRenderer gameObjectRenderer = this._currentEntity.GetComponent<MeshRenderer>();
 
-        // If gameObject is created just now, use highlighted material.
         gameObjectRenderer.material = material;
     }
 
