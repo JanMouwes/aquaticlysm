@@ -21,7 +21,7 @@ public class Think : CompositeGoal
     /// </summary>
     public void Evaluate()
     {
-        // Check if there is need for resting and also that the agent is not currently taking care of it
+        // Check if there is need for resting and also that the agent is not currently taking care of it.
         if (needsRest(Owner.energyLevel))
         {
             Vector3 restLocation = GameObject.FindGameObjectWithTag("Rest").transform.position;
