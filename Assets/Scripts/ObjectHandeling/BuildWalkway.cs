@@ -14,16 +14,6 @@ public class BuildWalkway : MonoBehaviour
 
     public GameObject walkwayPrefab;
 
-    /// <summary>
-    /// Material to highlight current entity
-    /// </summary>
-    public Material selectedMaterial;
-
-    /// <summary>
-    /// Actual material when entity is set down
-    /// </summary>
-    public Material normalMaterial;
-
     // Start is called before the first frame update
     private void Awake()
     {
@@ -62,7 +52,7 @@ public class BuildWalkway : MonoBehaviour
                 this._currentEntity.GetComponent<Selectable>().SetSelected(true);
             }
         }
-
+        // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
     }
 
@@ -76,7 +66,7 @@ public class BuildWalkway : MonoBehaviour
         // Keep dock following the mouse.
         UpdateDockPosition();
 
-        // Pressing escape destroy dock not yet placed.
+        // Pressing escape destroys dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
         {
             PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
@@ -98,8 +88,8 @@ public class BuildWalkway : MonoBehaviour
         if (Input.GetButtonDown("KeyBuildHere"))
         {
             if (DoesEntityCollide())
-            {
-                SwitchToMaterial(this.normalMaterial);
+            { 
+                this._currentEntity.GetComponent<Selectable>().SetSelected(false);
                 this._currentEntity = null;
                 this._navMeshSurface.BuildNavMesh();
             }
@@ -120,22 +110,12 @@ public class BuildWalkway : MonoBehaviour
             {
                 Vector3 target = hit.point;
 
+                // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
                 if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, out Vector3 newTarget)) { target = newTarget; }
 
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
         }
-    }
-
-    /// <summary>
-    /// Emphasize with an orange highlighter, if currently raycasted gameObject is selected.
-    /// </summary>
-    /// <param name="material">Material to switch to</param>
-    private void SwitchToMaterial(Material material)
-    {
-        MeshRenderer gameObjectRenderer = this._currentEntity.GetComponent<MeshRenderer>();
-
-        gameObjectRenderer.material = material;
     }
 
     /// <summary>
