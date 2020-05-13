@@ -55,10 +55,10 @@ public class BuildWalkway : MonoBehaviour
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
                 GameObject entity = PrefabInstanceManager.Instance.Spawn(
-                                                              this.walkwayPrefab,
-                                                              new Vector3(hit.point.x, 0, hit.point.z),
-                                                              Quaternion.Euler(0, 90, 0)
-                                                          );
+                    this.walkwayPrefab,
+                    new Vector3(hit.point.x, 0, hit.point.z),
+                    Quaternion.Euler(0, 90, 0)
+                );
 
                 this._currentEntity = entity;
                 SwitchToMaterial(this.selectedMaterial);
@@ -68,7 +68,7 @@ public class BuildWalkway : MonoBehaviour
         this._currentEntity.transform.parent = this.transform;
     }
 
-    private bool IsNearSnappingPoint(Vector3 point, float nearDistance, out Vector3 snapPoint)
+    private bool IsNearSnappingPoint(Vector3 point, float nearDistance, float offset, out Vector3 snapPoint)
     {
         IEnumerable<GameObject> walkways = GameObject.FindGameObjectsWithTag("Walkway");
 
@@ -81,15 +81,23 @@ public class BuildWalkway : MonoBehaviour
             return false;
         }
 
-        Vector3 referencePoint = (Vector3) possibleSnapPoint; 
-        
-        Debug.Log((this._currentEntity.GetComponent<BoxCollider>().size / 2));
-
         BoxCollider entityCollider = this._currentEntity.GetComponent<BoxCollider>();
 
-        Vector3 closest = entityCollider.ClosestPoint(referencePoint);        
+        // Nearest point on the gameobject to snap to
+        Vector3 referencePoint = (Vector3) possibleSnapPoint;
+        referencePoint.y = 0;
 
-        snapPoint = referencePoint + -(closest - entityCollider.transform.position);
+        Vector3 closest = entityCollider.ClosestPointOnBounds(referencePoint);
+        Vector3 direction = (closest - referencePoint).normalized;
+        Vector3 entityCentre = entityCollider.bounds.extents;
+        
+        Vector3 localDistance = new Vector3(
+            direction.x * (entityCentre.x + offset),
+            0,
+            direction.z * (entityCentre.z + offset)
+        );
+        
+        snapPoint = referencePoint + localDistance;
 
         return Vector3.Distance(referencePoint, point) < nearDistance;
     }
@@ -158,8 +166,8 @@ public class BuildWalkway : MonoBehaviour
             {
                 Vector3 target = hit.point;
 
-                if (!Input.GetButton("IgnoreSnapping") && IsNearSnappingPoint(target, 3, out Vector3 newTarget)) { target = newTarget; }
-                
+                if (!Input.GetButton("IgnoreSnapping") && IsNearSnappingPoint(target, 3, .2f, out Vector3 newTarget)) { target = newTarget; }
+
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
         }
