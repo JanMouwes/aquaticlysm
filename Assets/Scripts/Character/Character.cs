@@ -14,6 +14,7 @@ using UnityEngine.Profiling.Memory.Experimental;
 public class Character : MonoBehaviour, ISelectable
 {
     private static Dictionary<string, Func<GoalInputData, IGoal>> _actions = new Dictionary<string, Func<GoalInputData, IGoal>>();
+    private static bool _intialized;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -24,13 +25,17 @@ public class Character : MonoBehaviour, ISelectable
     public float energyLevel;
 
     private Think _brain;
+    private GoalInputData _goaldata;
 
     // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
-        InitGoals();
+        _goaldata = new GoalInputData(this);
+
+        if (!_intialized)
+            InitGoals();
     }
 
     void OnEnable()
@@ -49,33 +54,35 @@ public class Character : MonoBehaviour, ISelectable
     private void Update()
     {
         // Check, that energylevel does not get lower during resting
-        energyLevel -= 8 * Time.deltaTime;
+        energyLevel -= 2 * Time.deltaTime;
 
         _brain.Process();
     }
     
-    public void DoAction(string tag, Vector3 position, bool priority) 
+    public void ActionHandler(string tag, Vector3 position, bool priority) 
     {
         if (_actions.ContainsKey(tag))
         {
-            IGoal goal = _actions[tag].Invoke(new GoalInputData(this) { Position = position });
+            _goaldata.Position = position;
+            IGoal goal = _actions[tag].Invoke(_goaldata);
         
             if (priority)
                 _brain.AddSubGoal(goal);
             else
                 _brain.PrioritizeSubGoal(goal);
         }
-
     }
 
     private static void InitGoals()
     {
-        Func<GoalInputData, IGoal> goal = input => new MoveTo(input.Owner, input.Position);
-        _actions.Add("Character-Walkway", goal);
+        Func<GoalInputData, IGoal> goal;
+
+        goal = input => new MoveTo(input.Owner, input.Position);
+        _actions.Add("Walkway", goal);
         
         goal = input => new Rest(input.Owner);
-        _actions.Add("Character-Rest", goal);
-        
+        _actions.Add("Rest", goal);
+
+        _intialized = true;
     }
-    
 }

@@ -5,14 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public enum Tags
-{
-    Walkway,
-    Rest
-}
 public interface ISelectable
 {
     bool Selected { get; set; }
-    void DoAction(string tag, Vector3 position, bool priority);
+    void ActionHandler(string tag, Vector3 position, bool priority);
 }
 
