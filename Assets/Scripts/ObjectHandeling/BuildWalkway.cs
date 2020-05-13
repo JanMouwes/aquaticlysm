@@ -83,7 +83,13 @@ public class BuildWalkway : MonoBehaviour
 
         Vector3 referencePoint = (Vector3) possibleSnapPoint; 
         
-        snapPoint = referencePoint + this._currentEntity.GetComponent<BoxCollider>().center;
+        Debug.Log((this._currentEntity.GetComponent<BoxCollider>().size / 2));
+
+        BoxCollider entityCollider = this._currentEntity.GetComponent<BoxCollider>();
+
+        Vector3 closest = entityCollider.ClosestPoint(referencePoint);        
+
+        snapPoint = referencePoint + -(closest - entityCollider.transform.position);
 
         return Vector3.Distance(referencePoint, point) < nearDistance;
     }
