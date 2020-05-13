@@ -13,7 +13,7 @@ using UnityEngine.Profiling.Memory.Experimental;
 /// </summary>
 public class Character : MonoBehaviour, ISelectable
 {
-    private static Dictionary<string, Func<GoalInputData, IGoal>> _actions = new Dictionary<string, Func<GoalInputData, IGoal>>();
+    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
     private static bool _intialized;
 
     public string FirstName { get; private set; }
@@ -25,14 +25,14 @@ public class Character : MonoBehaviour, ISelectable
     public float energyLevel;
 
     private Think _brain;
-    private GoalInputData _goaldata;
+    private GoalCommand _goaldata;
 
     // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
-        _goaldata = new GoalInputData(this);
+        _goaldata = new GoalCommand(this);
 
         if (!_intialized)
             InitGoals();
@@ -75,7 +75,7 @@ public class Character : MonoBehaviour, ISelectable
 
     private static void InitGoals()
     {
-        Func<GoalInputData, IGoal> goal;
+        Func<GoalCommand, IGoal> goal;
 
         goal = input => new MoveTo(input.Owner, input.Position);
         _actions.Add("Walkway", goal);
