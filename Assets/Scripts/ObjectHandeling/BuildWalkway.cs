@@ -150,7 +150,7 @@ public class BuildWalkway : MonoBehaviour
             {
                 Vector3 target = hit.point;
 
-                if (IsNearSnappingPoint(target, 3, out Vector3 newTarget)) { target = newTarget; }
+                if (!Input.GetButton("IgnoreSnapping") && IsNearSnappingPoint(target, 3, out Vector3 newTarget)) { target = newTarget; }
                 
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
