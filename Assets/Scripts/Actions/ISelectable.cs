@@ -5,6 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public enum Tags
+{
+    Walkway,
+    Rest
+}
 public interface ISelectable
 {
     bool Selected { get; set; }

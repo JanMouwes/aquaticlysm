@@ -25,7 +25,7 @@ public class Think : CompositeGoal
         if (needsRest(Owner.energyLevel))
         {
             Vector3 restLocation = GameObject.FindGameObjectWithTag("Rest").transform.position;
-            AddSubGoal(new Rest(Owner, restLocation));
+            AddSubGoal(new Rest(Owner));
         }
     }
 

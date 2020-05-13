@@ -4,13 +4,16 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using UnityEngine.Experimental.TerrainAPI;
+using UnityEngine.Profiling.Memory.Experimental;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
 public class Character : MonoBehaviour, ISelectable
 {
-    private static Dictionary<string, IGoal> _actions = new Dictionary<string, IGoal>();
+    private static Dictionary<string, Func<GoalInputData, IGoal>> _actions = new Dictionary<string, Func<GoalInputData, IGoal>>();
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -27,6 +30,7 @@ public class Character : MonoBehaviour, ISelectable
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
+        InitGoals();
     }
 
     void OnEnable()
@@ -49,30 +53,29 @@ public class Character : MonoBehaviour, ISelectable
 
         _brain.Process();
     }
-
+    
     public void DoAction(string tag, Vector3 position, bool priority) 
     {
-        IGoal goal = null;
-
-        switch (tag)
+        if (_actions.ContainsKey(tag))
         {
-            case "Walkway":
-                    goal = new MoveTo(this, position);
-                break;
-            case "Rest":
-                    goal = new Rest(this, position);
-                break;
-            case "Boat":
-                Debug.Log("Booty");
-                break;
-            default:
-                Debug.Log("I can't do that");
-                break;
+            IGoal goal = _actions[tag].Invoke(new GoalInputData(this) { Position = position });
+        
+            if (priority)
+                _brain.AddSubGoal(goal);
+            else
+                _brain.PrioritizeSubGoal(goal);
         }
 
-        if (goal != null && priority)
-            _brain.AddSubGoal(goal);
-        else
-            _brain.PrioritizeSubGoal(goal);
     }
+
+    private static void InitGoals()
+    {
+        Func<GoalInputData, IGoal> goal = input => new MoveTo(input.Owner, input.Position);
+        _actions.Add("Character-Walkway", goal);
+        
+        goal = input => new Rest(input.Owner);
+        _actions.Add("Character-Rest", goal);
+        
+    }
+    
 }

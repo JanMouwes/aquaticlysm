@@ -7,7 +7,7 @@ public class Rest : CompositeGoal
 {
     private Vector3 _target;
 
-    public Rest(Character owner, Vector3 target) : base(owner)
+    public Rest(Character owner) : base(owner)
     {
         Name = "Rest";
     }

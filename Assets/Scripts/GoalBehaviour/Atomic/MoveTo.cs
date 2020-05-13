@@ -17,7 +17,7 @@ public class MoveTo : IGoal
         Name = "MoveTo";
         _target = position;
     }
-
+    
     public void Activate()
     {
         Owner.agent.destination = _target;
