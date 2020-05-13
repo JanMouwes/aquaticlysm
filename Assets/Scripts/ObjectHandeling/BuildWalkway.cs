@@ -81,9 +81,11 @@ public class BuildWalkway : MonoBehaviour
             return false;
         }
 
-        snapPoint = (Vector3) possibleSnapPoint;
+        Vector3 referencePoint = (Vector3) possibleSnapPoint; 
+        
+        snapPoint = referencePoint + this._currentEntity.GetComponent<BoxCollider>().center;
 
-        return Vector3.Distance(snapPoint, point) < nearDistance;
+        return Vector3.Distance(referencePoint, point) < nearDistance;
     }
 
     private Vector3? GetNearestSnapPoint(Vector3 toPoint, IEnumerable<GameObject> walkways)
