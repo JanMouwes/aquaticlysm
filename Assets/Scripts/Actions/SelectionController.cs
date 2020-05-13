@@ -4,10 +4,10 @@ using UnityEngine;
 public class SelectionController : MonoBehaviour
 {
     // All selectable entities
-    public static List<Selectable> selectables = new List<Selectable>();
+    public static List<ISelectable> selectables = new List<ISelectable>();
 
     // All selected entities
-    public static List<Selectable> selectedEntities = new List<Selectable>();
+    public static List<ISelectable> selectedEntities = new List<ISelectable>();
 
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
@@ -51,10 +51,10 @@ public class SelectionController : MonoBehaviour
             ClearSelected();
 
             // Select a single unit
-            Selectable s = raycastHit.collider.GetComponentInParent<Selectable>();
+            ISelectable s = raycastHit.collider.GetComponentInParent<ISelectable>();
             if (s != null)
             {
-                s.SetSelected(true);
+                s.Selected = true;
                 selectedEntities.Add(s);
             }
 
@@ -88,13 +88,17 @@ public class SelectionController : MonoBehaviour
             Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
 
             // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat
-            foreach (Selectable selectable in selectables)
-                if (selectable.CompareTag("Character")
-                    && boundingBox.Contains(new Vector2(selectable.transform.position.x, selectable.transform.position.z)))
+            foreach (ISelectable selectable in selectables)
+            {
+                if (selectable is Character gameObject)
                 {
-                    selectable.SetSelected(true);
-                    selectedEntities.Add(selectable);
+                    if(boundingBox.Contains(new Vector2(gameObject.transform.position.x, gameObject.transform.position.z)))
+                    {
+                        selectable.Selected = true;
+                        selectedEntities.Add(selectable);
+                    }
                 }
+            }
         }
     }
 
@@ -103,7 +107,7 @@ public class SelectionController : MonoBehaviour
     /// </summary>
     private void ClearSelected() 
     {
-        selectedEntities.ForEach(s => s.SetSelected(false));
+        selectedEntities.ForEach(s => s.Selected = false);
         selectedEntities.Clear();
     }
 

@@ -22,29 +22,12 @@ public class ActionController : MonoBehaviour
             {
                 RaycastHit hit;
 
-                bool shift = Input.GetKey(KeyCode.LeftShift) 
+                bool priority = Input.GetKey(KeyCode.LeftShift) 
                              || Input.GetKey(KeyCode.RightShift);
                 
                 // Use a raycast (range 100) to register the position of the mouse click and set the agents new destination
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-                {
-                    foreach (Selectable current in SelectionController.selectedEntities)
-                    {
-                        switch (current.tag)
-                        {
-                            case "Character":
-                                GlobalActions.CharacterDoAction(hit.point, 
-                                                                current.GetComponent<Character>(), 
-                                                                hit.collider.gameObject.tag, shift);
-                                break;
-                            case "Boat":
-                                
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                    SelectionController.selectedEntities.ForEach(s => s.DoAction(hit.collider.gameObject.tag, hit.point, priority));
             }
         }
     }
