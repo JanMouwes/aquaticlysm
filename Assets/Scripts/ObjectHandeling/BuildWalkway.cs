@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
+using Util;
 
 /// <summary>
 /// Class for building walkways
@@ -68,50 +66,6 @@ public class BuildWalkway : MonoBehaviour
         this._currentEntity.transform.parent = this.transform;
     }
 
-    private bool IsNearSnappingPoint(Vector3 point, float nearDistance, float offset, out Vector3 snapPoint)
-    {
-        IEnumerable<GameObject> walkways = GameObject.FindGameObjectsWithTag("Walkway");
-
-        Vector3? possibleSnapPoint = GetNearestSnapPoint(point, walkways);
-
-        if (possibleSnapPoint == null)
-        {
-            snapPoint = Vector3.zero;
-
-            return false;
-        }
-
-        BoxCollider entityCollider = this._currentEntity.GetComponent<BoxCollider>();
-
-        // Nearest point on the gameobject to snap to
-        Vector3 referencePoint = (Vector3) possibleSnapPoint;
-        referencePoint.y = 0;
-
-        Vector3 closest = entityCollider.ClosestPointOnBounds(referencePoint);
-        Vector3 direction = (closest - referencePoint).normalized;
-        Vector3 entityCentre = entityCollider.bounds.extents;
-        
-        Vector3 localDistance = new Vector3(
-            direction.x * (entityCentre.x + offset),
-            0,
-            direction.z * (entityCentre.z + offset)
-        );
-        
-        snapPoint = referencePoint + localDistance;
-
-        return Vector3.Distance(referencePoint, point) < nearDistance;
-    }
-
-    private Vector3? GetNearestSnapPoint(Vector3 toPoint, IEnumerable<GameObject> walkways)
-    {
-        IEnumerable<Vector3> snapPoints = walkways.Where(walkway => walkway != this._currentEntity)
-                                                  .Select(walkway => walkway.GetComponent<BoxCollider>().ClosestPoint(toPoint))
-                                                  .OrderBy(snapPoint => Vector3.Distance(snapPoint, toPoint))
-                                                  .ToList();
-
-        return snapPoints.Any() ? (Vector3?) snapPoints.FirstOrDefault() : null;
-    }
-
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
@@ -166,7 +120,7 @@ public class BuildWalkway : MonoBehaviour
             {
                 Vector3 target = hit.point;
 
-                if (!Input.GetButton("IgnoreSnapping") && IsNearSnappingPoint(target, 3, .2f, out Vector3 newTarget)) { target = newTarget; }
+                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, out Vector3 newTarget)) { target = newTarget; }
 
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
