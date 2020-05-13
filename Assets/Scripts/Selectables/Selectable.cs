@@ -1,32 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Selectable : MonoBehaviour
 {
-    private Material _selectedMaterial;
-    private Material _normalMaterial;
-    private GameObject _owner;
+    public Material selectedMaterial;
+    public Material normalMaterial;
 
-    public bool IsSelected;
-
-    public void SetSelected(bool selection, GameObject owner, Material selectedMaterial, Material normalMaterial)
-    {
-        this.IsSelected = selection;
-        this._owner = owner;
-        this._selectedMaterial = selectedMaterial;
-        this._normalMaterial = normalMaterial;
-    }
-
+    public bool isSelected;
+    
     public void SetSelected(bool selection)
     {
         // Set if it's selected or not
-        IsSelected = selection;
+        this.isSelected = selection;
+
+        Material newMaterial = selection ? this.selectedMaterial : this.normalMaterial;
+
+        SwitchToMaterial(newMaterial);
     }
 
     void OnEnable()
     {
         // Add the selectable to a list of selectable entities
         SelectionController.selectables.Add(this);
-        SwitchToMaterial(_selectedMaterial);
     }
 
 
@@ -34,7 +29,6 @@ public class Selectable : MonoBehaviour
     {
         // Remove the selectable of the list of selectable entities
         SelectionController.selectables.Remove(this);
-        SwitchToMaterial(_normalMaterial);
     }
 
     /// <summary>
@@ -43,7 +37,7 @@ public class Selectable : MonoBehaviour
     /// <param name="material">Material to switch to</param>
     public void SwitchToMaterial(Material material)
     {
-        MeshRenderer gameObjectRenderer = this._owner.GetComponent<MeshRenderer>();
+        MeshRenderer gameObjectRenderer = this.gameObject.GetComponent<MeshRenderer>();
 
         gameObjectRenderer.material = material;
     }

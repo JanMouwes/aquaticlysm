@@ -59,8 +59,7 @@ public class BuildWalkway : MonoBehaviour
                 );
 
                 this._currentEntity = entity;
-                Debug.Log(selectedMaterial.ToString() + " " + normalMaterial.ToString());
-                this._currentEntity.GetComponent<Selectable>().SetSelected(true, this._currentEntity, selectedMaterial, normalMaterial);
+                this._currentEntity.GetComponent<Selectable>().SetSelected(true);
             }
         }
 
