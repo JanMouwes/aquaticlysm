@@ -6,28 +6,23 @@ using UnityEngine.EventSystems;
 
 public class ActionController : MonoBehaviour
 {
+    private RaycastHit _hit;
+    private bool _priority;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
         if (Input.GetButtonDown("RightMouseButton"))
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                RaycastHit hit;
-
-                bool priority = Input.GetKey(KeyCode.LeftShift) 
-                             || Input.GetKey(KeyCode.RightShift);
+                // Set the priority with the shift click.
+                _priority = Input.GetKey(KeyCode.LeftShift) 
+                            || Input.GetKey(KeyCode.RightShift);
                 
-                // Use a raycast (range 100) to register the position of the mouse click and set the agents new destination
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
-                    SelectionController.selectedEntities.ForEach(s => s.ActionHandler(hit.collider.gameObject.tag, hit.point, priority));
+                // Use a raycast to register a game object and send the data to the selected entities.
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, 100))
+                    SelectionController.selectedEntities.ForEach(s => s.ActionHandler(_hit.collider.gameObject.tag, _hit.point, _priority));
             }
         }
     }

@@ -52,5 +52,10 @@ public class Think : CompositeGoal
     {
     }
 
+    /// <summary>
+    /// Check, if an entity needs rest.
+    /// </summary>
+    /// <param name="energyLevel">Amount of energy.</param>
+    /// <returns>true or false</returns>
     private static bool needsRest(float energyLevel) => energyLevel < 10;
 }

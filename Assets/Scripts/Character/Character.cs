@@ -13,8 +13,8 @@ using UnityEngine.Profiling.Memory.Experimental;
 /// </summary>
 public class Character : MonoBehaviour, ISelectable
 {
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
-    private static bool _intialized;
+    // A dictionary with all the possible actions for the characters.
+    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -27,35 +27,39 @@ public class Character : MonoBehaviour, ISelectable
     private Think _brain;
     private GoalCommand _goaldata;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
         _goaldata = new GoalCommand(this);
 
-        if (!_intialized)
+        if (_actions == null)
+        {
+            // Initialize the dictionary.
+            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
             InitGoals();
+        }
     }
     
-    //TODO: REMOVE HERE
+    //TODO: REMOVE HERE AND SET IN THE FACTORY.
     void OnEnable()
     {
-        // Add the selectable to a list of selectable entities
+        // Add the selectable to a list of selectable entities.
         SelectionController.selectables.Add(this);
     }
 
-    //TODO: REMOVE HERE
+    //TODO: REMOVE HERE AND SET IN THE FACTORY.
     void OnDisable()
     {
-        // Remove the selectable of the list of selectable entities
+        // Remove the selectable of the list of selectable entities.
         SelectionController.selectables.Remove(this);
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     private void Update()
     {
-        // Check, that energylevel does not get lower during resting
+        // Check, that energylevel does not get lower during resting.
         energyLevel -= 2 * Time.deltaTime;
 
         _brain.Process();
@@ -65,9 +69,11 @@ public class Character : MonoBehaviour, ISelectable
     {
         if (_actions.ContainsKey(tag))
         {
+            // Set the goal with the current data.
             _goaldata.Position = position;
             IGoal goal = _actions[tag].Invoke(_goaldata);
         
+            // Add the goal to the brain.
             if (priority)
                 _brain.AddSubGoal(goal);
             else
@@ -75,6 +81,9 @@ public class Character : MonoBehaviour, ISelectable
         }
     }
 
+    /// <summary>
+    /// Fills the _actions dictionary with goals related to an action.
+    /// </summary>
     private static void InitGoals()
     {
         Func<GoalCommand, IGoal> goal;
@@ -84,7 +93,5 @@ public class Character : MonoBehaviour, ISelectable
         
         goal = input => new Rest(input.Owner);
         _actions.Add("Rest", goal);
-
-        _intialized = true;
     }
 }

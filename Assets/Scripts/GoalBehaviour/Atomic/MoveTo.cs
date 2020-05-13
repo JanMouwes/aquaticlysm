@@ -8,7 +8,7 @@ public class MoveTo : IGoal
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
 
-    // Target position
+    // Target position.
     private Vector3 _target;
 
     public MoveTo(Character owner, Vector3 position)
@@ -20,6 +20,7 @@ public class MoveTo : IGoal
     
     public void Activate()
     {
+        // Set destination.
         Owner.agent.destination = _target;
         Status = GoalStatus.Active;
     }
@@ -31,6 +32,7 @@ public class MoveTo : IGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
+        // Checks if the Owner arrived at the target.
         if (Vector3.Distance(Owner.transform.position, _target) < 2f)
             Terminate();
 

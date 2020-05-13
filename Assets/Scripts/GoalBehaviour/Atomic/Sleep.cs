@@ -25,6 +25,7 @@ public class Sleep : IGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
+        // Replenishes the energy level.
         if (!isRested(Owner.energyLevel))
             Owner.energyLevel += 20 * Time.deltaTime;
         else
@@ -41,10 +42,7 @@ public class Sleep : IGoal
     /// <summary>
     ///     Check, if energylevel has been met or not.
     /// </summary>
-    /// <param name="energyLevel"></param>
-    /// <returns></returns>
-    private static bool isRested(float energyLevel)
-    {
-        return energyLevel >= 100.0f;
-    }
+    /// <param name="energyLevel">Amount of energy.</param>
+    /// <returns>true or false</returns>
+    private static bool isRested(float energyLevel) => energyLevel >= 100.0f;
 }

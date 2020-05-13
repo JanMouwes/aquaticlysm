@@ -15,8 +15,11 @@ public class Rest : CompositeGoal
     public override void Activate()
     {
         _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
+
+        // Add the subgoals.
         AddSubGoal(new MoveTo(Owner, _target));
         AddSubGoal(new Sleep(Owner));
+
         Status = GoalStatus.Active;
     }
 
@@ -31,7 +34,7 @@ public class Rest : CompositeGoal
         }
         else
         {
-            // Process new subgoal
+            // Process new subgoal.
             subGoals.Peek().Process();
             RemoveCompletedSubgoals();
         }
