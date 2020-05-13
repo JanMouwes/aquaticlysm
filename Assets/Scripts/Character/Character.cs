@@ -37,13 +37,15 @@ public class Character : MonoBehaviour, ISelectable
         if (!_intialized)
             InitGoals();
     }
-
+    
+    //TODO: REMOVE HERE
     void OnEnable()
     {
         // Add the selectable to a list of selectable entities
         SelectionController.selectables.Add(this);
     }
 
+    //TODO: REMOVE HERE
     void OnDisable()
     {
         // Remove the selectable of the list of selectable entities
