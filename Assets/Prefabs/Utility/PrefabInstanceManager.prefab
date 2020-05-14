@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3432821709360244869
+--- !u!1 &444097917881298856
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3432821709360244867}
-  - component: {fileID: 3432821709360244866}
+  - component: {fileID: 444097917881298862}
+  - component: {fileID: 444097917881298857}
   m_Layer: 0
-  m_Name: SpawnControlDemo
+  m_Name: PrefabInstanceManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3432821709360244867
+--- !u!4 &444097917881298862
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3432821709360244869}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.744586, y: 0.668779, z: 0.2613945}
+  m_GameObject: {fileID: 444097917881298856}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3432821709360244866
+--- !u!114 &444097917881298857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3432821709360244869}
+  m_GameObject: {fileID: 444097917881298856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3c836d6618cf7246a3b47f4fcf6a60d, type: 3}
+  m_Script: {fileID: 11500000, guid: 17b0933da290ae74f9f55e0b3b508ed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsuleJesus: {fileID: 7818925638999121654, guid: 8a03599607994d94a946c31e3328eb14,
-    type: 3}
-  boat: {fileID: 7798238763537469224, guid: 9990c610e5b0eb945ad8eae5c92915f5, type: 3}
