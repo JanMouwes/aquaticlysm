@@ -7,15 +7,15 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outline
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _ENVIRONMENTREFLECTIONS_OFF
-  m_LightmapFlags: 4
+  m_Name: barge joint
+  m_Shader: {fileID: -6465566751694194690, guid: 0d2fdc966babae34883076b1a5a8ca63,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2050
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -49,24 +49,24 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_34FBE0B1: 1.01
-    - Vector1_37837C7C: 0.2
-    - Vector1_5D17AD44: 1.1
-    - Vector1_5DF4C49F: 1.19
+    - Vector1_13C2F8A2: 0.377
+    - Vector1_1C587E1B: 0
+    - Vector1_3D4B9AF9: 0.464
+    - Vector1_419C398B: 100
+    - Vector1_6641BF02: 0
+    - Vector1_9A15012C: 0.03
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
     - _DstBlend: 0
-    - _EnvironmentReflections: 0
+    - _EnvironmentReflections: 1
     - _GlossMapScale: 0
-    - _Glossiness: 0.5
+    - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Outline: 0
-    - _OutlineWidth: 1.53
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -77,13 +77,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_368632D: {r: 1.984314, g: 0.509804, b: 0, a: 0}
-    - _BaseColor: {r: 0.8490566, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.8490566, g: 0, b: 0, a: 0}
+    - Color_7F6B2A6E: {r: 0.16037738, g: 0, b: 0, a: 0}
+    - Color_8E63E8C3: {r: 0, g: 1024, b: 1024, a: 0}
+    - _BaseColor: {r: 0.14731409, g: 0.0003233439, b: 0, a: 1}
+    - _Color: {r: 0.14731409, g: 0.0003233439, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0.9716981, g: 0.592292, b: 0.03208439, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
---- !u!114 &7714852251742001476
+--- !u!114 &3495406526868671823
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
