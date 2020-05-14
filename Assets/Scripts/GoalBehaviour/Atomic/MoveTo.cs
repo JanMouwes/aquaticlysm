@@ -27,8 +27,6 @@ public class MoveTo : IGoal
 
     public GoalStatus Process()
     {
-        Debug.Log(Name);
-
         if (Status == GoalStatus.Inactive)
             Activate();
 
