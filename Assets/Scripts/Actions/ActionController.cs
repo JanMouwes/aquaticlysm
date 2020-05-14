@@ -17,8 +17,7 @@ public class ActionController : MonoBehaviour
             if (!EventSystem.current.IsPointerOverGameObject())
             {
                 // Set the priority with the shift click.
-                _priority = Input.GetKey(KeyCode.LeftShift) 
-                            || Input.GetKey(KeyCode.RightShift);
+                _priority = Input.GetButton("Shift");
                 
                 // Use a raycast to register a game object and send the data to the selected entities.
                 if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, 100))
