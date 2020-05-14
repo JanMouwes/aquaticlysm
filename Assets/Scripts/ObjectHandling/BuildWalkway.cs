@@ -20,6 +20,7 @@ public class BuildWalkway : MonoBehaviour
     /// </summary>
     public Material selectedMaterial;
 
+    private Outline _outline;
     /// <summary>
     /// Actual material when entity is set down
     /// </summary>
@@ -46,24 +47,23 @@ public class BuildWalkway : MonoBehaviour
     private void UpdateCreateEntity()
     {
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
-
+        
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject())
+        //if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Get mouse position
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                GameObject entity = PrefabInstanceManager.Instance.Spawn(
+                _currentEntity = PrefabInstanceManager.Instance.Spawn(
                     this.walkwayPrefab,
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
-
-                this._currentEntity = entity;
-                SwitchToMaterial(this.selectedMaterial);
+                _outline = _currentEntity.GetComponent<Outline>();
+                _outline.enabled = true;
             }
         }
-
+        
         this._currentEntity.transform.parent = this.transform;
     }
 
@@ -76,6 +76,14 @@ public class BuildWalkway : MonoBehaviour
 
         // Keep dock following the mouse.
         UpdateDockPosition();
+        if (DoesEntityCollide())
+        {
+            _outline.OutlineColor= Color.yellow;
+        }
+        else
+        {
+            _outline.OutlineColor= Color.red;
+        }
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -114,7 +122,7 @@ public class BuildWalkway : MonoBehaviour
     private void UpdateDockPosition()
     {
         // Check, if clicking on the UI or the game world.
-        if (!EventSystem.current.IsPointerOverGameObject())
+        //if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) { this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z); }
@@ -127,10 +135,10 @@ public class BuildWalkway : MonoBehaviour
     /// <param name="material">Material to switch to</param>
     private void SwitchToMaterial(Material material)
     {
-        MeshRenderer gameObjectRenderer = this._currentEntity.GetComponent<MeshRenderer>();
+        //this._currentEntity.GetComponent<Outline>().enabled = !_currentEntity.GetComponent<Outline>().enabled;
 
         // If gameObject is created just now, use highlighted material.
-        gameObjectRenderer.material = material;
+        //gameObjectRenderer.material = material;
     }
 
     /// <summary>

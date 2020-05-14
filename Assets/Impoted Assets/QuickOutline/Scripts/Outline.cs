@@ -211,28 +211,28 @@ public class Outline : MonoBehaviour {
     // Copy normals to a new list
     var smoothNormals = new List<Vector3>(mesh.normals);
 
-    // Average normals for grouped vertices
-    foreach (var group in groups) {
-
-      // Skip single vertices
-      if (group.Count() == 1) {
-        continue;
-      }
-
-      // Calculate the average normal
-      var smoothNormal = Vector3.zero;
-
-      foreach (var pair in group) {
-        smoothNormal += mesh.normals[pair.Value];
-      }
-
-      smoothNormal.Normalize();
-
-      // Assign smooth normal to each vertex
-      foreach (var pair in group) {
-        smoothNormals[pair.Value] = smoothNormal;
-      }
-    }
+    // // Average normals for grouped vertices
+    // foreach (var group in groups) {
+    //
+    //   // Skip single vertices
+    //   if (group.Count() == 1) {
+    //     continue;
+    //   }
+    //
+    //   // Calculate the average normal
+    //   var smoothNormal = Vector3.zero;
+    //
+    //   foreach (var pair in group) {
+    //     smoothNormal += mesh.normals[pair.Value];
+    //   }
+    //
+    //   smoothNormal.Normalize();
+    //
+    //   // Assign smooth normal to each vertex
+    //   foreach (var pair in group) {
+    //     smoothNormals[pair.Value] = smoothNormal;
+    //   }
+    // }
 
     return smoothNormals;
   }
