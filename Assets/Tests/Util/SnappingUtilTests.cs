@@ -14,28 +14,27 @@ namespace Tests.Util
         [Test]
         public void Test_SimplePasses()
         {
-            Mock<BoxCollider> boxColliderMock = new Mock<BoxCollider>(MockBehavior.Strict);
-            Mock<GameObject> gameObjectMock = new Mock<GameObject>(MockBehavior.Strict);
-            IEnumerable<GameObject> gameObjects = new GameObject[] { gameObjectMock.Object }; 
+            GameObject gameObject = new GameObject();
+            gameObject.AddComponent<BoxCollider>();
 
-            boxColliderMock.Setup(p => p.ClosestPoint(It.IsAny<Vector3>()))
-                           .Returns(new Vector3(2, 0, 2));
+            BoxCollider boxColliderMock = gameObject.GetComponent<BoxCollider>();
+            boxColliderMock.size = Vector3.zero;
+            boxColliderMock.center = new Vector3(2, 0, 2);
 
-            gameObjectMock.Setup(p => p.GetComponent<BoxCollider>())
-               .Returns(boxColliderMock.Object);
+            IEnumerable<GameObject> gameObjects = new[] {gameObject};
 
             Vector3? result = SnappingUtil.GetNearestSnapPoint(new Vector3(1, 0, 1), gameObjects);
 
             Assert.IsNotNull(result);
 
-            Vector3 actualNotNull = (Vector3)result;
+            Vector3 actualNotNull = (Vector3) result;
 
             // Use the Assert class to test conditions
-            Assert.AreEqual(actualNotNull.x, 2f);
+            Assert.AreEqual(2f, actualNotNull.x, .001f);
 
-            Assert.AreEqual(actualNotNull.y, 0f);
+            Assert.AreEqual(0f, actualNotNull.y, .001f);
 
-            Assert.AreEqual(actualNotNull.z, 2f);
+            Assert.AreEqual(2f, actualNotNull.z, .001f);
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
