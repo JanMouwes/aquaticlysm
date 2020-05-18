@@ -66,8 +66,6 @@ public class BuildWalkway : MonoBehaviour
         // Keep dock following the mouse.
         UpdateDockPosition();
 
-        this._outline.effectColor = DoesEntityCollide() ? Color.red : Color.yellow;
-
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
         {
