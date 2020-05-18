@@ -10,6 +10,7 @@ using Util;
 public class BuildWalkway : MonoBehaviour
 {
     private GameObject _currentEntity;
+    private Outline _outline;
     private NavMeshSurface _navMeshSurface;
 
     public GameObject walkwayPrefab;
@@ -39,13 +40,15 @@ public class BuildWalkway : MonoBehaviour
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
         { 
-            GameObject entity = PrefabInstanceManager.Instance.Spawn(
+            this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                 this.walkwayPrefab,
                 new Vector3(hit.point.x, 0, hit.point.z),
                 Quaternion.Euler(0, 90, 0)
             );
 
-            this._currentEntity = entity;
+            this._outline = this._currentEntity.GetComponent<Outline>();
+            this._outline.enabled = true;
+   
         }
         // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
@@ -60,6 +63,8 @@ public class BuildWalkway : MonoBehaviour
 
         // Keep dock following the mouse.
         UpdateDockPosition();
+
+        this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.yellow;
 
         // Pressing escape destroys dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -95,10 +100,13 @@ public class BuildWalkway : MonoBehaviour
         this._currentEntity.transform.Rotate(0, rotation, 0);
     }
 
+        // After checking, if the position is available for building, build a dock pressing U.
+        
     private void BuildBuilding()
     {
-        if (DoesEntityCollide())
+        if (!DoesEntityCollide())
         {
+            this._outline.enabled = false;
             this._currentEntity = null;
             this._navMeshSurface.BuildNavMesh();
         }
@@ -137,6 +145,6 @@ public class BuildWalkway : MonoBehaviour
         Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
 
         return allWalkways.Where(walkway => walkway != this._currentEntity)
-                          .All(walkway => !walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+                          .Any(walkway => walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 }
