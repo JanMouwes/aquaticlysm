@@ -11,7 +11,7 @@ public abstract class CompositeGoal : IGoal
     public string Name { get; set; }
 
     // List for holding all activated goals waiting to be met
-    public Queue<IGoal> subGoals { get; set; }
+    public Queue<IGoal> subGoals { get;}
    
     public CompositeGoal(Character owner)
     {
