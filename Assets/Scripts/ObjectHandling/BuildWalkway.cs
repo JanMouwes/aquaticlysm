@@ -49,7 +49,7 @@ public class BuildWalkway : MonoBehaviour
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
         
         // Check, if clicking on UI or on the game world
-        //if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Get mouse position
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
@@ -122,7 +122,7 @@ public class BuildWalkway : MonoBehaviour
     private void UpdateDockPosition()
     {
         // Check, if clicking on the UI or the game world.
-        //if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) { this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z); }
