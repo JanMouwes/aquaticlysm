@@ -11,7 +11,7 @@ namespace Tests
     public class GoalsTest
     {
         [Test]
-        public void DeleteCompletedGoal()
+        public void Test_WhenGoalCompleted_ShouldDequeueGoal()
         {
             // Arrange
             Mock<Character> mockCharacter = new Mock<Character>(MockBehavior.Strict);
