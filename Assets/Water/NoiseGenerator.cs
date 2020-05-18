@@ -28,7 +28,7 @@ public class NoiseGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _meshFilter.mesh.vertices = GenerateNoise();
+        _meshFilter.mesh.vertices = GenerateNoise(_meshFilter.mesh.vertices);
 
         // Calculate the offset with physics (aka time hehe)
         _xOffset += Time.deltaTime * timeScale;
@@ -42,10 +42,8 @@ public class NoiseGenerator : MonoBehaviour
             _yOffset -= Time.deltaTime * timeScale;
     }
 
-    Vector3[] GenerateNoise() 
+    Vector3[] GenerateNoise(Vector3[] vertices) 
     {
-        Vector3[] vertices = _meshFilter.mesh.vertices;
-
         for (int i = 0; i < vertices.Length; i++)
         {
             // Calculate the perlin noise
