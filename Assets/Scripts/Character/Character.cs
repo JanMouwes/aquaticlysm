@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, ISelectable
     private GoalCommand _goaldata;
 
     // Start is called before the first frame update.
-    private void Start()
+    public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
