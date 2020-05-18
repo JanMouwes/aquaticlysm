@@ -1,10 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Tests
 {
