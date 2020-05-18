@@ -13,8 +13,8 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "nunit.framework.dll",
-        "",
-        ""
+        "moq.dll",
+        "Moq.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [
