@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Class for building walkways
@@ -11,19 +9,10 @@ using UnityEngine.Serialization;
 public class BuildWalkway : MonoBehaviour
 {
     private GameObject _currentEntity;
+    private Outline _outline;
     private NavMeshSurface _navMeshSurface;
 
     public GameObject walkwayPrefab;
-
-    /// <summary>
-    /// Material to highlight current entity
-    /// </summary>
-    public Material selectedMaterial;
-
-    /// <summary>
-    /// Actual material when entity is set down
-    /// </summary>
-    public Material normalMaterial;
 
     // Start is called before the first frame update
     private void Awake()
@@ -53,14 +42,13 @@ public class BuildWalkway : MonoBehaviour
             // Get mouse position
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
             {
-                GameObject entity = PrefabInstanceManager.Instance.Spawn(
+                this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                     this.walkwayPrefab,
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
-
-                this._currentEntity = entity;
-                SwitchToMaterial(this.selectedMaterial);
+                this._outline = this._currentEntity.GetComponent<Outline>();
+                this._outline.enabled = true;
             }
         }
 
@@ -76,6 +64,8 @@ public class BuildWalkway : MonoBehaviour
 
         // Keep dock following the mouse.
         UpdateDockPosition();
+
+        this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.yellow;
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -98,9 +88,9 @@ public class BuildWalkway : MonoBehaviour
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("KeyBuildHere"))
         {
-            if (DoesEntityCollide())
+            if (!DoesEntityCollide())
             {
-                SwitchToMaterial(this.normalMaterial);
+                this._outline.enabled = false;
                 this._currentEntity = null;
                 this._navMeshSurface.BuildNavMesh();
             }
@@ -122,18 +112,6 @@ public class BuildWalkway : MonoBehaviour
     }
 
     /// <summary>
-    /// Emphasize with an orange highlighter, if currently raycasted gameObject is selected or not.
-    /// </summary>
-    /// <param name="material">Material to switch to</param>
-    private void SwitchToMaterial(Material material)
-    {
-        MeshRenderer gameObjectRenderer = this._currentEntity.GetComponent<MeshRenderer>();
-
-        // If gameObject is created just now, use highlighted material.
-        gameObjectRenderer.material = material;
-    }
-
-    /// <summary>
     /// Get all gameObjects colliding with the mouse position to check, if its possible to build here.
     /// </summary>
     /// <returns></returns>
@@ -144,6 +122,6 @@ public class BuildWalkway : MonoBehaviour
         Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
 
         return allWalkways.Where(walkway => walkway != this._currentEntity)
-                          .All(walkway => !walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+                          .Any(walkway => walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 }
