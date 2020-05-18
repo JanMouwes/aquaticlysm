@@ -4,12 +4,11 @@
 ///     Highest level of goal managing, makes decisions between strategies to
 ///     fulfill agents pressing needs.
 /// </summary>
-public class ThinkGoal : CompositeGoal
+public class Think : CompositeGoal
 {
-    public ThinkGoal(Character owner) : base(owner)
+    public Think(Character owner) : base(owner)
     {
         Name = "Think";
-        // To be continued...
     }
 
     public override void Activate()
@@ -22,18 +21,16 @@ public class ThinkGoal : CompositeGoal
     /// </summary>
     public void Evaluate()
     {
-        // Check if there is need for resting and also that the agent is not currently taking care of it
+        // Check if there is need for resting and also that the agent is not currently taking care of it.
         if (needsRest(Owner.energyLevel))
         {
-            RestGoal restGoal = new RestGoal(Owner);
-            AddSubGoal(restGoal);
+            Vector3 restLocation = GameObject.FindGameObjectWithTag("Rest").transform.position;
+            AddSubGoal(new Rest(Owner));
         }
     }
 
     public override GoalStatus Process()
     {
-
-        // Activate, if goalstatus not yet active
         if (Status == GoalStatus.Inactive)
             Activate();
 
@@ -43,10 +40,9 @@ public class ThinkGoal : CompositeGoal
         }
         else
         {
-            RemoveCompletedSubgoals();
-
             // Process new subgoal
             subGoals.Peek().Process();
+            RemoveCompletedSubgoals();
         }
 
         return Status;
@@ -56,5 +52,10 @@ public class ThinkGoal : CompositeGoal
     {
     }
 
+    /// <summary>
+    /// Check, if an entity needs rest.
+    /// </summary>
+    /// <param name="energyLevel">Amount of energy.</param>
+    /// <returns>true or false</returns>
     private static bool needsRest(float energyLevel) => energyLevel < 10;
 }
