@@ -23,7 +23,6 @@ public class Character : MonoBehaviour, ISelectable
 
     public NavMeshAgent agent;
     public float energyLevel;
-
     private Think _brain;
     private GoalCommand _goaldata;
 
