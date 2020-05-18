@@ -7,10 +7,9 @@ public interface IGoal
     Character Owner { get; }
     GoalStatus Status { get; }
     string Name { get; }
+
     void Activate();
-
     GoalStatus Process();
-
     void Terminate();
 }
 
