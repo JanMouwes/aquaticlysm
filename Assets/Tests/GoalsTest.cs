@@ -12,7 +12,7 @@ namespace Tests
     {
         // example for mocking interfaces 
         [Test]
-        public void Test_WhenGoalCompleted_ShouldDequeueGoal()
+        public void WhenGoalCompleted_ShouldDequeueGoal()
         {
             // Arrange
             // mock character and goal
@@ -29,10 +29,44 @@ namespace Tests
             // procces could remove the completed mockgoal
             think.Process();
             
-
             // Assert
             // check if the queue is now empty
             Assert.AreEqual( new Queue(), think.subGoals);
+        }
+
+        [Test]
+        public void WhenGoalAdded_ShouldAddToQueue()
+        {
+            // Arrange
+            Mock<Character> character = new Mock<Character>(MockBehavior.Strict);
+            Think think = new Think(character.Object);
+            IGoal goal = new Sleep(character.Object);
+            think.AddSubGoal(goal);
+
+            // Act
+            think.AddSubGoal(goal);
+            think.AddSubGoal(goal);
+
+            // Assert
+            Assert.AreEqual(think.subGoals.Count, 3);
+        }
+
+        [Test]
+        public void WhenGoalAdded_ShouldPrioritize() 
+        {
+            // Arrange
+            Mock<Character> character = new Mock<Character>(MockBehavior.Strict);
+            Think think = new Think(character.Object);
+            IGoal goal = new Sleep(character.Object);
+            think.AddSubGoal(goal);
+            think.AddSubGoal(goal);
+            think.AddSubGoal(goal);
+
+            // Act
+            think.PrioritizeSubGoal(goal);
+
+            // Assert
+            Assert.AreEqual(think.subGoals.Count, 1);
         }
 
     }
