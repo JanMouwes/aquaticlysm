@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
+using Util;
 
 /// <summary>
 /// Class for building walkways
@@ -40,7 +42,7 @@ public class BuildWalkway : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Get mouse position
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
             {
                 this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                     this.walkwayPrefab,
@@ -105,7 +107,10 @@ public class BuildWalkway : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit)) { this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z); }
+            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
+            {
+                this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+            }
         }
     }
 
