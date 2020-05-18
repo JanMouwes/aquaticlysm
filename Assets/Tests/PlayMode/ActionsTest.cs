@@ -9,36 +9,37 @@ namespace Tests
 {
     public class ActionsTest
     {
-            
-
         [UnityTest]
         public IEnumerator WhenUndefinedAction_ShouldNotDoAnything()
         {
             // Arrange
-            GameObject gameObject = new GameObject("dang");
             SceneManager.LoadScene("Scenes/LocalSea");
-            Object.Instantiate(gameObject);
+            GameObject gameObject = new GameObject("dang");
             Character character = gameObject.AddComponent<Character>();
+            Object.Instantiate(gameObject);
+
             yield return new WaitForSeconds(0.5f);
+
             // Act
             bool actionExcists = character.ActionHandler("Oewagadoego", Vector3.zero, false);
-
 
             // Assert
             Assert.IsFalse(actionExcists);
         }
+
         [UnityTest]
-        public IEnumerator WhenActionExist_ShouldExist()
+        public IEnumerator WhenDefinedAction_ShouldDoAction()
         {
             // Arrange
-            GameObject gameObject = new GameObject("dang");
             SceneManager.LoadScene("Scenes/LocalSea");
-            Object.Instantiate(gameObject);
+            GameObject gameObject = new GameObject("dang");
             Character character = gameObject.AddComponent<Character>();
+            Object.Instantiate(gameObject);
+
             yield return new WaitForSeconds(0.5f);
+
             // Act
             bool actionExcists = character.ActionHandler("Rest", Vector3.zero, false);
-
 
             // Assert
             Assert.IsTrue(actionExcists);
