@@ -12,7 +12,7 @@ namespace Tests.Util
     {
         // A Test behaves as an ordinary method
         [Test]
-        public void Test_SimplePasses()
+        public void Test_WhenNearestSnapPointCalled_ShouldReturnNearestSnapPoint()
         {
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<BoxCollider>();
