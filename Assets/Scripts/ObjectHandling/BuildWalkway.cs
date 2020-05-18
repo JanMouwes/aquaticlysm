@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using Util;
 
 /// <summary>
@@ -38,7 +39,7 @@ public class BuildWalkway : MonoBehaviour
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
 
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        if (!EventSystem.current.IsPointerOverGameObject() && MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         { 
             this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                 this.walkwayPrefab,
@@ -63,8 +64,6 @@ public class BuildWalkway : MonoBehaviour
 
         // Keep dock following the mouse.
         UpdateDockPosition();
-
-        this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.yellow;
 
         // Pressing escape destroys dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -122,7 +121,7 @@ public class BuildWalkway : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+            if (MouseUtil.TryRaycastAtMousePosition( out RaycastHit hit))
             {
                 Vector3 target = hit.point;
 
