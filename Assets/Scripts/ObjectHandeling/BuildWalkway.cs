@@ -46,7 +46,6 @@ public class BuildWalkway : MonoBehaviour
             );
 
             this._currentEntity = entity;
-            this._currentEntity.GetComponent<Selectable>().SetSelected(true);
         }
         // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
@@ -100,7 +99,6 @@ public class BuildWalkway : MonoBehaviour
     {
         if (DoesEntityCollide())
         {
-            this._currentEntity.GetComponent<Selectable>().SetSelected(false);
             this._currentEntity = null;
             this._navMeshSurface.BuildNavMesh();
         }
