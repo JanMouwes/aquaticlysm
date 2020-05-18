@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 public class SelectionController : MonoBehaviour
 {
@@ -19,10 +20,7 @@ public class SelectionController : MonoBehaviour
     private Vector2 startScreenPosition;
     private Vector2 startWorldSpace;
     private Vector2 endWorldSpace;
-
-    // The position where the raycast hits.
-    private RaycastHit raycastHit;
-
+    
     // Start is called before the first frame update.
     private void Start()
     {
@@ -43,9 +41,11 @@ public class SelectionController : MonoBehaviour
     // Update is called once per frame.
     private void Update()
     {
+        RaycastHit raycastHit;
+        
         // Return true when the left mouse button is pressed and the raycast (range 300) hits the floor.
         if (Input.GetButtonDown("LeftMouseButton") && 
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 300))
+            MouseUtil.TryRaycastAtMousePosition(300, out raycastHit))
         {
             // Clear all selected items.
             ClearSelected();
@@ -66,9 +66,9 @@ public class SelectionController : MonoBehaviour
             startWorldSpace.y = raycastHit.point.z;
         }
 
-        // Return true when the left mouse button is held down and the raycast (range 300) hits the floor.
+        // Return true when the left mouse button is held down and the raycast (range 1000) hits the floor.
         if (Input.GetButton("LeftMouseButton") && 
-            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000))
+            MouseUtil.TryRaycastAtMousePosition(1000, out raycastHit))
         {
             // Update the selection box with the new mousecoordinates.
             UpdateSelectionBox(Input.mousePosition);
