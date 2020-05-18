@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class for building walkways
@@ -65,7 +66,7 @@ public class BuildWalkway : MonoBehaviour
         // Keep dock following the mouse.
         UpdateDockPosition();
 
-        this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.yellow;
+        this._outline.effectColor = DoesEntityCollide() ? Color.red : Color.yellow;
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
