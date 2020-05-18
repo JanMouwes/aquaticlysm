@@ -37,20 +37,15 @@ public class BuildWalkway : MonoBehaviour
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
 
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject())
-        {
-            // Get mouse position
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
-            {
-                GameObject entity = PrefabInstanceManager.Instance.Spawn(
-                    this.walkwayPrefab,
-                    new Vector3(hit.point.x, 0, hit.point.z),
-                    Quaternion.Euler(0, 90, 0)
-                );
+        if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit))
+        { 
+            GameObject entity = PrefabInstanceManager.Instance.Spawn(
+                this.walkwayPrefab,
+                new Vector3(hit.point.x, 0, hit.point.z),
+                Quaternion.Euler(0, 90, 0)
+            );
 
-                this._currentEntity = entity;
-                this._currentEntity.GetComponent<Selectable>().SetSelected(true);
-            }
+            this._currentEntity = entity;
         }
         // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
@@ -69,32 +64,45 @@ public class BuildWalkway : MonoBehaviour
         // Pressing escape destroys dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
         {
-            PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
-            this._currentEntity = null;
-
+            CancelBuilding();
             return;
         }
 
-
+        // Pressing Z and X rotates the building 90 degrees on Y-axis.
         if (Input.GetButtonDown("KeyRotate"))
         {
-            // Rotate dock when Z or X are pressed.
-            float rotation = Input.GetAxisRaw("KeyRotate") * 90;
-
-            this._currentEntity.transform.Rotate(0, rotation, 0);
+            RotateBuilding();
         }
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("KeyBuildHere"))
         {
-            if (DoesEntityCollide())
-            { 
-                this._currentEntity.GetComponent<Selectable>().SetSelected(false);
-                this._currentEntity = null;
-                this._navMeshSurface.BuildNavMesh();
-            }
-            else { Debug.Log("Can't build here!"); }
+            BuildBuilding();
         }
+    }
+
+    private void CancelBuilding()
+    {
+        PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
+        this._currentEntity = null;
+    }
+
+    private void RotateBuilding()
+    {
+        // Rotate dock when Z or X are pressed.
+        float rotation = Input.GetAxisRaw("KeyRotate") * 90;
+
+        this._currentEntity.transform.Rotate(0, rotation, 0);
+    }
+
+    private void BuildBuilding()
+    {
+        if (DoesEntityCollide())
+        {
+            this._currentEntity = null;
+            this._navMeshSurface.BuildNavMesh();
+        }
+        else { Debug.Log("Can't build here!"); }
     }
 
     /// <summary>
