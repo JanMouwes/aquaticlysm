@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Util;
 
 public class ActionController : MonoBehaviour
 {
-    private RaycastHit _hit;
     private bool _priority;
 
     // Update is called once per frame.
@@ -18,10 +18,10 @@ public class ActionController : MonoBehaviour
             {
                 // Set the priority with the shift click.
                 _priority = Input.GetButton("Shift");
-                
+
                 // Use a raycast to register a game object and send the data to the selected entities.
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out _hit, 100))
-                    SelectionController.selectedEntities.ForEach(s => s.ActionHandler(_hit.collider.gameObject.tag, _hit.point, _priority));
+                if (MouseUtil.TryRaycastAtMousePosition(100, out RaycastHit hit))
+                    SelectionController.selectedEntities.ForEach(s => s.ActionHandler(hit.collider.gameObject.tag, hit.point, _priority));
             }
         }
     }
