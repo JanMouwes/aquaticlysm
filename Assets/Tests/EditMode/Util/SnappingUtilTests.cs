@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.TestTools;
 using Util;
+using Assert = NUnit.Framework.Assert;
 
 namespace Tests.Util
 {
