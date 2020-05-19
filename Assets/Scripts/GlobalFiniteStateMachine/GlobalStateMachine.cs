@@ -22,10 +22,12 @@ public class GlobalStateMachine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             ChangeState(new Build());
+            Debug.Log("Build");
         }        
         if (Input.GetKeyDown(KeyCode.P))
         {
             ChangeState(new Play());
+            Debug.Log("Play");
         }
     }
 

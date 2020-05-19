@@ -1,27 +1,35 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using Util;
 
-/// <summary>
-/// Class for building walkways
-/// </summary>
-public class BuildWalkway : Buildings
+public class Buildings : MonoBehaviour
 {
     private GameObject _currentEntity;
     private Outline _outline;
-    private NavMeshSurface _navMeshSurface;
+    public NavMeshSurface _navMeshSurface;
+    public GameObject[] GameObjects;
+    private GameObject prefab;
 
-    public GameObject walkwayPrefab;
+    private void Start()
+    {
+        enabled = true;
+        GlobalStateMachine.instance.StateChanged += Changestate;
+    }
 
     // Start is called before the first frame update
     private void Awake()
     {
-        this._navMeshSurface = GetComponent<NavMeshSurface>();
+        this._navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
         this._navMeshSurface.BuildNavMesh();
     }
 
+    private void Changestate(IState state) =>this.enabled = (state is Build);
+    
     // Update is called once per frame
     private void Update()
     {
@@ -35,6 +43,15 @@ public class BuildWalkway : Buildings
     /// </summary>
     private void UpdateCreateEntity()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ChangeBuildings(0);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            ChangeBuildings(1);
+        }
+        
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
 
         // Check, if clicking on UI or on the game world
@@ -44,7 +61,7 @@ public class BuildWalkway : Buildings
             if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
             {
                 this._currentEntity = PrefabInstanceManager.Instance.Spawn(
-                    this.walkwayPrefab,
+                    this.prefab,
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
@@ -52,10 +69,15 @@ public class BuildWalkway : Buildings
                 this._outline.enabled = true;
             }
         }
-
-        this._currentEntity.transform.parent = this.transform;
+        
+        this._currentEntity.transform.parent = this.transform.GetChild(2);
     }
 
+    void ChangeBuildings(int index)
+    {
+        prefab = GameObjects[index];
+    }
+    
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
@@ -64,7 +86,7 @@ public class BuildWalkway : Buildings
         if (this._currentEntity == null) { return; }
 
         // Keep dock following the mouse.
-        UpdateDockPosition();
+        UpdateObjectPosition();
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -100,7 +122,7 @@ public class BuildWalkway : Buildings
     /// <summary>
     /// Keep created gameObject following the mouse position to select a position for it.
     /// </summary>
-    private void UpdateDockPosition()
+    private void UpdateObjectPosition()
     {
         // Check, if clicking on the UI or the game world.
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -119,11 +141,12 @@ public class BuildWalkway : Buildings
     /// <returns></returns>
     private bool DoesEntityCollide()
     {
-        GameObject[] allWalkways = GameObject.FindGameObjectsWithTag("Walkway");
-
-        Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
-
-        return allWalkways.Where(walkway => walkway != this._currentEntity)
-                          .Any(walkway => walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+        // Buildings[] buildings = GameObject.FindObjectsOfType<Buildings>();
+        //
+        // Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
+        //
+        // return buildings.Where(building => building != this._currentEntity)
+        //                .Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+        return false;
     }
 }
