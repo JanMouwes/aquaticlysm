@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -38,21 +39,19 @@ public class BuildWalkway : Buildings
         if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
 
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject() && MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         {
-            // Get mouse position
-            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
-            {
-                this._currentEntity = PrefabInstanceManager.Instance.Spawn(
-                    this.walkwayPrefab,
-                    new Vector3(hit.point.x, 0, hit.point.z),
-                    Quaternion.Euler(0, 90, 0)
-                );
-                this._outline = this._currentEntity.GetComponent<Outline>();
-                this._outline.enabled = true;
-            }
+            this._currentEntity = PrefabInstanceManager.Instance.Spawn(
+                this.walkwayPrefab,
+                new Vector3(hit.point.x, 0, hit.point.z),
+                Quaternion.Euler(0, 90, 0)
+            );
+
+            this._outline = this._currentEntity.GetComponent<Outline>();
+            this._outline.enabled = true;
         }
 
+        // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
     }
 
@@ -66,35 +65,46 @@ public class BuildWalkway : Buildings
         // Keep dock following the mouse.
         UpdateDockPosition();
 
-        // Pressing escape destroy dock not yet placed.
+        // Pressing escape destroys dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
         {
-            PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
-            this._currentEntity = null;
+            CancelBuilding();
 
             return;
         }
 
-
-        if (Input.GetButtonDown("KeyRotate"))
-        {
-            // Rotate dock when Z or X are pressed.
-            float rotation = Input.GetAxisRaw("KeyRotate") * 90;
-
-            this._currentEntity.transform.Rotate(0, rotation, 0);
-        }
+        // Pressing Z and X rotates the building 90 degrees on Y-axis.
+        if (Input.GetButtonDown("KeyRotate")) { RotateBuilding(); }
 
         // After checking, if the position is available for building, build a dock pressing U.
-        if (Input.GetButtonDown("KeyBuildHere"))
+        if (Input.GetButtonDown("KeyBuildHere")) { BuildBuilding(); }
+    }
+
+    private void CancelBuilding()
+    {
+        PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
+        this._currentEntity = null;
+    }
+
+    private void RotateBuilding()
+    {
+        // Rotate dock when Z or X are pressed.
+        float rotation = Input.GetAxisRaw("KeyRotate") * 90;
+
+        this._currentEntity.transform.Rotate(0, rotation, 0);
+    }
+
+    // After checking, if the position is available for building, build a dock pressing U.
+
+    private void BuildBuilding()
+    {
+        if (!DoesEntityCollide())
         {
-            if (!DoesEntityCollide())
-            {
-                this._outline.enabled = false;
-                this._currentEntity = null;
-                this._navMeshSurface.BuildNavMesh();
-            }
-            else { Debug.Log("Can't build here!"); }
+            this._outline.enabled = false;
+            this._currentEntity = null;
+            this._navMeshSurface.BuildNavMesh();
         }
+        else { Debug.Log("Can't build here!"); }
     }
 
     /// <summary>
@@ -108,7 +118,15 @@ public class BuildWalkway : Buildings
             // Use a raycast to register the position of the mouse
             if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
             {
-                this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+                Vector3 target = hit.point;
+
+                IEnumerable<GameObject> snappables = GameObject.FindGameObjectsWithTag("Walkway")
+                                                               .Where(walkway => walkway != this._currentEntity);
+
+                // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
+                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, snappables, out Vector3 newTarget)) { target = newTarget; }
+
+                this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
         }
     }
