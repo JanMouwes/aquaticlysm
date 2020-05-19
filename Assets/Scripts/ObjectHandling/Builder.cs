@@ -7,21 +7,21 @@ using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using Util;
 
-public class Buildings : MonoBehaviour
+public class Builder : MonoBehaviour
 {
+    public NavMeshSurface navMeshSurface;
+    public GameObject[] gameObjects;
+
     private GameObject _currentEntity;
+    private GameObject _prefab;
     private Outline _outline;
-    public NavMeshSurface _navMeshSurface;
-    public GameObject[] GameObjects;
-    private GameObject prefab;
     private bool _walkable;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
-        this._navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
-        this._navMeshSurface.BuildNavMesh();
+        this.navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
+        this.navMeshSurface.BuildNavMesh();
     }
 
     private void ToggleEnable(IState state) => this.enabled = state is Build;
@@ -30,37 +30,28 @@ public class Buildings : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.L))
-        {
-            ChangeBuildings(0);
-            _walkable = true;
-        }
+            ChangeBuildings(0, true);
         else if (Input.GetKeyDown(KeyCode.K))
-        {
-            ChangeBuildings(1);
-            _walkable = false;
-        }
+            ChangeBuildings(1, false);
 
         if (Input.GetButtonDown("LeftMouseButton"))
-        {
             UpdateCreateEntity();
-        }
-        
 
         UpdateCurrentEntity();
     }
     
-    void ChangeBuildings(int index)
+    void ChangeBuildings(int index, bool isWalkable)
     {
-        prefab = GameObjects[index];
+        _prefab = gameObjects[index];
+        _walkable = isWalkable;
     }
-
 
     /// <summary>
     /// Creates an entity from a prefab
     /// </summary>
     private void UpdateCreateEntity()
     {
-        if (this._currentEntity != null || prefab == null) return;
+        if (this._currentEntity != null || _prefab == null) return;
 
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -69,7 +60,7 @@ public class Buildings : MonoBehaviour
             if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
             {
                 this._currentEntity = PrefabInstanceManager.Instance.Spawn(
-                    this.prefab,
+                    this._prefab,
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
@@ -79,7 +70,6 @@ public class Buildings : MonoBehaviour
         }
         this._currentEntity.transform.parent = _walkable ? this.transform.GetChild(2) : this.transform;
     }
-
    
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
@@ -95,17 +85,15 @@ public class Buildings : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             CancelBuilding();
-
             return;
         }
 
-        if (Input.GetButtonDown("KeyRotate")) { RotateBuilding(); }
+        if (Input.GetButtonDown("KeyRotate"))
+            RotateBuilding();
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
-        {
             BuildBuilding();
-        }
     }
     
     private void CancelBuilding()
@@ -129,7 +117,7 @@ public class Buildings : MonoBehaviour
             this._outline.enabled = false;
             this._currentEntity   = null;
             if(_walkable)
-                this._navMeshSurface.BuildNavMesh();
+                this.navMeshSurface.BuildNavMesh();
             UpdateCreateEntity();
         }
         else { Debug.Log("Can't build here!"); }
@@ -145,18 +133,17 @@ public class Buildings : MonoBehaviour
         {
             Vector3 target = hit.point;
 
-            IEnumerable<BoxCollider> snappables = FindObjectsOfType<BoxCollider>()
-                                                           .Where(boxCollider => boxCollider != this._currentEntity.GetComponent<BoxCollider>());
-            List<GameObject> objects = new List<GameObject>();
-            foreach (var snappable in snappables)
-            {
-                objects.Add(snappable.gameObject);
-            }
+            BoxCollider currentBox = _currentEntity.GetComponent<BoxCollider>();
+
+            IEnumerable<GameObject> snappables = FindObjectsOfType<BoxCollider>()
+                .Where(obj => obj != currentBox)
+                .Cast<GameObject>();
 
             // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
-            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, objects, out Vector3 newTarget)) { target = newTarget; }
+            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, snappables, out Vector3 newTarget)) 
+                target = newTarget;
 
-            this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
+            _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
         }
     }
 
@@ -168,9 +155,9 @@ public class Buildings : MonoBehaviour
     {
         BoxCollider[] buildings = GameObject.FindObjectsOfType<BoxCollider>();
         
-        Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
+        Bounds bounds = _currentEntity.GetComponent<BoxCollider>().bounds;
         
-        return buildings.Where(building => building != this._currentEntity.GetComponent<BoxCollider>())
+        return buildings.Where(building => building != _currentEntity.GetComponent<BoxCollider>())
                        .Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 }

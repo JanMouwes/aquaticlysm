@@ -8,7 +8,7 @@ using Util;
 /// <summary>
 /// Class for building walkways
 /// </summary>
-public class BuildWalkway : Buildings
+public class BuildWalkway : Builder
 {
     private GameObject _currentEntity;
     private Outline _outline;
