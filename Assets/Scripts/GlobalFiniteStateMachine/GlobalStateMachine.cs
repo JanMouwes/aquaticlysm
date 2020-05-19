@@ -7,7 +7,6 @@ public class GlobalStateMachine : MonoBehaviour
 {
     public static GlobalStateMachine current;
     private IState _currentState;
-
     public event Action<IState> Statechanged;
 
     private void Start()
@@ -35,6 +34,7 @@ public class GlobalStateMachine : MonoBehaviour
         _currentState.Stop();
         _currentState = state;
         _currentState.Start();
-        Statechanged(_currentState);
+        if (Statechanged != null)
+            Statechanged(_currentState);
     }
 }
