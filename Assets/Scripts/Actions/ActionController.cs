@@ -9,7 +9,7 @@ public class ActionController : MonoBehaviour
 {
     private bool _priority;
 
-    private void Start()
+    private void Awake()
     {
         GlobalStateMachine.instance.StateChanged += Changestate;
     }

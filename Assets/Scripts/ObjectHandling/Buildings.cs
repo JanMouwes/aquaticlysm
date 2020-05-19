@@ -15,20 +15,15 @@ public class Buildings : MonoBehaviour
     public GameObject[] GameObjects;
     private GameObject prefab;
 
-    private void Start()
-    {
-        enabled = true;
-        GlobalStateMachine.instance.StateChanged += Changestate;
-    }
-
     // Start is called before the first frame update
     private void Awake()
     {
+        GlobalStateMachine.instance.StateChanged += Changestate;
         this._navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
         this._navMeshSurface.BuildNavMesh();
     }
 
-    private void Changestate(IState state) =>this.enabled = (state is Build);
+    private void Changestate(IState state) => this.enabled = state is Build;
     
     // Update is called once per frame
     private void Update()
@@ -96,7 +91,6 @@ public class Buildings : MonoBehaviour
 
             return;
         }
-
 
         if (Input.GetButtonDown("KeyRotate"))
         {

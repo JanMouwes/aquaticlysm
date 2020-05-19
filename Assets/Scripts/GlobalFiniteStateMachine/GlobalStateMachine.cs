@@ -8,11 +8,15 @@ public class GlobalStateMachine : MonoBehaviour
     public static GlobalStateMachine instance;
     private IState _currentState;
     public event Action<IState> StateChanged;
+    private void Awake()
+    {
+        instance = this;
+        _currentState = new Load();
+    }
 
     private void Start()
     {
-        instance = this;
-        _currentState = new Play();
+        ChangeState(new Play());
     }
 
     private void Update()
