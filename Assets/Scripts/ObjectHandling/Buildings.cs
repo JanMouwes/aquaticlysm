@@ -39,8 +39,12 @@ public class Buildings : MonoBehaviour
             ChangeBuildings(1);
             _walkable = false;
         }
+
+        if (Input.GetButtonDown("LeftMouseButton"))
+        {
+            UpdateCreateEntity();
+        }
         
-        UpdateCreateEntity();
 
         UpdateCurrentEntity();
     }
@@ -56,7 +60,7 @@ public class Buildings : MonoBehaviour
     /// </summary>
     private void UpdateCreateEntity()
     {
-        if (!Input.GetButtonDown("LeftMouseButton") || this._currentEntity != null) return;
+        if (this._currentEntity != null || prefab == null) return;
 
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -74,7 +78,6 @@ public class Buildings : MonoBehaviour
             }
         }
         this._currentEntity.transform.parent = _walkable ? this.transform.GetChild(2) : this.transform;
-
     }
 
    
@@ -91,31 +94,45 @@ public class Buildings : MonoBehaviour
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
         {
-            PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
-            this._currentEntity = null;
+            CancelBuilding();
 
             return;
         }
 
-        if (Input.GetButtonDown("KeyRotate"))
-        {
-            // Rotate dock when Z or X are pressed.
-            float rotation = Input.GetAxisRaw("KeyRotate") * 90;
-
-            this._currentEntity.transform.Rotate(0, rotation, 0);
-        }
+        if (Input.GetButtonDown("KeyRotate")) { RotateBuilding(); }
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
         {
-            if (!DoesEntityCollide())
-            {
-                this._outline.enabled = false;
-                this._currentEntity = null;
-                this._navMeshSurface.BuildNavMesh();
-            }
-            else { Debug.Log("Can't build here!"); }
+            BuildBuilding();
         }
+    }
+    
+    private void CancelBuilding()
+    {
+        PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
+        this._currentEntity = null;
+    }
+
+    private void RotateBuilding()
+    {
+        // Rotate dock when Z or X are pressed.
+        float rotation = Input.GetAxisRaw("KeyRotate") * 90;
+
+        this._currentEntity.transform.Rotate(0, rotation, 0);
+    }
+    
+    private void BuildBuilding()
+    {
+        if (!DoesEntityCollide())
+        {
+            this._outline.enabled = false;
+            this._currentEntity   = null;
+            if(_walkable)
+                this._navMeshSurface.BuildNavMesh();
+            UpdateCreateEntity();
+        }
+        else { Debug.Log("Can't build here!"); }
     }
 
     /// <summary>
@@ -123,14 +140,23 @@ public class Buildings : MonoBehaviour
     /// </summary>
     private void UpdateObjectPosition()
     {
-        // Check, if clicking on the UI or the game world.
-        if (!EventSystem.current.IsPointerOverGameObject())
+        // Use a raycast to register the position of the mouse
+        if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         {
-            // Use a raycast to register the position of the mouse
-            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
+            Vector3 target = hit.point;
+
+            IEnumerable<BoxCollider> snappables = FindObjectsOfType<BoxCollider>()
+                                                           .Where(boxCollider => boxCollider != this._currentEntity.GetComponent<BoxCollider>());
+            List<GameObject> objects = new List<GameObject>();
+            foreach (var snappable in snappables)
             {
-                this._currentEntity.transform.position = new Vector3(hit.point.x, 0, hit.point.z);
+                objects.Add(snappable.gameObject);
             }
+
+            // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
+            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, objects, out Vector3 newTarget)) { target = newTarget; }
+
+            this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
         }
     }
 
