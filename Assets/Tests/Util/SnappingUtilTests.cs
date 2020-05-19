@@ -10,41 +10,66 @@ namespace Tests.Util
 {
     public class SnappingUtilTests
     {
-        // A Test behaves as an ordinary method
-        [Test]
-        public void Test_WhenNearestSnapPointCalled_ShouldReturnNearestSnapPoint()
+        private static GameObject CreateTestGameObjectWithBoxCollider(Vector2 position = default)
         {
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<BoxCollider>();
+            gameObject.transform.position = position;
 
-            BoxCollider boxColliderMock = gameObject.GetComponent<BoxCollider>();
-            boxColliderMock.size = Vector3.zero;
-            boxColliderMock.center = new Vector3(2, 0, 2);
+            BoxCollider subjectBoxCollider = gameObject.GetComponent<BoxCollider>();
+            subjectBoxCollider.size = Vector3.zero;
+            subjectBoxCollider.center = new Vector3(2, 0, 2);
+
+            return gameObject;
+        }
+
+
+        [Test]
+        public void Test_WhenNearestSnapPointCalled_ShouldReturnNearestSnapPoint()
+        {
+            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
 
             IEnumerable<GameObject> gameObjects = new[] {gameObject};
 
-            Vector3? result = SnappingUtil.GetNearestSnapPoint(new Vector3(1, 0, 1), gameObjects);
+            Vector3? actual = SnappingUtil.GetNearestSnapPoint(new Vector3(1, 0, 1), gameObjects);
 
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(actual);
 
-            Vector3 actualNotNull = (Vector3) result;
+            Vector3 actualNotNull = (Vector3) actual;
 
             // Use the Assert class to test conditions
             Assert.AreEqual(2f, actualNotNull.x, .001f);
-
             Assert.AreEqual(0f, actualNotNull.y, .001f);
-
             Assert.AreEqual(2f, actualNotNull.z, .001f);
         }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator Test_WithEnumeratorPasses()
+        [TestCase(1, 1, 1f, false)]
+        [TestCase(1, 1, 3f, true)]
+        public void Test_WhenIsNearSnappingPoint_ShouldReturnTrue(float x, float z, float distance, bool expected)
         {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
+            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
+
+            IEnumerable<GameObject> gameObjects = new[] {gameObject};
+
+            bool actual = SnappingUtil.IsNearSnappingPoint(new Vector3(x, 0, z), distance, gameObjects, out Vector3 actualSnapPoint);
+
+            // Use the Assert class to test conditions
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 1, 1f, 1f, false)]
+        [TestCase(1, 1, 3f, 1f, true)]
+        public void Test_WhenTryGetSnappingPointCalled_ShouldReturnExpected(float x, float z, float distance, float offset, bool expected)
+        {
+            GameObject subject = CreateTestGameObjectWithBoxCollider();
+            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
+
+            IEnumerable<GameObject> gameObjects = new[] {gameObject};
+
+            bool actual = SnappingUtil.TryGetSnappingPoint(new Vector3(x, 0, z), distance, offset, subject, gameObjects, out Vector3 actualSnapPoint);
+
+            // Use the Assert class to test conditions
+            Assert.AreEqual(expected, actual);
         }
     }
 }

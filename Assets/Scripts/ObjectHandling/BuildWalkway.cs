@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -124,8 +125,10 @@ public class BuildWalkway : MonoBehaviour
             {
                 Vector3 target = hit.point;
 
+                IEnumerable<GameObject> snappables = GameObject.FindGameObjectsWithTag("Walkway")
+                                                               .Where(walkway => walkway != this._currentEntity);
                 // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
-                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, out Vector3 newTarget)) { target = newTarget; }
+                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity,snappables, out Vector3 newTarget)) { target = newTarget; }
 
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }

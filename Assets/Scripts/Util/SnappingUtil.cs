@@ -15,12 +15,9 @@ namespace Util
         /// <param name="entity">Object to snap</param>
         /// <param name="snapPoint">The point that was found</param>
         /// <returns>Whether the search was successful</returns>
-        public static bool TryGetSnappingPoint(Vector3 nearPoint, float nearDistance, float offset, GameObject entity, out Vector3 snapPoint)
+        public static bool TryGetSnappingPoint(Vector3 nearPoint, float nearDistance, float offset, GameObject entity, IEnumerable<GameObject> snappables, out Vector3 snapPoint)
         {
-            IEnumerable<GameObject> walkways = GameObject.FindGameObjectsWithTag("Walkway")
-                                                         .Where(walkway => walkway != entity);
-
-            if (!IsNearSnappingPoint(nearPoint, nearDistance, walkways, out snapPoint)) { return false; }
+            if (!IsNearSnappingPoint(nearPoint, nearDistance, snappables, out snapPoint)) { return false; }
 
             // Transforms snap-point to valid building point
             BoxCollider entityCollider = entity.GetComponent<BoxCollider>();
