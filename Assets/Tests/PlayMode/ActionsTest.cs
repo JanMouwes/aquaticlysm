@@ -21,10 +21,10 @@ namespace Tests
             yield return new WaitForSeconds(0.5f);
 
             // Act
-            bool actionExcists = character.ActionHandler("Oewagadoego", Vector3.zero, false);
+            bool actionExists = character.ActionHandler("Oewagadoego", Vector3.zero, false);
 
             // Assert
-            Assert.IsFalse(actionExcists);
+            Assert.IsFalse(actionExists);
         }
 
         [UnityTest]
