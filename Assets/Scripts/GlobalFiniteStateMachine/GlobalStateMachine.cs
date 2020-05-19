@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class GlobalStateMachine : MonoBehaviour
 {
-    public static GlobalStateMachine current;
+    public static GlobalStateMachine instance;
     private IState _currentState;
-    public event Action<IState> Statechanged;
+    public event Action<IState> StateChanged;
 
     private void Start()
     {
-        current = this;
+        instance = this;
         _currentState = new Play();
     }
 
@@ -34,7 +34,7 @@ public class GlobalStateMachine : MonoBehaviour
         _currentState.Stop();
         _currentState = state;
         _currentState.Start();
-        if (Statechanged != null)
-            Statechanged(_currentState);
+
+        StateChanged?.Invoke(_currentState);
     }
 }

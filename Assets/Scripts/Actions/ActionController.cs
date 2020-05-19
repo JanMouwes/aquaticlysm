@@ -11,7 +11,7 @@ public class ActionController : MonoBehaviour
 
     private void Start()
     {
-        GlobalStateMachine.current.Statechanged += Changestate;
+        GlobalStateMachine.instance.StateChanged += Changestate;
     }
 
     private void Changestate(IState state) =>this.enabled = (state is Play) ? true : false;
