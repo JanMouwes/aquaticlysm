@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Build : IState
 {
+    public GlobalState StateType() => GlobalState.Build;
+
     public void Start()
     {
         throw new System.NotImplementedException();

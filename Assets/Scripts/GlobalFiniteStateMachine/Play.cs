@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Play : IState
 {
+    public GlobalState StateType() => GlobalState.Play;
+
     public void Execute()
     {
         throw new System.NotImplementedException();
