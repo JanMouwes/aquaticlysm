@@ -48,7 +48,7 @@ public class BuildWalkway : MonoBehaviour
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
-                _currentEntity.GetComponent<Walkway>().OnSelected();
+                _currentEntity.GetComponent<Walkway>().Selected = true;
             }
         }
 
@@ -88,7 +88,7 @@ public class BuildWalkway : MonoBehaviour
         {
             if (!DoesEntityCollide())
             {
-                _currentEntity.GetComponent<Walkway>().OnDeselected();
+                _currentEntity.GetComponent<Walkway>().Selected = false;
                 this._currentEntity = null;
                 this._navMeshSurface.BuildNavMesh();
             }

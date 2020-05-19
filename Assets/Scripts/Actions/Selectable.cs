@@ -4,9 +4,25 @@ using UnityEngine;
 
 public abstract class Selectable : MonoBehaviour
 {
-    public bool Selected { get; set; }
-    
+    public bool Selected
+    {
+        get => _selected;
+        set
+        {
+            _selected = value;
+            if (_selected)
+            {
+                OnSelected();
+            }
+            else
+            {
+                OnDeselected();
+            }
+        }
+    }
+
     private Outline _outline;
+    private bool _selected;
 
     /// <summary>
     /// The action handler processes all the selectable specific actions.
@@ -30,13 +46,13 @@ public abstract class Selectable : MonoBehaviour
         SelectionController.selectables.Remove(this);
     }
 
-    public void OnSelected()
+    private void OnSelected()
     {
         _outline.enabled = true;
 
     }
 
-    public void OnDeselected()
+    private void OnDeselected()
     {
         _outline.enabled = false;
     }
