@@ -11,13 +11,9 @@ public abstract class Selectable : MonoBehaviour
         {
             _selected = value;
             if (_selected)
-            {
                 OnSelected();
-            }
             else
-            {
                 OnDeselected();
-            }
         }
     }
 
