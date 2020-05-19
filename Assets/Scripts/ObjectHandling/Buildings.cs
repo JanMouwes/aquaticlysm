@@ -14,6 +14,7 @@ public class Buildings : MonoBehaviour
     public NavMeshSurface _navMeshSurface;
     public GameObject[] GameObjects;
     private GameObject prefab;
+    private bool _walkable;
 
     // Start is called before the first frame update
     private void Awake()
@@ -28,26 +29,34 @@ public class Buildings : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ChangeBuildings(0);
+            _walkable = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            ChangeBuildings(1);
+            _walkable = false;
+        }
+        
         UpdateCreateEntity();
 
         UpdateCurrentEntity();
     }
+    
+    void ChangeBuildings(int index)
+    {
+        prefab = GameObjects[index];
+    }
+
 
     /// <summary>
     /// Creates an entity from a prefab
     /// </summary>
     private void UpdateCreateEntity()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ChangeBuildings(0);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ChangeBuildings(1);
-        }
-        
-        if (!Input.GetButtonDown("CreateNewObject") || this._currentEntity != null) return;
+        if (!Input.GetButtonDown("LeftMouseButton") || this._currentEntity != null) return;
 
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject())
@@ -64,15 +73,11 @@ public class Buildings : MonoBehaviour
                 this._outline.enabled = true;
             }
         }
-        
-        this._currentEntity.transform.parent = this.transform.GetChild(2);
+        this._currentEntity.transform.parent = _walkable ? this.transform.GetChild(2) : this.transform;
+
     }
 
-    void ChangeBuildings(int index)
-    {
-        prefab = GameObjects[index];
-    }
-    
+   
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
@@ -101,7 +106,7 @@ public class Buildings : MonoBehaviour
         }
 
         // After checking, if the position is available for building, build a dock pressing U.
-        if (Input.GetButtonDown("KeyBuildHere"))
+        if (Input.GetButtonDown("RightMouseButton"))
         {
             if (!DoesEntityCollide())
             {
@@ -135,12 +140,11 @@ public class Buildings : MonoBehaviour
     /// <returns></returns>
     private bool DoesEntityCollide()
     {
-        // Buildings[] buildings = GameObject.FindObjectsOfType<Buildings>();
-        //
-        // Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
-        //
-        // return buildings.Where(building => building != this._currentEntity)
-        //                .Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
-        return false;
+        BoxCollider[] buildings = GameObject.FindObjectsOfType<BoxCollider>();
+        
+        Bounds bounds = this._currentEntity.GetComponent<BoxCollider>().bounds;
+        
+        return buildings.Where(building => building != this._currentEntity.GetComponent<BoxCollider>())
+                       .Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 }
