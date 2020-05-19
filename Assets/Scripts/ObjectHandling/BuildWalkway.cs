@@ -40,7 +40,7 @@ public class BuildWalkway : MonoBehaviour
 
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject() && MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
-        { 
+        {
             this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                 this.walkwayPrefab,
                 new Vector3(hit.point.x, 0, hit.point.z),
@@ -49,8 +49,8 @@ public class BuildWalkway : MonoBehaviour
 
             this._outline = this._currentEntity.GetComponent<Outline>();
             this._outline.enabled = true;
-   
         }
+
         // Make sure, this walkway is assigned as a child of the Docks.
         this._currentEntity.transform.parent = this.transform;
     }
@@ -69,20 +69,15 @@ public class BuildWalkway : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             CancelBuilding();
+
             return;
         }
 
         // Pressing Z and X rotates the building 90 degrees on Y-axis.
-        if (Input.GetButtonDown("KeyRotate"))
-        {
-            RotateBuilding();
-        }
+        if (Input.GetButtonDown("KeyRotate")) { RotateBuilding(); }
 
         // After checking, if the position is available for building, build a dock pressing U.
-        if (Input.GetButtonDown("KeyBuildHere"))
-        {
-            BuildBuilding();
-        }
+        if (Input.GetButtonDown("KeyBuildHere")) { BuildBuilding(); }
     }
 
     private void CancelBuilding()
@@ -99,8 +94,8 @@ public class BuildWalkway : MonoBehaviour
         this._currentEntity.transform.Rotate(0, rotation, 0);
     }
 
-        // After checking, if the position is available for building, build a dock pressing U.
-        
+    // After checking, if the position is available for building, build a dock pressing U.
+
     private void BuildBuilding()
     {
         if (!DoesEntityCollide())
@@ -121,14 +116,15 @@ public class BuildWalkway : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             // Use a raycast to register the position of the mouse
-            if (MouseUtil.TryRaycastAtMousePosition( out RaycastHit hit))
+            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
             {
                 Vector3 target = hit.point;
 
                 IEnumerable<GameObject> snappables = GameObject.FindGameObjectsWithTag("Walkway")
                                                                .Where(walkway => walkway != this._currentEntity);
+
                 // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
-                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity,snappables, out Vector3 newTarget)) { target = newTarget; }
+                if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, snappables, out Vector3 newTarget)) { target = newTarget; }
 
                 this._currentEntity.transform.position = new Vector3(target.x, 0, target.z);
             }
