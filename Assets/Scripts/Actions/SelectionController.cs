@@ -5,10 +5,10 @@ using Util;
 public class SelectionController : MonoBehaviour
 {
     // All selectable entities.
-    public static List<ISelectable> selectables = new List<ISelectable>();
+    public static List<Selectable> selectables = new List<Selectable>();
     
     // All selected entities.
-    public static List<ISelectable> selectedEntities = new List<ISelectable>();
+    public static List<Selectable> selectedEntities = new List<Selectable>();
 
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
@@ -51,7 +51,7 @@ public class SelectionController : MonoBehaviour
             ClearSelected();
 
             // Select a single unit.
-            ISelectable s = raycastHit.collider.GetComponentInParent<ISelectable>();
+            Selectable s = raycastHit.collider.GetComponentInParent<Selectable>();
             if (s != null)
             {
                 s.Selected = true;
@@ -88,7 +88,7 @@ public class SelectionController : MonoBehaviour
             Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
 
             // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat.
-            foreach (ISelectable selectable in selectables)
+            foreach (Selectable selectable in selectables)
             {
                 if (selectable is Character gameObject)
                 {

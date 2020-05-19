@@ -11,7 +11,7 @@ using UnityEngine.Profiling.Memory.Experimental;
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
-public class Character : MonoBehaviour, ISelectable
+public class Character : Selectable
 {
     // A dictionary with all the possible actions for the characters.
     private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
@@ -19,7 +19,6 @@ public class Character : MonoBehaviour, ISelectable
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public int Age { get; private set; }
-    public bool Selected { get; set; }
 
     public NavMeshAgent agent;
     public float energyLevel;
@@ -40,20 +39,6 @@ public class Character : MonoBehaviour, ISelectable
             InitGoals();
         }
     }
-    
-    //TODO: REMOVE HERE AND SET IN THE FACTORY.
-    void OnEnable()
-    {
-        // Add the selectable to a list of selectable entities.
-        SelectionController.selectables.Add(this);
-    }
-
-    //TODO: REMOVE HERE AND SET IN THE FACTORY.
-    void OnDisable()
-    {
-        // Remove the selectable of the list of selectable entities.
-        SelectionController.selectables.Remove(this);
-    }
 
     // Update is called once per frame.
     private void Update()
@@ -64,7 +49,7 @@ public class Character : MonoBehaviour, ISelectable
         _brain.Process();
     }
     
-    public bool ActionHandler(string tag, Vector3 position, bool priority) 
+    public override bool ActionHandler(string tag, Vector3 position, bool priority) 
     {
         if (_actions.ContainsKey(tag))
         {
