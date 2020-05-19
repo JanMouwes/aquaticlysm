@@ -39,10 +39,10 @@ namespace Tests
             yield return new WaitForSeconds(0.5f);
 
             // Act
-            bool actionExcists = character.ActionHandler("Rest", Vector3.zero, false);
+            bool actionExists = character.ActionHandler("Rest", Vector3.zero, false);
 
             // Assert
-            Assert.IsTrue(actionExcists);
+            Assert.IsTrue(actionExists);
         }
     }
 }
