@@ -7,7 +7,7 @@ using Util;
 /// <summary>
 /// Class for building walkways
 /// </summary>
-public class BuildWalkway : Selectable
+public class BuildWalkway : MonoBehaviour
 {
     private GameObject _currentEntity;
     //private Outline _outline;
@@ -29,12 +29,7 @@ public class BuildWalkway : Selectable
 
         UpdateCurrentEntity();
     }
-
-    public override bool ActionHandler(string tag, Vector3 position, bool priority)
-    {
-        return false;
-    }
-
+    
     /// <summary>
     /// Creates an entity from a prefab
     /// </summary>
@@ -53,7 +48,7 @@ public class BuildWalkway : Selectable
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
-                this.Owner = this._currentEntity;
+                _currentEntity.GetComponent<Walkway>().OnSelected();
             }
         }
 
@@ -93,6 +88,7 @@ public class BuildWalkway : Selectable
         {
             if (!DoesEntityCollide())
             {
+                _currentEntity.GetComponent<Walkway>().OnDeselected();
                 this._currentEntity = null;
                 this._navMeshSurface.BuildNavMesh();
             }

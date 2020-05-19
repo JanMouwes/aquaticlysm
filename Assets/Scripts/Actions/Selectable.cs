@@ -5,9 +5,7 @@ using UnityEngine;
 public abstract class Selectable : MonoBehaviour
 {
     public bool Selected { get; set; }
-
-    public GameObject Owner;
-
+    
     private Outline _outline;
 
     /// <summary>
@@ -22,15 +20,24 @@ public abstract class Selectable : MonoBehaviour
     {
         // Add the selectable to a list of selectable entities.
         SelectionController.selectables.Add(this);
-        this._outline = Owner.GetComponent<Outline>();
-        _outline.enabled = true;
-
+        this._outline = this.GetComponent<Outline>();
+        OnDeselected();
     }
 
     public void OnDisable()
     {
         // Remove the selectable of the list of selectable entities.
         SelectionController.selectables.Remove(this);
+    }
+
+    public void OnSelected()
+    {
+        _outline.enabled = true;
+
+    }
+
+    public void OnDeselected()
+    {
         _outline.enabled = false;
     }
 }

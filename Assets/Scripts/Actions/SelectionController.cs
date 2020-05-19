@@ -55,6 +55,7 @@ public class SelectionController : MonoBehaviour
             if (s != null)
             {
                 s.Selected = true;
+                s.OnSelected();
                 selectedEntities.Add(s);
             }
 
@@ -95,6 +96,8 @@ public class SelectionController : MonoBehaviour
                     if(boundingBox.Contains(new Vector2(gameObject.transform.position.x, gameObject.transform.position.z)))
                     {
                         selectable.Selected = true;
+                        selectable.OnSelected();
+                        
                         selectedEntities.Add(selectable);
                     }
                 }
@@ -108,6 +111,8 @@ public class SelectionController : MonoBehaviour
     private void ClearSelected() 
     {
         selectedEntities.ForEach(s => s.Selected = false);
+        selectedEntities.ForEach(s => s.OnDeselected());
+
         selectedEntities.Clear();
     }
 
