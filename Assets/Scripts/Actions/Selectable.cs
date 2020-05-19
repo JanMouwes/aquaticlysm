@@ -1,24 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Selectable : MonoBehaviour
 {
-    public bool Selected
-    {
-        get => _selected;
-        set
-        {
-            _selected = value;
-            if (_selected)
-                OnSelected();
-            else
-                OnDeselected();
-        }
-    }
-
     private Outline _outline;
     private bool _selected;
+
+    public bool Selected
+    {
+        get => this._selected;
+        set
+        {
+            this._selected = value;
+
+            if (this._selected) { OnSelected(); }
+            else { OnDeselected(); }
+        }
+    }
 
     /// <summary>
     /// The action handler processes all the selectable specific actions.
@@ -32,7 +29,7 @@ public abstract class Selectable : MonoBehaviour
     {
         // Add the selectable to a list of selectable entities.
         SelectionController.selectables.Add(this);
-        this._outline = this.GetComponent<Outline>();
+        this._outline = GetComponent<Outline>();
         OnDeselected();
     }
 
@@ -44,12 +41,11 @@ public abstract class Selectable : MonoBehaviour
 
     private void OnSelected()
     {
-        _outline.enabled = true;
-
+        this._outline.enabled = true;
     }
 
     private void OnDeselected()
     {
-        _outline.enabled = false;
+        this._outline.enabled = false;
     }
 }
