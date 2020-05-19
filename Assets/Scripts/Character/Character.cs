@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, ISelectable
     private GoalCommand _goaldata;
 
     // Start is called before the first frame update.
-    private void Start()
+    public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
@@ -64,7 +64,7 @@ public class Character : MonoBehaviour, ISelectable
         _brain.Process();
     }
     
-    public void ActionHandler(string tag, Vector3 position, bool priority) 
+    public bool ActionHandler(string tag, Vector3 position, bool priority) 
     {
         if (_actions.ContainsKey(tag))
         {
@@ -77,7 +77,11 @@ public class Character : MonoBehaviour, ISelectable
                 _brain.AddSubGoal(goal);
             else
                 _brain.PrioritizeSubGoal(goal);
+
+            return true;
         }
+
+        return false;
     }
 
     /// <summary>
