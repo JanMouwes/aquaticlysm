@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum GlobalState { Play, Build}
 
 public class GlobalStateMachine : MonoBehaviour
 {
     public static GlobalStateMachine current;
     private IState _currentState;
+
+    public event Action<IState> Statechanged;
 
     private void Start()
     {
@@ -18,6 +19,15 @@ public class GlobalStateMachine : MonoBehaviour
     private void Update()
     {
         _currentState.Execute();
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ChangeState(new Build());
+        }        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ChangeState(new Play());
+        }
     }
 
     public void ChangeState(IState state) 
@@ -25,7 +35,6 @@ public class GlobalStateMachine : MonoBehaviour
         _currentState.Stop();
         _currentState = state;
         _currentState.Start();
+        Statechanged(_currentState);
     }
-
-    public bool IsState(GlobalState type) => (_currentState.StateType() == type) ? true : false ;
 }

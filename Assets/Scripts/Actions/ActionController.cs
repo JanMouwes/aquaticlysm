@@ -9,6 +9,13 @@ public class ActionController : MonoBehaviour
 {
     private bool _priority;
 
+    private void Start()
+    {
+        GlobalStateMachine.current.Statechanged += Changestate;
+    }
+
+    private void Changestate(IState state) =>this.enabled = (state is Play) ? true : false;
+
     // Update is called once per frame.
     void Update()
     {
