@@ -11,10 +11,10 @@ public class ActionController : MonoBehaviour
 
     private void Awake()
     {
-        GlobalStateMachine.instance.StateChanged += Changestate;
+        GlobalStateMachine.instance.StateChanged += ToggleEnable;
     }
 
-    private void Changestate(IState state) =>this.enabled = (state is Play) ? true : false;
+    private void ToggleEnable(IState state) =>this.enabled = state is Play;
 
     // Update is called once per frame.
     void Update()

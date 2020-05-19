@@ -18,12 +18,12 @@ public class Buildings : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        GlobalStateMachine.instance.StateChanged += Changestate;
+        GlobalStateMachine.instance.StateChanged += ToggleEnable;
         this._navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
         this._navMeshSurface.BuildNavMesh();
     }
 
-    private void Changestate(IState state) => this.enabled = state is Build;
+    private void ToggleEnable(IState state) => this.enabled = state is Build;
     
     // Update is called once per frame
     private void Update()
