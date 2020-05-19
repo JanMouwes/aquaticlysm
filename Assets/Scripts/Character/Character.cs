@@ -3,10 +3,6 @@ using UnityEngine.AI;
 using System.Collections;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using UnityEngine.Experimental.TerrainAPI;
-using UnityEngine.Profiling.Memory.Experimental;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
@@ -22,6 +18,7 @@ public class Character : Selectable
 
     public NavMeshAgent agent;
     public float energyLevel;
+
     private Think _brain;
     private GoalCommand _goaldata;
 

@@ -6,6 +6,10 @@ public abstract class Selectable : MonoBehaviour
 {
     public bool Selected { get; set; }
 
+    public GameObject Owner;
+
+    private Outline _outline;
+
     /// <summary>
     /// The action handler processes all the selectable specific actions.
     /// </summary>
@@ -18,11 +22,15 @@ public abstract class Selectable : MonoBehaviour
     {
         // Add the selectable to a list of selectable entities.
         SelectionController.selectables.Add(this);
+        this._outline = Owner.GetComponent<Outline>();
+        _outline.enabled = true;
+
     }
 
     public void OnDisable()
     {
         // Remove the selectable of the list of selectable entities.
         SelectionController.selectables.Remove(this);
+        _outline.enabled = false;
     }
 }

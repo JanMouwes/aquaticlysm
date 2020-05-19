@@ -621,8 +621,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkwayPrefab: {fileID: 3784799114617638757, guid: 421f1fb2ac547a042a3e87d4f7b53e7c,
     type: 3}
-  selectedMaterial: {fileID: 2100000, guid: e04970e93eaf88a418c6ce9c475304c6, type: 2}
-  normalMaterial: {fileID: 2100000, guid: b5096305e39f29244ad792ace6af324f, type: 2}
 --- !u!1 &962299754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566643657360843199, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
@@ -642,7 +640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 1, g: 0.54578495, b: 0.0141509175, a: 1}
   outlineWidth: 7.7
   precomputeOutline: 0
   bakeKeys: []
