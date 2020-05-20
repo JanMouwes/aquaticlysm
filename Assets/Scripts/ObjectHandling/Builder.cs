@@ -21,7 +21,7 @@ public class Builder : MonoBehaviour
     private void Awake()
     {
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
-        _navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
+        _navMeshSurface = transform.GetChild(0).GetComponent<NavMeshSurface>();
         _navMeshSurface.BuildNavMesh();
     }
 
@@ -77,7 +77,7 @@ public class Builder : MonoBehaviour
             _outline.enabled = true;
         }
 
-        _currentEntity.transform.parent = _walkable ? transform.GetChild(2) : transform;
+        _currentEntity.transform.parent = _walkable ? transform.GetChild(0) : transform.GetChild(1);
     }
 
     /// <summary>
