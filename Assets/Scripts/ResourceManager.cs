@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// Singleton class that contains a dictionary with all possible resources.
+///
+/// Fetch the instance with 'ResourceManager.Instance'
 /// </summary>
 public class ResourceManager
 {
     private static ResourceManager _instance = null;
     private readonly Dictionary<string, int> _resources = new Dictionary<string, int>();
 
+    /// <summary>
+    /// Fetch the single instance
+    /// </summary>
     public static ResourceManager Instance
     {
         get
@@ -21,8 +26,7 @@ public class ResourceManager
             return _instance;
         }
     }
-
-
+    
     /// <summary>
     /// Adds a particular resource to the resources.
     /// </summary>
@@ -68,9 +72,7 @@ public class ResourceManager
     public void AddNewResource(string resource, int amount = 0)
     {
         if (!_resources.ContainsKey(resource))
-        {
             _resources.Add(resource, amount);
-        }
     }
 
     /// <summary>
@@ -82,9 +84,7 @@ public class ResourceManager
     private bool CanSubtractResourceAmount(string resource, int amount)
     {
         if (_resources.ContainsKey(resource))
-        {
             return _resources[resource] >= amount;
-        }
 
         return false;
     }
@@ -98,9 +98,7 @@ public class ResourceManager
     public int GetResourceAmount(string resource)
     {
         if (_resources.TryGetValue(resource, out int value))
-        {
             return value;
-        }
 
         AddNewResource(resource, 0);
         return 0;
