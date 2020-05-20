@@ -1,23 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// 
 /// </summary>
-public class ResourceManager 
+public class ResourceManager
 {
     private static ResourceManager _instance = null;
     private readonly Dictionary<string, int> _resources = new Dictionary<string, int>();
-    
+
     public static ResourceManager Instance
     {
         get
         {
             if (_instance == null)
-            {
                 _instance = new ResourceManager();
-            }
 
             return _instance;
         }
@@ -35,7 +34,7 @@ public class ResourceManager
             _resources[resource] += amount;
         else
             _resources.Add(resource, amount);
-        
+
         if (_resources[resource] < 0)
             _resources[resource] = 0;
     }
@@ -48,7 +47,10 @@ public class ResourceManager
     /// <returns></returns>
     public bool UseResource(string resource, int neededAmount)
     {
-        if (CheckForResource(resource, neededAmount))
+        if (neededAmount < 0)
+            return false;
+
+        if (CanSubtractResourceAmount(resource, neededAmount))
         {
             _resources[resource] -= neededAmount;
             return true;
@@ -58,10 +60,11 @@ public class ResourceManager
     }
 
     /// <summary>
-    /// 
+    /// Adds a completely new resource to the resources dictionary
+    /// if does not yet exist.
     /// </summary>
     /// <param name="resource"></param>
-    /// <param name="amount"></param>
+    /// <param name="amount">Optional</param>
     public void AddNewResource(string resource, int amount = 0)
     {
         if (!_resources.ContainsKey(resource))
@@ -69,49 +72,42 @@ public class ResourceManager
             _resources.Add(resource, amount);
         }
     }
+
     /// <summary>
     /// Check if there's enough of a certain resource
     /// </summary>
     /// <param name="resource"></param>
     /// <param name="amount"></param>
     /// <returns>true if there's enough resources</returns>
-    private bool CheckForResource(string resource, int amount)
+    private bool CanSubtractResourceAmount(string resource, int amount)
     {
         if (_resources.ContainsKey(resource))
         {
-            if (_resources[resource] >= amount)
-                return true;
-            
-            return false;
+            return _resources[resource] >= amount;
         }
 
         return false;
     }
 
     /// <summary>
-    /// 
+    /// Return the resource amount corresponding to the key.
+    /// If the resource does not exist yet, it gets added.
     /// </summary>
     /// <param name="resource"></param>
-    /// <returns></returns>
+    /// <returns>The amount of resources </returns>
     public int GetResourceAmount(string resource)
     {
-        if (_resources.ContainsKey(resource))
+        if (_resources.TryGetValue(resource, out int value))
         {
-            return _resources[resource];
+            return value;
         }
 
+        AddNewResource(resource, 0);
         return 0;
     }
 
-    public void Clear()
-    {
-        _resources.Clear();
-    }
+    /// <summary>
+    /// Clears the entire dictionary of all its resources.
+    /// </summary>
+    public void Clear() => _resources.Clear();
 }
-
-
-
-
-
-
-
