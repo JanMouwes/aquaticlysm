@@ -1336,8 +1336,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 1675793768008181234, guid: 6fac049a955596f4cbd2fb8005bab8eb, type: 3}
   - {fileID: 3784799114617638757, guid: 421f1fb2ac547a042a3e87d4f7b53e7c, type: 3}
+  - {fileID: 1675793768008181234, guid: 6fac049a955596f4cbd2fb8005bab8eb, type: 3}
 --- !u!1001 &1806880574
 PrefabInstance:
   m_ObjectHideFlags: 0

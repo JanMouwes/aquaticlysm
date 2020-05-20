@@ -6,8 +6,10 @@ using UnityEngine;
 public class GlobalStateMachine : MonoBehaviour
 {
     public static GlobalStateMachine instance;
-    private IState _currentState;
     public event Action<IState> StateChanged;
+
+    private IState _currentState;
+
     private void Awake()
     {
         instance = this;
@@ -35,6 +37,11 @@ public class GlobalStateMachine : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Changes the state and invokes all observers.
+    /// </summary>
+    /// <param name="state">The desired state.</param>
     public void ChangeState(IState state) 
     {
         _currentState.Stop();

@@ -111,8 +111,12 @@ public class Builder : MonoBehaviour
     /// </summary>
     private void CancelBuilding()
     {
-        PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
-        _currentEntity = null;
+        if (_currentEntity != null)
+        {
+            PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
+            _currentEntity = null;
+        }
+
         _prefab = null;
     }
 
