@@ -621,8 +621,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkwayPrefab: {fileID: 3784799114617638757, guid: 421f1fb2ac547a042a3e87d4f7b53e7c,
     type: 3}
-  selectedMaterial: {fileID: 2100000, guid: e04970e93eaf88a418c6ce9c475304c6, type: 2}
-  normalMaterial: {fileID: 2100000, guid: b5096305e39f29244ad792ace6af324f, type: 2}
 --- !u!1 &962299754 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 566643657360843199, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
@@ -1419,6 +1417,62 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 96124874}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2091461430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091461433}
+  - component: {fileID: 2091461432}
+  - component: {fileID: 2091461431}
+  m_Layer: 0
+  m_Name: Resources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2091461431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091461430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8308f2f4e43cf543b703ec5d20c0d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2091461432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091461430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af0138644190ba45b575df2bf12c706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2091461433
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091461430}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5124655, y: 3.421679, z: 0.509331}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &566643656067081100
 PrefabInstance:
   m_ObjectHideFlags: 0

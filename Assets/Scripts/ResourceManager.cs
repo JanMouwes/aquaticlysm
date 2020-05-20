@@ -5,10 +5,10 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class ResourceManager : MonoBehaviour
+public class ResourceManager 
 {
-    private Dictionary<string, int> _resources;
     private static ResourceManager _instance = null;
+    private readonly Dictionary<string, int> _resources = new Dictionary<string, int>();
     
     public static ResourceManager Instance
     {
@@ -23,12 +23,7 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _resources = new Dictionary<string, int>();
-    }
-    
+
     /// <summary>
     /// Adds a particular resource to the resources.
     /// </summary>
@@ -36,7 +31,6 @@ public class ResourceManager : MonoBehaviour
     /// <param name="amount"></param>
     public void GatherResource(string resource, int amount)
     {
-      
         if (_resources.ContainsKey(resource))
             _resources[resource] += amount;
         else
@@ -64,6 +58,18 @@ public class ResourceManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="resource"></param>
+    /// <param name="amount"></param>
+    public void AddNewResource(string resource, int amount = 0)
+    {
+        if (!_resources.ContainsKey(resource))
+        {
+            _resources.Add(resource, amount);
+        }
+    }
+    /// <summary>
     /// Check if there's enough of a certain resource
     /// </summary>
     /// <param name="resource"></param>
@@ -81,7 +87,26 @@ public class ResourceManager : MonoBehaviour
 
         return false;
     }
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="resource"></param>
+    /// <returns></returns>
+    public int GetResourceAmount(string resource)
+    {
+        if (_resources.ContainsKey(resource))
+        {
+            return _resources[resource];
+        }
+
+        return 0;
+    }
+
+    public void Clear()
+    {
+        _resources.Clear();
+    }
 }
 
 
