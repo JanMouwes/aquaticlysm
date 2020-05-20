@@ -10,10 +10,16 @@ public class Selectable : MonoBehaviour
         get => _selected;
         set
         {
-            if (value) 
+            if (value)
+            {
+                _selected = true;
                 OnSelected();
-            else 
+            }
+            else
+            {
+                _selected = false;
                 OnDeselected();
+            }
         }
     }
 
@@ -34,13 +40,11 @@ public class Selectable : MonoBehaviour
 
     private void OnSelected()
     {
-        _selected = true;
         _outline.enabled = true;
     }
 
     private void OnDeselected()
     {
-        _selected = false;
         _outline.enabled = false;
     }
 }

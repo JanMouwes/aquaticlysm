@@ -38,17 +38,17 @@ public class Builder : MonoBehaviour
 
         // CURRENTLY TEST CODE, KEEP IN MIND.
         if (Input.GetKeyDown(KeyCode.L))
-            ChangeBuildings(0, true);
+            ChangePrefab(0, true);
         else if (Input.GetKeyDown(KeyCode.K))
-            ChangeBuildings(1, false);
+            ChangePrefab(1, false);
 
         if (Input.GetButtonDown("LeftMouseButton"))
-            UpdateCreateEntity();
+            CreateEntity();
 
-        UpdateCurrentEntity();
+        UpdateEntity();
     }
 
-    void ChangeBuildings(int index, bool isWalkable)
+    void ChangePrefab(int index, bool isWalkable)
     {
         _prefab = prefabs[index];
         _walkable = isWalkable;
@@ -57,7 +57,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Creates an entity from a prefab.
     /// </summary>
-    private void UpdateCreateEntity()
+    private void CreateEntity()
     {
         if (_currentEntity != null || _prefab == null) 
             return;
@@ -83,13 +83,13 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
-    private void UpdateCurrentEntity()
+    private void UpdateEntity()
     {
         if (_currentEntity == null)
             return;
 
         // Keep dock following the mouse.
-        UpdateObjectPosition();
+        UpdateEntityPosition();
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -99,11 +99,11 @@ public class Builder : MonoBehaviour
         }
 
         if (Input.GetButtonDown("KeyRotate"))
-            RotateBuilding();
+            RotateEntity();
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
-            BuildBuilding();
+            BuildEntity();
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Rotates the current building.
     /// </summary>
-    private void RotateBuilding()
+    private void RotateEntity()
     {
         // Rotate dock when Z or X are pressed.
         float rotation = Input.GetAxisRaw("KeyRotate") * 90;
@@ -133,15 +133,18 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Build the building if it doesn't collide with any building.
     /// </summary>
-    private void BuildBuilding()
+    private void BuildEntity()
     {
         if (!DoesEntityCollide())
         {
             _outline.enabled = false;
             _currentEntity = null;
+
             if (_walkable)
                 _navMeshSurface.BuildNavMesh();
-            UpdateCreateEntity();
+
+            // Create next entity
+            CreateEntity();
         }
         else 
             Debug.Log("Can't build here!");
@@ -150,7 +153,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Keep created gameObject following the mouse position to select a position for it.
     /// </summary>
-    private void UpdateObjectPosition()
+    private void UpdateEntityPosition()
     {
         // Use a raycast to register the position of the mouse
         if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
