@@ -90,5 +90,22 @@ namespace Tests
             Assert.AreEqual(12, instance.GetResourceAmount("wood"));
             Assert.AreEqual(8, instance.GetResourceAmount("steel"));
         }
+        
+        [Test]
+        public void WhenResourceRemoved_ShouldnotContainResource()
+        {
+            //Arrange
+            ResourceManager instance = ResourceManager.Instance;
+            bool expected = false;
+            
+            //Act
+            instance.AddNewResource("steel", 8);
+            instance.RemoveResource("steel");
+            bool actual = instance.DoesResourceExist("steel");
+            
+            
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
