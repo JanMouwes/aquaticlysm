@@ -25,11 +25,18 @@ public class Builder : MonoBehaviour
         _navMeshSurface.BuildNavMesh();
     }
 
+    private void OnDisable()
+    {
+        CancelBuilding();
+    }
+
     private void ToggleEnable(IState state) => enabled = state is Build;
 
     // Update is called once per frame
     private void Update()
     {
+
+        // CURRENTLY TEST CODE, KEEP IN MIND.
         if (Input.GetKeyDown(KeyCode.L))
             ChangeBuildings(0, true);
         else if (Input.GetKeyDown(KeyCode.K))
@@ -48,7 +55,7 @@ public class Builder : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates an entity from a prefab
+    /// Creates an entity from a prefab.
     /// </summary>
     private void UpdateCreateEntity()
     {
@@ -99,12 +106,19 @@ public class Builder : MonoBehaviour
             BuildBuilding();
     }
 
+    /// <summary>
+    /// Cancels building a building and resets the builder.
+    /// </summary>
     private void CancelBuilding()
     {
         PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
         _currentEntity = null;
+        _prefab = null;
     }
 
+    /// <summary>
+    /// Rotates the current building.
+    /// </summary>
     private void RotateBuilding()
     {
         // Rotate dock when Z or X are pressed.
@@ -112,6 +126,9 @@ public class Builder : MonoBehaviour
         _currentEntity.transform.Rotate(0, rotation, 0);
     }
 
+    /// <summary>
+    /// Build the building if it doesn't collide with any building.
+    /// </summary>
     private void BuildBuilding()
     {
         if (!DoesEntityCollide())
@@ -147,13 +164,15 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Get all gameObjects colliding with the mouse position to check, if its possible to build here.
     /// </summary>
-    /// <returns></returns>
     private bool DoesEntityCollide()
     {
         Bounds bounds = _currentEntity.GetComponent<BoxCollider>().bounds;
         return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 
+    /// <summary>
+    /// Gets the box colliders from all buildings.
+    /// </summary>
     private IEnumerable<BoxCollider> GetBoxColliders() =>  FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
 
 }
