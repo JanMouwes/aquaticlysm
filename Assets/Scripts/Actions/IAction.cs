@@ -5,10 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public interface ISelectable
+public interface IAction
 {
-    bool Selected { get; set; }
-
     /// <summary>
     /// The action handler processes all the selectable specific actions.
     /// </summary>

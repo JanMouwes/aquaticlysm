@@ -12,7 +12,7 @@ namespace Tests.Util
 {
     public class SnappingUtilTests
     {
-        private static GameObject CreateTestGameObjectWithBoxCollider(Vector2 position = default)
+        private static BoxCollider CreateTestGameObjectWithBoxCollider(Vector2 position = default)
         {
             GameObject gameObject = new GameObject();
             gameObject.AddComponent<BoxCollider>();
@@ -22,16 +22,16 @@ namespace Tests.Util
             subjectBoxCollider.size = Vector3.zero;
             subjectBoxCollider.center = new Vector3(2, 0, 2);
 
-            return gameObject;
+            return subjectBoxCollider;
         }
 
 
         [Test]
         public void Test_WhenNearestSnapPointCalled_ShouldReturnNearestSnapPoint()
         {
-            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
+            BoxCollider gameObject = CreateTestGameObjectWithBoxCollider();
 
-            IEnumerable<GameObject> gameObjects = new[] {gameObject};
+            IEnumerable<BoxCollider> gameObjects = new[] {gameObject};
 
             Vector3? actual = SnappingUtil.GetNearestSnapPoint(new Vector3(1, 0, 1), gameObjects);
 
@@ -49,9 +49,9 @@ namespace Tests.Util
         [TestCase(1, 1, 3f, true)]
         public void Test_WhenIsNearSnappingPoint_ShouldReturnTrue(float x, float z, float distance, bool expected)
         {
-            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
+            BoxCollider gameObject = CreateTestGameObjectWithBoxCollider();
 
-            IEnumerable<GameObject> gameObjects = new[] {gameObject};
+            IEnumerable<BoxCollider> gameObjects = new[] {gameObject};
 
             bool actual = SnappingUtil.IsNearSnappingPoint(new Vector3(x, 0, z), distance, gameObjects, out Vector3 actualSnapPoint);
 
@@ -63,10 +63,10 @@ namespace Tests.Util
         [TestCase(1, 1, 3f, 1f, true)]
         public void Test_WhenTryGetSnappingPointCalled_ShouldReturnExpected(float x, float z, float distance, float offset, bool expected)
         {
-            GameObject subject = CreateTestGameObjectWithBoxCollider();
-            GameObject gameObject = CreateTestGameObjectWithBoxCollider();
+            GameObject subject = CreateTestGameObjectWithBoxCollider().gameObject;
+            BoxCollider gameObject = CreateTestGameObjectWithBoxCollider();
 
-            IEnumerable<GameObject> gameObjects = new[] {gameObject};
+            IEnumerable<BoxCollider> gameObjects = new[] {gameObject};
 
             bool actual = SnappingUtil.TryGetSnappingPoint(new Vector3(x, 0, z), distance, offset, subject, gameObjects, out Vector3 actualSnapPoint);
 

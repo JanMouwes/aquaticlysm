@@ -15,7 +15,7 @@ namespace Util
         /// <param name="entity">Object to snap</param>
         /// <param name="snapPoint">The point that was found</param>
         /// <returns>Whether the search was successful</returns>
-        public static bool TryGetSnappingPoint(Vector3 nearPoint, float nearDistance, float offset, GameObject entity, IEnumerable<GameObject> snappables, out Vector3 snapPoint)
+        public static bool TryGetSnappingPoint(Vector3 nearPoint, float nearDistance, float offset, GameObject entity, IEnumerable<BoxCollider> snappables, out Vector3 snapPoint)
         {
             if (!IsNearSnappingPoint(nearPoint, nearDistance, snappables, out snapPoint)) { return false; }
 
@@ -45,7 +45,7 @@ namespace Util
         /// <param name="snappables">Possible objects to snap to</param>
         /// <param name="snapPoint">The point that was found</param>
         /// <returns>Whether the search was successful</returns>
-        public static bool IsNearSnappingPoint(Vector3 point, float nearDistance, IEnumerable<GameObject> snappables, out Vector3 snapPoint)
+        public static bool IsNearSnappingPoint(Vector3 point, float nearDistance, IEnumerable<BoxCollider> snappables, out Vector3 snapPoint)
         {
             Vector3? possibleSnapPoint = GetNearestSnapPoint(point, snappables);
 
@@ -69,13 +69,13 @@ namespace Util
         /// <param name="toPoint">Starting point</param>
         /// <param name="snappables">Possible objects to snap to</param>
         /// <returns>Nearest point or null if no points were found</returns>
-        public static Vector3? GetNearestSnapPoint(Vector3 toPoint, IEnumerable<GameObject> snappables)
+        public static Vector3? GetNearestSnapPoint(Vector3 toPoint, IEnumerable<BoxCollider> snappables)
         {
-            IEnumerable<GameObject> gameObjects = snappables as GameObject[] ?? snappables.ToArray();
+            IEnumerable<BoxCollider> gameObjects = snappables as BoxCollider[] ?? snappables.ToArray();
 
             if (!gameObjects.Any()) { return null; }
 
-            IEnumerable<Vector3> snapPoints = gameObjects.Select(walkway => walkway.GetComponent<BoxCollider>().ClosestPoint(toPoint))
+            IEnumerable<Vector3> snapPoints = gameObjects.Select(walkway => walkway.ClosestPoint(toPoint))
                                                          .OrderBy(snapPoint => Vector3.Distance(snapPoint, toPoint));
 
             return snapPoints.FirstOrDefault();

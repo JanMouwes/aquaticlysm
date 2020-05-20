@@ -5,10 +5,10 @@ using Util;
 public class SelectionController : MonoBehaviour
 {
     // All selectable entities.
-    public static List<ISelectable> selectables = new List<ISelectable>();
+    public static List<Selectable> selectables = new List<Selectable>();
     
     // All selected entities.
-    public static List<ISelectable> selectedEntities = new List<ISelectable>();
+    public static List<Selectable> selectedEntities = new List<Selectable>();
 
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
@@ -20,7 +20,14 @@ public class SelectionController : MonoBehaviour
     private Vector2 startScreenPosition;
     private Vector2 startWorldSpace;
     private Vector2 endWorldSpace;
-    
+
+    private void Awake()
+    {
+        GlobalStateMachine.instance.StateChanged += ToggleEnable;
+    }
+
+    private void ToggleEnable(IState state) => this.enabled = state is Play;
+
     // Start is called before the first frame update.
     private void Start()
     {
@@ -47,23 +54,7 @@ public class SelectionController : MonoBehaviour
         if (Input.GetButtonDown("LeftMouseButton") && 
             MouseUtil.TryRaycastAtMousePosition(300, out raycastHit))
         {
-            // Clear all selected items.
-            ClearSelected();
-
-            // Select a single unit.
-            ISelectable s = raycastHit.collider.GetComponentInParent<ISelectable>();
-            if (s != null)
-            {
-                s.Selected = true;
-                selectedEntities.Add(s);
-            }
-
-            // Register the mouse coordinates within the canvas.
-            startScreenPosition = Input.mousePosition;
-
-            // Set the pos of the raycasthit.
-            startWorldSpace.x = raycastHit.point.x;
-            startWorldSpace.y = raycastHit.point.z;
+            SelectSingleUnit(raycastHit);
         }
 
         // Return true when the left mouse button is held down and the raycast (range 1000) hits the floor.
@@ -81,22 +72,48 @@ public class SelectionController : MonoBehaviour
         // Return true when the left mouse button is released.
         if (Input.GetButtonUp("LeftMouseButton"))
         {
-            // Close the selection box.
-            selectionBox.gameObject.SetActive(false);
+            SelectMultipleUnits();
+        }
+    }
 
-            // Create a bounding box with the positions in the worldspace.
-            Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
+    private void SelectSingleUnit(RaycastHit raycastHit)
+    {
+        // Clear all selected items.
+        ClearSelected();
 
-            // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat.
-            foreach (ISelectable selectable in selectables)
+        // Select a single unit.
+        Selectable s = raycastHit.collider.GetComponentInParent<Selectable>();
+        if (s != null)
+        {
+            s.Selected = true;
+            selectedEntities.Add(s);
+        }
+
+        // Register the mouse coordinates within the canvas.
+        startScreenPosition = Input.mousePosition;
+
+        // Set the pos of the raycasthit.
+        startWorldSpace.x = raycastHit.point.x;
+        startWorldSpace.y = raycastHit.point.z;
+    }
+
+    private void SelectMultipleUnits()
+    {
+        // Close the selection box.
+        selectionBox.gameObject.SetActive(false);
+
+        // Create a bounding box with the positions in the worldspace.
+        Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
+
+        // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat.
+        foreach (Selectable selectable in selectables)
+        {
+            if (selectable.CompareTag("Character"))
             {
-                if (selectable is Character gameObject)
+                if (boundingBox.Contains(new Vector2(selectable.gameObject.transform.position.x, selectable.gameObject.transform.position.z)))
                 {
-                    if(boundingBox.Contains(new Vector2(gameObject.transform.position.x, gameObject.transform.position.z)))
-                    {
-                        selectable.Selected = true;
-                        selectedEntities.Add(selectable);
-                    }
+                    selectable.Selected = true;
+                    selectedEntities.Add(selectable);
                 }
             }
         }
@@ -108,6 +125,7 @@ public class SelectionController : MonoBehaviour
     private void ClearSelected() 
     {
         selectedEntities.ForEach(s => s.Selected = false);
+
         selectedEntities.Clear();
     }
 
