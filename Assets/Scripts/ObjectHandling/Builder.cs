@@ -9,9 +9,10 @@ using Util;
 
 public class Builder : MonoBehaviour
 {
-    public NavMeshSurface navMeshSurface;
-    public GameObject[] gameObjects;
+    public GameObject[] prefabs;
 
+    private NavMeshSurface _navMeshSurface;
+    private IEnumerable<BoxCollider> _buildingBoxColliders;
     private GameObject _currentEntity;
     private GameObject _prefab;
     private Outline _outline;
@@ -20,12 +21,12 @@ public class Builder : MonoBehaviour
     private void Awake()
     {
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
-        this.navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
-        this.navMeshSurface.BuildNavMesh();
+        _navMeshSurface = transform.GetChild(2).GetComponent<NavMeshSurface>();
+        _navMeshSurface.BuildNavMesh();
     }
 
-    private void ToggleEnable(IState state) => this.enabled = state is Build;
-    
+    private void ToggleEnable(IState state) => enabled = state is Build;
+
     // Update is called once per frame
     private void Update()
     {
@@ -39,10 +40,10 @@ public class Builder : MonoBehaviour
 
         UpdateCurrentEntity();
     }
-    
+
     void ChangeBuildings(int index, bool isWalkable)
     {
-        _prefab = gameObjects[index];
+        _prefab = prefabs[index];
         _walkable = isWalkable;
     }
 
@@ -51,32 +52,34 @@ public class Builder : MonoBehaviour
     /// </summary>
     private void UpdateCreateEntity()
     {
-        if (this._currentEntity != null || _prefab == null) return;
+        if (_currentEntity != null || _prefab == null) 
+            return;
+
+        _buildingBoxColliders = GetBoxColliders();
 
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject())
+        if (!EventSystem.current.IsPointerOverGameObject() &&
+            MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         {
-            // Get mouse position
-            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
-            {
-                this._currentEntity = PrefabInstanceManager.Instance.Spawn(
-                    this._prefab,
-                    new Vector3(hit.point.x, 0, hit.point.z),
-                    Quaternion.Euler(0, 90, 0)
-                );
-                this._outline = this._currentEntity.GetComponent<Outline>();
-                this._outline.enabled = true;
-            }
+            _currentEntity = PrefabInstanceManager.Instance.Spawn(
+                _prefab,
+                new Vector3(hit.point.x, 0, hit.point.z),
+                Quaternion.Euler(0, 90, 0));
+
+            _outline = _currentEntity.GetComponent<Outline>();
+            _outline.enabled = true;
         }
-        this._currentEntity.transform.parent = _walkable ? this.transform.GetChild(2) : this.transform;
+
+        _currentEntity.transform.parent = _walkable ? transform.GetChild(2) : transform;
     }
-   
+
     /// <summary>
     /// Handle selected entity: cancel selection, rotate, set on place.
     /// </summary>
     private void UpdateCurrentEntity()
     {
-        if (this._currentEntity == null) { return; }
+        if (_currentEntity == null)
+            return;
 
         // Keep dock following the mouse.
         UpdateObjectPosition();
@@ -95,32 +98,32 @@ public class Builder : MonoBehaviour
         if (Input.GetButtonDown("RightMouseButton"))
             BuildBuilding();
     }
-    
+
     private void CancelBuilding()
     {
-        PrefabInstanceManager.Instance.DestroyEntity(this._currentEntity.GetInstanceID());
-        this._currentEntity = null;
+        PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
+        _currentEntity = null;
     }
 
     private void RotateBuilding()
     {
         // Rotate dock when Z or X are pressed.
         float rotation = Input.GetAxisRaw("KeyRotate") * 90;
-
-        this._currentEntity.transform.Rotate(0, rotation, 0);
+        _currentEntity.transform.Rotate(0, rotation, 0);
     }
-    
+
     private void BuildBuilding()
     {
         if (!DoesEntityCollide())
         {
-            this._outline.enabled = false;
-            this._currentEntity   = null;
-            if(_walkable)
-                this.navMeshSurface.BuildNavMesh();
+            _outline.enabled = false;
+            _currentEntity = null;
+            if (_walkable)
+                _navMeshSurface.BuildNavMesh();
             UpdateCreateEntity();
         }
-        else { Debug.Log("Can't build here!"); }
+        else 
+            Debug.Log("Can't build here!");
     }
 
     /// <summary>
@@ -133,14 +136,8 @@ public class Builder : MonoBehaviour
         {
             Vector3 target = hit.point;
 
-            BoxCollider currentBox = _currentEntity.GetComponent<BoxCollider>();
-
-            IEnumerable<GameObject> snappables = FindObjectsOfType<BoxCollider>()
-                .Where(obj => obj != currentBox)
-                .Cast<GameObject>();
-
             // If left shift is not pressed, override the current raycasted target position with a possible snapping position.
-            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, this._currentEntity, snappables, out Vector3 newTarget)) 
+            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, _currentEntity, _buildingBoxColliders, out Vector3 newTarget))
                 target = newTarget;
 
             _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
@@ -153,11 +150,10 @@ public class Builder : MonoBehaviour
     /// <returns></returns>
     private bool DoesEntityCollide()
     {
-        BoxCollider[] buildings = GameObject.FindObjectsOfType<BoxCollider>();
-        
         Bounds bounds = _currentEntity.GetComponent<BoxCollider>().bounds;
-        
-        return buildings.Where(building => building != _currentEntity.GetComponent<BoxCollider>())
-                       .Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+        return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
+
+    private IEnumerable<BoxCollider> GetBoxColliders() =>  FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
+
 }
