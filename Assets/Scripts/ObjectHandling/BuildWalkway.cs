@@ -41,16 +41,14 @@ public class BuildWalkway : MonoBehaviour
         // Check, if clicking on UI or on the game world
         if (!EventSystem.current.IsPointerOverGameObject() && MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         {
-            // Get mouse position
-            if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
-            {
+
                 this._currentEntity = PrefabInstanceManager.Instance.Spawn(
                     this.walkwayPrefab,
                     new Vector3(hit.point.x, 0, hit.point.z),
                     Quaternion.Euler(0, 90, 0)
                 );
                 _currentEntity.GetComponent<Walkway>().Selected = true;
-            }
+            
         }
 
         // Make sure, this walkway is assigned as a child of the Docks.
