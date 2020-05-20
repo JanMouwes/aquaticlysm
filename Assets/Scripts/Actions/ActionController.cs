@@ -25,7 +25,13 @@ public class ActionController : MonoBehaviour
 
                 // Use a raycast to register a game object and send the data to the selected entities.
                 if (MouseUtil.TryRaycastAtMousePosition(100, out RaycastHit hit))
-                    SelectionController.selectedEntities.ForEach(s => s.ActionHandler(hit.collider.gameObject.tag, hit.point, _priority));
+                    foreach (Selectable selectable in SelectionController.selectedEntities)
+                    {
+                        IAction action = selectable.gameObject.GetComponent<IAction>();
+                        if(action != null)
+                            action.ActionHandler(hit.collider.gameObject.tag, hit.point, _priority);
+                    }
+
             }
         }
     }

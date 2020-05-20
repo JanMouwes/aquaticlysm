@@ -20,7 +20,14 @@ public class SelectionController : MonoBehaviour
     private Vector2 startScreenPosition;
     private Vector2 startWorldSpace;
     private Vector2 endWorldSpace;
-    
+
+    private void Awake()
+    {
+        GlobalStateMachine.instance.StateChanged += ToggleEnable;
+    }
+
+    private void ToggleEnable(IState state) => this.enabled = state is Play;
+
     // Start is called before the first frame update.
     private void Start()
     {
@@ -101,12 +108,11 @@ public class SelectionController : MonoBehaviour
         // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat.
         foreach (Selectable selectable in selectables)
         {
-            if (selectable is Character gameObject)
+            if (selectable.CompareTag("Character"))
             {
-                if (boundingBox.Contains(new Vector2(gameObject.transform.position.x, gameObject.transform.position.z)))
+                if (boundingBox.Contains(new Vector2(selectable.gameObject.transform.position.x, selectable.gameObject.transform.position.z)))
                 {
                     selectable.Selected = true;
-
                     selectedEntities.Add(selectable);
                 }
             }

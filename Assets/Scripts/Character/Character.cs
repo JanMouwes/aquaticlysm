@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
-public class Character : Selectable
+public class Character : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the characters.
     private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
@@ -46,7 +46,7 @@ public class Character : Selectable
         _brain.Process();
     }
     
-    public override bool ActionHandler(string tag, Vector3 position, bool priority) 
+    public bool ActionHandler(string tag, Vector3 position, bool priority) 
     {
         if (_actions.ContainsKey(tag))
         {

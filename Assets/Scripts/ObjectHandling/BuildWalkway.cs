@@ -10,6 +10,7 @@ using Util;
 /// </summary>
 public class BuildWalkway : MonoBehaviour
 {
+    /*
     private GameObject _currentEntity;
     //private Outline _outline;
     private NavMeshSurface _navMeshSurface;
@@ -146,4 +147,5 @@ public class BuildWalkway : MonoBehaviour
         return allWalkways.Where(walkway => walkway != this._currentEntity)
                           .Any(walkway => walkway.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
+    */
 }
