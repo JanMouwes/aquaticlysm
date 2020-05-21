@@ -167,8 +167,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 206346880947961206}
-  - component: {fileID: 4791516340963955131}
   - component: {fileID: 5221015229271545225}
+  - component: {fileID: 6027926843112769457}
+  - component: {fileID: 4791516340963955131}
   m_Layer: 0
   m_Name: Walkway
   m_TagString: Walkway
@@ -193,24 +194,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4791516340963955131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3784799114617638757}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 1
-  outlineColor: {r: 1, g: 0.444982, b: 0, a: 1}
-  outlineWidth: 15
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!65 &5221015229271545225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -224,6 +207,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.87, y: 0.3, z: 1.57}
   m_Center: {x: 0, y: 0.03, z: 0}
+--- !u!114 &6027926843112769457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784799114617638757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3af3d6e3374b42b59ed627b8192cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4791516340963955131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3784799114617638757}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.53300416, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &4828725022169192941
 GameObject:
   m_ObjectHideFlags: 0
