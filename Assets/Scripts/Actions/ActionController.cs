@@ -34,7 +34,7 @@ public class ActionController : MonoBehaviour
                     {
                         IAction action = selectable.gameObject.GetComponent<IAction>();
                         if(action != null)
-                            action.ActionHandler(hit.collider.gameObject.tag, hit.point, _priority);
+                            action.ActionHandler(hit, _priority);
                     }
 
             }

@@ -13,6 +13,6 @@ public interface IAction
     /// <param name="tag">The tag of the clicked object</param>
     /// <param name="position">The click position</param>
     /// <param name="priority">Is it a prioritized action or not</param>
-    bool ActionHandler(string tag, Vector3 position, bool priority);
+    bool ActionHandler(RaycastHit hit, bool priority);
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveTo : IGoal
 {
@@ -29,10 +30,12 @@ public class MoveTo : IGoal
     {
         if (Status == GoalStatus.Inactive)
             Activate();
-
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(Owner.transform.position, _target) < 2f)
-            Terminate();
+        if (Vector3.Distance(Owner.transform.position, _target) <= 2f)
+        {
+            // Arrived
+           Terminate();
+        }
 
         return Status;
     }
