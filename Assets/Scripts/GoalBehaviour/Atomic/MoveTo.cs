@@ -30,12 +30,14 @@ public class MoveTo : IGoal
     {
         if (Status == GoalStatus.Inactive)
             Activate();
+
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(Owner.transform.position, _target) <= 2f)
-        {
-            // Arrived
+        if (Vector3.Distance(Owner.transform.position, _target) <= 1f)
            Terminate();
-        }
+
+        // Check if the agent can't move any further.
+        if (Owner.agent.isStopped)
+            Status = GoalStatus.Failed;
 
         return Status;
     }

@@ -15,7 +15,7 @@ namespace Tests
             //Arrange
             SceneManager.LoadScene("Scenes/LocalSea");
             IState currentState = null;
-            IState state = new Build();
+            IState state = new BuildState();
 
             //Act
             GlobalStateMachine.instance.StateChanged += (IState s) => currentState = s;

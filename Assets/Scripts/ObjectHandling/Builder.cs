@@ -30,7 +30,7 @@ public class Builder : MonoBehaviour
         CancelBuilding();
     }
 
-    private void ToggleEnable(IState state) => enabled = state is Build;
+    private void ToggleEnable(IState state) => enabled = state is BuildState;
 
     // Update is called once per frame
     private void Update()

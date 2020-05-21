@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Construct : IGoal
+public class Build : IGoal
 {
-    public Character  Owner  { get; private set; }
+    public Character Owner { get; private set; }
     public GoalStatus Status { get; private set; }
-    public string     Name   { get; private set; }
-    private DissolveControl _dissolveControl;
+    public string Name { get; private set; }
 
-    public Construct(Character owner, GameObject gameObject) 
+    private DissolveController _dissolveController;
+
+    public Build(Character owner, GameObject gameObject) 
     {
         Owner = owner;
         Name  = "Construct";
-        _dissolveControl = gameObject.GetComponent<DissolveControl>();
+        _dissolveController = gameObject.GetComponent<DissolveController>();
     }
 
     public void Activate()
@@ -31,7 +32,7 @@ public class Construct : IGoal
             Status = GoalStatus.Failed;
         
         if(Status == GoalStatus.Active)
-            if (_dissolveControl.Build(0.1f * Time.deltaTime))
+            if (_dissolveController.Build(0.1f * Time.deltaTime))
                 Terminate();
         
         return Status;

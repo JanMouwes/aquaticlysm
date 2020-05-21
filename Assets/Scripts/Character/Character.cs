@@ -80,7 +80,7 @@ public class Character : MonoBehaviour, IAction
         goal = input => new Rest(input.Owner);
         _actions.Add("Rest", goal);
         
-        goal = input =>  new BuildGoal(input.Owner, input.Building);
+        goal = input =>  new Construct(input.Owner, input.Building);
         _actions.Add("Building", goal);
     }
 }

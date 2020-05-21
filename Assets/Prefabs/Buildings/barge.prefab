@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8256658401011967730}
   - component: {fileID: 45761509260218469}
   - component: {fileID: 8313224449462912791}
-  - component: {fileID: 2660850299503896899}
+  - component: {fileID: 198468174290548414}
   m_Layer: 0
   m_Name: barge
   m_TagString: Building
@@ -79,7 +79,7 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &2660850299503896899
+--- !u!114 &198468174290548414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1675793768008181234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1996d5535ec271a4f98101667ac2141d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6871499a96b88194ab2f4fbf0ec5a21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   progress: 0

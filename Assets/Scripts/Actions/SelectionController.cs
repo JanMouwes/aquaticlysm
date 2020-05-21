@@ -26,7 +26,7 @@ public class SelectionController : MonoBehaviour
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
     }
 
-    private void ToggleEnable(IState state) => this.enabled = state is Play;
+    private void ToggleEnable(IState state) => this.enabled = state is PlayState;
 
     // Start is called before the first frame update.
     private void Start()
