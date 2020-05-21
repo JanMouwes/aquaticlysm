@@ -16,6 +16,7 @@ public class Builder : MonoBehaviour
     private GameObject _currentEntity;
     private GameObject _prefab;
     private Outline _outline;
+    private Color _originalOutlineColour;
     private bool _walkable;
 
     private void Awake()
@@ -35,7 +36,6 @@ public class Builder : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         // CURRENTLY TEST CODE, KEEP IN MIND.
         if (Input.GetKeyDown(KeyCode.L))
             ChangePrefab(0, true);
@@ -59,7 +59,7 @@ public class Builder : MonoBehaviour
     /// </summary>
     private void CreateEntity()
     {
-        if (_currentEntity != null || _prefab == null) 
+        if (_currentEntity != null || _prefab == null)
             return;
 
         _buildingBoxColliders = GetBoxColliders();
@@ -75,6 +75,7 @@ public class Builder : MonoBehaviour
 
             _outline = _currentEntity.GetComponent<Outline>();
             _outline.enabled = true;
+            this._originalOutlineColour = this._outline.OutlineColor;
         }
 
         _currentEntity.transform.parent = _walkable ? transform.GetChild(0) : transform.GetChild(1);
@@ -95,6 +96,7 @@ public class Builder : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             CancelBuilding();
+
             return;
         }
 
@@ -137,6 +139,7 @@ public class Builder : MonoBehaviour
     {
         if (!DoesEntityCollide())
         {
+            this._outline.OutlineColor = this._originalOutlineColour;
             _outline.enabled = false;
             _currentEntity = null;
 
@@ -146,7 +149,7 @@ public class Builder : MonoBehaviour
             // Create next entity
             CreateEntity();
         }
-        else 
+        else
             Debug.Log("Can't build here!");
     }
 
@@ -177,12 +180,12 @@ public class Builder : MonoBehaviour
     private bool DoesEntityCollide()
     {
         Bounds bounds = _currentEntity.GetComponent<BoxCollider>().bounds;
+
         return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 
     /// <summary>
     /// Gets the box colliders from all buildings.
     /// </summary>
-    private IEnumerable<BoxCollider> GetBoxColliders() =>  FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
-
+    private IEnumerable<BoxCollider> GetBoxColliders() => FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
 }
