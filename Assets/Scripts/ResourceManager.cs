@@ -11,7 +11,7 @@ using UnityEngine;
 public class ResourceManager
 {
     private static ResourceManager _instance = null;
-    private readonly Dictionary<string, int> _resources = new Dictionary<string, int>();
+    private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
 
     /// <summary>
     /// Fetch the single instance
@@ -35,12 +35,9 @@ public class ResourceManager
     public void GatherResource(string resource, int amount)
     {
         if (_resources.ContainsKey(resource))
-            _resources[resource] += amount;
+            _resources[resource].Add(amount);
         else
-            _resources.Add(resource, amount);
-
-        if (_resources[resource] < 0)
-            _resources[resource] = 0;
+            AddNewResource(resource, amount);
     }
 
     /// <summary>
@@ -56,7 +53,7 @@ public class ResourceManager
 
         if (CanSubtractResourceAmount(resource, neededAmount))
         {
-            _resources[resource] -= neededAmount;
+            _resources[resource].Remove(neededAmount);
             return true;
         }
 
@@ -72,9 +69,13 @@ public class ResourceManager
     public void AddNewResource(string resource, int amount = 0)
     {
         if (!_resources.ContainsKey(resource))
-            _resources.Add(resource, amount);
+        {
+            ResourceType type = new ResourceType(resource);
+            Resource temp = new Resource(type, amount);
+            _resources.Add(resource, temp);
+        }
     }
-    
+
     /// <summary>
     /// Clears the entire dictionary of all its resources.
     /// </summary>
@@ -88,8 +89,8 @@ public class ResourceManager
     /// <returns>The amount of resources </returns>
     public int GetResourceAmount(string resource)
     {
-        if (_resources.TryGetValue(resource, out int value))
-            return value;
+        if (_resources.TryGetValue(resource, out Resource value))
+            return value.Amount;
 
         AddNewResource(resource, 0);
         return 0;
@@ -126,7 +127,7 @@ public class ResourceManager
     private bool CanSubtractResourceAmount(string resource, int amount)
     {
         if (_resources.ContainsKey(resource))
-            return _resources[resource] >= amount;
+            return _resources[resource].Amount >= amount;
 
         return false;
     }
