@@ -5,6 +5,6 @@ public struct ResourceType
 
     public ResourceType(string name)
     {
-        this.shortName = name;
+        shortName = name;
     }
 }
