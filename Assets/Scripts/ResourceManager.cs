@@ -34,10 +34,10 @@ public class ResourceManager
     /// <param name="amount"></param>
     public void GatherResource(string resource, int amount)
     {
-        if (_resources.ContainsKey(resource))
-            _resources[resource].Add(amount);
+        if (this._resources.ContainsKey(resource))
+            this._resources[resource].Add(amount);
         else
-            AddNewResource(resource, amount);
+            AddResourceType(resource, amount);
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ResourceManager
 
         if (CanSubtractResourceAmount(resource, neededAmount))
         {
-            _resources[resource].Remove(neededAmount);
+            this._resources[resource].Remove(neededAmount);
             return true;
         }
 
@@ -64,22 +64,22 @@ public class ResourceManager
     /// Adds a completely new resource to the resources dictionary
     /// if does not yet exist.
     /// </summary>
-    /// <param name="resource"></param>
-    /// <param name="amount">Optional</param>
-    public void AddNewResource(string resource, int amount = 0)
+    /// <param name="resourceName"></param>
+    /// <param name="initialAmount">Optional</param>
+    public void AddResourceType(string resourceName, int initialAmount = 0)
     {
-        if (!_resources.ContainsKey(resource))
+        if (!this._resources.ContainsKey(resourceName))
         {
-            ResourceType type = new ResourceType(resource);
-            Resource temp = new Resource(type, amount);
-            _resources.Add(resource, temp);
+            ResourceType type = new ResourceType(resourceName);
+            Resource temp = new Resource(type, initialAmount);
+            this._resources.Add(resourceName, temp);
         }
     }
 
     /// <summary>
     /// Clears the entire dictionary of all its resources.
     /// </summary>
-    public void Clear() => _resources.Clear();
+    public void Clear() => this._resources.Clear();
     
     /// <summary>
     /// Return the resource amount corresponding to the key.
@@ -89,20 +89,20 @@ public class ResourceManager
     /// <returns>The amount of resources </returns>
     public int GetResourceAmount(string resource)
     {
-        if (_resources.TryGetValue(resource, out Resource value))
+        if (this._resources.TryGetValue(resource, out Resource value))
             return value.Amount;
 
-        AddNewResource(resource, 0);
+        AddResourceType(resource, 0);
         return 0;
     }
 
     /// <summary>
     /// Remove a certain resource from the dictionary
     /// </summary>
-    /// <param name="resource"></param>
-    public void RemoveResource(string resource)
+    /// <param name="resourceName"></param>
+    public void RemoveResourceType(string resourceName)
     {
-        _resources.Remove(resource);
+        this._resources.Remove(resourceName);
     }
 
     /// <summary>
@@ -112,10 +112,7 @@ public class ResourceManager
     /// <returns>true if key exists, false if key doesn't exist</returns>
     public bool DoesResourceExist(string resource)
     {
-        if (_resources.ContainsKey(resource))
-            return true;
-
-        return false;
+        return this._resources.ContainsKey(resource);
     }
     
     /// <summary>
@@ -126,8 +123,8 @@ public class ResourceManager
     /// <returns>true if there's enough resources</returns>
     private bool CanSubtractResourceAmount(string resource, int amount)
     {
-        if (_resources.ContainsKey(resource))
-            return _resources[resource].Amount >= amount;
+        if (this._resources.ContainsKey(resource))
+            return this._resources[resource].Amount >= amount;
 
         return false;
     }

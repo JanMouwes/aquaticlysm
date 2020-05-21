@@ -11,7 +11,7 @@ public class Resource
     public Resource(ResourceType type, int amount)
     {
         this.type = type;
-        Amount = amount;
+        this.Amount = amount;
     }
 
     /// <summary>
@@ -23,8 +23,8 @@ public class Resource
     {
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "Parameter has negative value.");
-        
-        Amount += amount;
+
+        this.Amount += amount;
     }
 
     /// <summary>
@@ -37,6 +37,6 @@ public class Resource
         if (amount < 0)
             throw new ArgumentOutOfRangeException(nameof(amount), "Parameter has negative value.");
 
-        Amount -= amount;
+        this.Amount -= amount;
     }
 }

@@ -37,7 +37,7 @@ namespace Tests
         {
             //Arrange
             ResourceManager instance = ResourceManager.Instance;
-            instance.AddNewResource("wood", startingAmount);
+            instance.AddResourceType("wood", startingAmount);
             
             //Act
             bool actual = instance.UseResource("wood", useAmount);
@@ -70,7 +70,7 @@ namespace Tests
             
             //Act
             instance.GatherResource("wood", 12);
-            instance.AddNewResource("wood", 12);
+            instance.AddResourceType("wood", 12);
             
             //Assert
             Assert.AreEqual(12, instance.GetResourceAmount("wood"));
@@ -84,7 +84,7 @@ namespace Tests
             
             //Act
             instance.GatherResource("wood", 12);
-            instance.AddNewResource("steel", 8);
+            instance.AddResourceType("steel", 8);
             
             //Assert
             Assert.AreEqual(12, instance.GetResourceAmount("wood"));
@@ -99,8 +99,8 @@ namespace Tests
             bool expected = false;
             
             //Act
-            instance.AddNewResource("steel", 8);
-            instance.RemoveResource("steel");
+            instance.AddResourceType("steel", 8);
+            instance.RemoveResourceType("steel");
             bool actual = instance.DoesResourceExist("steel");
             
             
