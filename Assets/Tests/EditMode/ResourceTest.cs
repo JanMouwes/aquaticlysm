@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
+using Resources;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -22,7 +23,7 @@ namespace Tests
             ResourceManager instance = ResourceManager.Instance;
             
             //Act
-            instance.GatherResource("wood", 12);
+            instance.IncreaseResource("wood", 12);
             
             //Assert
             Assert.AreEqual(12, instance.GetResourceAmount("wood"));
@@ -40,7 +41,7 @@ namespace Tests
             instance.AddResourceType("wood", startingAmount);
             
             //Act
-            bool actual = instance.UseResource("wood", useAmount);
+            bool actual = instance.DecreaseResource("wood", useAmount);
             int actualAmount = instance.GetResourceAmount("wood");
 
             //Assert
@@ -55,8 +56,8 @@ namespace Tests
             ResourceManager instance = ResourceManager.Instance;
             
             //Act
-            instance.GatherResource("wood", 12);
-            instance.GatherResource("wood", 12);
+            instance.IncreaseResource("wood", 12);
+            instance.IncreaseResource("wood", 12);
             
             //Assert
             Assert.AreEqual(24, instance.GetResourceAmount("wood"));
@@ -69,7 +70,7 @@ namespace Tests
             ResourceManager instance = ResourceManager.Instance;
             
             //Act
-            instance.GatherResource("wood", 12);
+            instance.IncreaseResource("wood", 12);
             instance.AddResourceType("wood", 12);
             
             //Assert
@@ -83,7 +84,7 @@ namespace Tests
             ResourceManager instance = ResourceManager.Instance;
             
             //Act
-            instance.GatherResource("wood", 12);
+            instance.IncreaseResource("wood", 12);
             instance.AddResourceType("steel", 8);
             
             //Assert
