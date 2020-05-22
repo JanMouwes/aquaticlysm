@@ -18,6 +18,8 @@ public class NoiseGenerator : MonoBehaviour
     private float _yOffset;
     private MeshFilter _meshFilter;
 
+    public MeshFilter MeshFilter => this._meshFilter;
+
     // Start is called before the first frame update
     void Start()
     {
