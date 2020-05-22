@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   barrelPrefab: {fileID: 193042247}
+  water: {fileID: 1161426540}
 --- !u!1001 &389810454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1018,6 +1019,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1d35d4c5a9d6ca418625521efaccc7f, type: 3}
+--- !u!1 &1161426540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7166368612852141477, guid: c1d35d4c5a9d6ca418625521efaccc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1161426539}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1238437679
 GameObject:
   m_ObjectHideFlags: 0
