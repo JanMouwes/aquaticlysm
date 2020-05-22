@@ -15,6 +15,11 @@ public class DissolveController : MonoBehaviour
         _materials = GetComponentsInChildren<Renderer>();
     }
 
+    /// <summary>
+    /// Adds upp to the progress till it hit's 1.
+    /// </summary>
+    /// <param name="addProgress">The percentagal amount of work you put into the building.</param>
+    /// <returns>If the build is complete.</returns>
     public bool Build(float addProgress)
     {
         progress -= addProgress;
