@@ -31,6 +31,7 @@ public class Build : IGoal
         if (isExhausted(Owner.energyLevel))
             Status = GoalStatus.Failed;
         
+        // Build
         if(Status == GoalStatus.Active)
             if (_dissolveController.Build(0.1f * Time.deltaTime))
                 Terminate();

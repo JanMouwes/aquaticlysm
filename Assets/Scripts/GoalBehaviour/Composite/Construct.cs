@@ -18,7 +18,7 @@ public class Construct : CompositeGoal
     public override void Activate()
     {
 
-        // Check if the target is reachable
+        // Check if the target is reachable.
         if (_target == Vector3.positiveInfinity)
         {
             Status = GoalStatus.Failed;
@@ -59,6 +59,12 @@ public class Construct : CompositeGoal
         Status = GoalStatus.Completed;
     }
 
+    /// <summary>
+    /// Gets a reachable point from a building close to a navgraph.
+    /// </summary>
+    /// <param name="box">The Boxcollider of the building.</param>
+    /// <param name="maxDistance">The max distance from an object that it can be build.</param>
+    /// <returns>A reachable location except if it's unreachable then it returns the positive infinite.</returns>
     private static Vector3 GetReachableLocation(BoxCollider box, float maxDistance) 
     {
         Vector3 location = box.transform.position;
@@ -77,7 +83,7 @@ public class Construct : CompositeGoal
 
         for (int i = 0; i < 4; i++)
         {
-            // If the nav mesh is in reach return the location
+            // If the nav mesh is in reach return the location.
             if (NavMesh.SamplePosition(points[i], out hit, maxDistance, NavMesh.AllAreas))
                 return hit.position;
         }  
