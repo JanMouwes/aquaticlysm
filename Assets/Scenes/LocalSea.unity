@@ -271,7 +271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c7d120ccdef4a5fa9bcdc6b5375e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelPrefab: {fileID: 193042247}
+  barrelPrefab: {fileID: 169169367049380076, guid: b454c20b7ee3b4f2183a7d027f336962,
+    type: 3}
   water: {fileID: 1161426540}
 --- !u!1001 &389810454
 PrefabInstance:
