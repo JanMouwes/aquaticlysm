@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.44300342, g: 0.4921959, b: 0.5719257, a: 1}
+  m_IndirectSpecularColor: {r: 0.4430032, g: 0.49219626, b: 0.571926, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89c7d120ccdef4a5fa9bcdc6b5375e1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrelPrefab: {fileID: 169169367049380076, guid: b454c20b7ee3b4f2183a7d027f336962,
+  barrelPrefab: {fileID: 7181237435366848502, guid: 7c0f91a1eb5c33546a8a711fbaf2e46a,
     type: 3}
   water: {fileID: 1161426540}
 --- !u!1001 &389810454
