@@ -31,7 +31,7 @@ public class Barrels : MonoBehaviour
             Vector3 position = barrel.transform.position;
 
             barrel.transform.position = new Vector3(
-                position.z,
+                position.x,
                 GetYForPosition(position, this.gridSize, mesh),
                 position.z
             );
