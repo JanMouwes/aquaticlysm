@@ -36,7 +36,8 @@ public class MoveTo : IGoal
            Terminate();
 
         // Check if the agent can't move any further.
-        if (Owner.agent.isStopped)
+        // TODO Make sure composition fails too
+        if (Owner.agent.pathPending)
             Status = GoalStatus.Failed;
 
         return Status;
