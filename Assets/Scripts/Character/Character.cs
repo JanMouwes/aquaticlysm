@@ -73,7 +73,7 @@ public class Character : MonoBehaviour, IAction
     {
         Func<GoalCommand, IGoal> goal;
 
-        goal = input => new MoveTo(input.Owner, input.Position);
+        goal = input => new MoveTo(input.Owner.gameObject, input.Position);
         _actions.Add("Walkway", goal);
         
         goal = input => new Rest(input.Owner);
