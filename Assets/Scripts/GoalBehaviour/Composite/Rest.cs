@@ -27,6 +27,10 @@ public class Rest : CompositeGoal
 
     public override GoalStatus Process()
     {
+        foreach (IGoal subGoal in SubGoals)
+            if(subGoal.Status == GoalStatus.Failed)
+                Terminate();
+
         if (Status == GoalStatus.Inactive)
             Activate();
 

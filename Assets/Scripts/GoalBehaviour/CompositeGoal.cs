@@ -53,7 +53,8 @@ public abstract class CompositeGoal : IGoal
     /// </summary>
     public void RemoveCompletedSubgoals()
     {
-        if (SubGoals.Peek().Status == GoalStatus.Completed || SubGoals.Peek().Status == GoalStatus.Failed)
+        while (SubGoals.Count > 0 && 
+               (SubGoals.Peek().Status == GoalStatus.Completed || SubGoals.Peek().Status == GoalStatus.Failed))
         {
             SubGoals.Dequeue();
         }
