@@ -23,6 +23,10 @@ public class Builder : MonoBehaviour
     {
         _navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
+    }
+
+    private void Start()
+    {
         BuildNavMeshes();
     }
 
