@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 /// <summary>
 ///     Test goal for trying out goal behaviour. Meeting the energy need of the agent.
@@ -7,13 +8,13 @@ public class Rest : CompositeGoal
 {
     private Vector3 _target;
     private Character _owner;
-    
+
     public Rest(Character owner)
     {
         Name = "Rest";
         _owner = owner;
     }
-    
+
     public override void Activate()
     {
         _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
@@ -27,25 +28,9 @@ public class Rest : CompositeGoal
 
     public override GoalStatus Process()
     {
-        foreach (IGoal subGoal in SubGoals)
-            if(subGoal.Status == GoalStatus.Failed)
-                Terminate();
+        if (this.SubGoals.Any(subGoal => subGoal.Status == GoalStatus.Failed)) { Terminate(); }
 
-        if (Status == GoalStatus.Inactive)
-            Activate();
-
-        if (SubGoals.Count == 0)
-        {
-            Terminate();
-        }
-        else
-        {
-            // Process new subgoal.
-            SubGoals.Peek().Process();
-            RemoveCompletedSubgoals();
-        }
-
-        return Status;
+        return base.Process();
     }
 
     public override void Terminate()

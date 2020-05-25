@@ -7,7 +7,7 @@
 public class Think : CompositeGoal
 {
     private Character _owner;
-    
+
     public Think(Character owner)
     {
         Name = "Think";
@@ -22,14 +22,10 @@ public class Think : CompositeGoal
     /// <summary>
     ///     Checks if there is a need for a new goal.
     /// </summary>
-    public void Evaluate()
+    public void FindSubGoal()
     {
         // Check if there is need for resting and also that the agent is not currently taking care of it.
-        if (needsRest(_owner.energyLevel))
-        {
-            Vector3 restLocation = GameObject.FindGameObjectWithTag("Rest").transform.position;
-            AddSubGoal(new Rest(_owner));
-        }
+        if (needsRest(_owner.energyLevel)) { AddSubGoal(new Rest(_owner)); }
     }
 
     public override GoalStatus Process()
@@ -37,23 +33,12 @@ public class Think : CompositeGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (SubGoals.Count == 0)
-        {
-            Evaluate();
-        }
-        else
-        {
-            // Process new subgoal
-            SubGoals.Peek().Process();
-            RemoveCompletedSubgoals();
-        }
+        if (SubGoals.Count == 0) { FindSubGoal(); }
 
-        return Status;
+        return base.Process();
     }
 
-    public override void Terminate()
-    {
-    }
+    public override void Terminate() { }
 
     /// <summary>
     /// Check, if an entity needs rest.
