@@ -11,7 +11,7 @@ public class Builder : MonoBehaviour
 {
     public GameObject[] prefabs;
 
-    private NavMeshSurface _navMeshSurface;
+    private NavMeshSurface[] _navMeshSurfaces;
     private IEnumerable<BoxCollider> _buildingBoxColliders;
     private GameObject _currentEntity;
     private GameObject _prefab;
@@ -21,9 +21,9 @@ public class Builder : MonoBehaviour
 
     private void Awake()
     {
+        _navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
-        _navMeshSurface = transform.GetChild(0).GetComponent<NavMeshSurface>();
-        _navMeshSurface.BuildNavMesh();
+        BuildNavMeshes();
     }
 
     private void OnDisable()
@@ -144,7 +144,7 @@ public class Builder : MonoBehaviour
             _currentEntity = null;
 
             if (_walkable)
-                _navMeshSurface.BuildNavMesh();
+                BuildNavMeshes();
 
             // Create next entity
             CreateEntity();
@@ -182,6 +182,14 @@ public class Builder : MonoBehaviour
         Bounds bounds = _currentEntity.GetComponent<BoxCollider>().bounds;
 
         return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
+    }
+
+    private void BuildNavMeshes()
+    {
+        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)
+        {
+            navMeshSurface.BuildNavMesh();
+        }
     }
 
     /// <summary>
