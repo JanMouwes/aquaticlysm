@@ -184,6 +184,10 @@ public class Builder : MonoBehaviour
         return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 
+    
+    /// <summary>
+    /// rebuild all navmeshes in the scene
+    /// </summary>
     private void BuildNavMeshes()
     {
         foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)

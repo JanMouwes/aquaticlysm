@@ -31,12 +31,17 @@ public class Boat : MonoBehaviour, IAction
     // Update is called once per frame
     void Update()
     {
+        // Test for move change to actions later
+        ////////////////////////////////////////////////
+        #region TestCode
         if (Input.GetKeyDown(KeyCode.H))
         {
             RaycastHit hit;
             MouseUtil.TryRaycastAtMousePosition(out hit);
             agent.destination = hit.point;
         }
+        #endregion
+        ///////////////////////////////////////////////
 
     }
 
