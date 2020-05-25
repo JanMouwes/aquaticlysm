@@ -45,7 +45,7 @@ public class Build : IGoal
     }
 
     /// <summary>
-    ///     Check, if energylevel has been met or not.
+    /// Check if energy level is lower than a certain threshold.
     /// </summary>
     /// <param name="energyLevel">Amount of energy.</param>
     /// <returns>true or false</returns>
