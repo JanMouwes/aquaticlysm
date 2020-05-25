@@ -16,9 +16,9 @@ public class DissolveController : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds upp to the progress till it hit's 1.
+    /// Adds up to the progress till it hits 1.
     /// </summary>
-    /// <param name="addProgress">The percentagal amount of work you put into the building.</param>
+    /// <param name="addProgress">Percentage of the amount of work put into the building.</param>
     /// <returns>If the build is complete.</returns>
     public bool Build(float addProgress)
     {

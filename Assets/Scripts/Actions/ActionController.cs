@@ -16,7 +16,7 @@ public class ActionController : MonoBehaviour
         GlobalStateMachine.instance.StateChanged -= ToggleEnable;
     }
 
-    private void ToggleEnable(IState state) =>this.enabled = state is PlayState;
+    private void ToggleEnable(IState state) => this.enabled = state is PlayState;
 
     // Update is called once per frame.
     void Update()
