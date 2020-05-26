@@ -25,7 +25,7 @@ namespace Tests
             think.Process();
             
             // Assert
-            Assert.AreEqual( new Queue(), think.subGoals);
+            Assert.AreEqual( new Queue(), think.SubGoals);
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace Tests
             think.AddSubGoal(goal);
 
             // Assert
-            Assert.AreEqual(think.subGoals.Count, 3);
+            Assert.AreEqual(think.SubGoals.Count, 3);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Tests
             think.PrioritizeSubGoal(goal);
 
             // Assert
-            Assert.AreEqual(think.subGoals.Count, 1);
+            Assert.AreEqual(think.SubGoals.Count, 1);
         }
 
     }

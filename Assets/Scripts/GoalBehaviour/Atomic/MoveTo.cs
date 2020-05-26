@@ -5,24 +5,26 @@ using UnityEngine.AI;
 
 public class MoveTo : IGoal
 {
-    public Character Owner { get; private set; }
+    private GameObject _owner;
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
-
+    public float NearRange  { get; set; }
+    
     // Target position.
-    private Vector3 _target;
+    private readonly Vector3 _target;
 
-    public MoveTo(Character owner, Vector3 position)
+    public MoveTo(GameObject owner, Vector3 position)
     {
-        Owner = owner;
+        _owner = owner;
         Name = "MoveTo";
         _target = position;
+        NearRange = 2f;
     }
     
     public void Activate()
     {
         // Set destination.
-        Owner.agent.destination = _target;
+        _owner.GetComponent<NavMeshAgent>().destination = _target;
         Status = GoalStatus.Active;
     }
 
@@ -32,14 +34,9 @@ public class MoveTo : IGoal
             Activate();
 
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(Owner.transform.position, _target) <= 1f)
-           Terminate();
-
-        // Check if the agent can't move any further.
-        // TODO Make sure composition fails too
-        if (Owner.agent.pathPending)
-            Status = GoalStatus.Failed;
-
+        if (Vector3.Distance(_owner.transform.position, _target) < NearRange)
+            Terminate();
+        
         return Status;
     }
 

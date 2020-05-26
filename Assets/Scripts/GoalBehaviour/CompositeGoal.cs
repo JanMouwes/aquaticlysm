@@ -6,41 +6,39 @@ using UnityEngine;
 /// </summary>
 public abstract class CompositeGoal : IGoal
 {
-    public Character Owner { get; set; }
     public GoalStatus Status { get; set; }
     public string Name { get; set; }
 
     // List for holding all activated goals waiting to be met
-    public Queue<IGoal> subGoals { get;}
+    public Queue<IGoal> SubGoals { get; }
    
-    public CompositeGoal(Character owner)
+    public CompositeGoal()
     {
-        subGoals = new Queue<IGoal>();
-        Owner = owner;
+        SubGoals = new Queue<IGoal>();
     }
 
     public void AddSubGoal(IGoal goal)
     {
-        subGoals.Enqueue(goal);
+        SubGoals.Enqueue(goal);
     }    
     
     public void PrioritizeSubGoal(IGoal goal)
     {
         ClearAllGoals();
-        subGoals.Enqueue(goal);
+        SubGoals.Enqueue(goal);
     }
     
     public void ClearAllGoals()
     {
-        if (subGoals.Count > 0)
+        if (SubGoals.Count > 0)
         {
-            foreach (IGoal subGoal in subGoals)
+            foreach (IGoal subGoal in SubGoals)
             {
                 if (subGoal is CompositeGoal compositeGoal)
                     compositeGoal.ClearAllGoals();
             }
 
-            subGoals.Clear();
+            SubGoals.Clear();
         }
     }
 
@@ -55,9 +53,9 @@ public abstract class CompositeGoal : IGoal
     /// </summary>
     public void RemoveCompletedSubgoals()
     {
-        if (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)
+        if (SubGoals.Peek().Status == GoalStatus.Completed || SubGoals.Peek().Status == GoalStatus.Failed)
         {
-            subGoals.Dequeue();
+            SubGoals.Dequeue();
         }
     }
 }
