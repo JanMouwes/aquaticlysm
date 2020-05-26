@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: c2bf8894fd03dc648956e8d302f8721f
+<<<<<<< HEAD:Assets/Materials/FishingBoat.meta
+guid: 22a0ff50dfcfe58489fc1ebdf340d5ac
+=======
+guid: 2640a5d368194d8dafe66d374d2b9c02
+>>>>>>> develop:Assets/Scripts/GoalBehaviour/CompositeGoals.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
