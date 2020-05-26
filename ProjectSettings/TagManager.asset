@@ -9,6 +9,7 @@ TagManager:
   - Character
   - Walkway
   - Sea
+  - Building
   layers:
   - Default
   - TransparentFX
