@@ -9,6 +9,7 @@ public class MoveTo : IGoal
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
     public float NearRange { get; set; }
+    private Animator _playerAnim;
 
     private Vector3 _previousPosition;
 
@@ -21,6 +22,7 @@ public class MoveTo : IGoal
         Name = "MoveTo";
         _target = position;
         NearRange = 2f;
+        _playerAnim = _owner.GetComponent<Animator>();
     }
 
     public void Activate()
@@ -30,6 +32,7 @@ public class MoveTo : IGoal
 
 
         NavMeshPath path = new NavMeshPath();
+        _playerAnim.SetFloat("Speed", 0.5f);
 
         bool success = NavMesh.CalculatePath(_owner.transform.position, _target,
                                              _owner.GetComponent<NavMeshAgent>().areaMask, path);
@@ -45,10 +48,14 @@ public class MoveTo : IGoal
             Activate();
 
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Status = GoalStatus.Completed; }
+        if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Terminate(); }
         
         return Status;
     }
 
-    public void Terminate() { }
+    public void Terminate()
+    {
+        _playerAnim.SetFloat("Speed", 0);
+        Status = GoalStatus.Completed;
+    }
 }
