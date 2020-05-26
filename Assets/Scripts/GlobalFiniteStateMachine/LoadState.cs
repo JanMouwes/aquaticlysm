@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Load : IState
+class LoadState : IState
 {
-    public void Execute()
-    {
-    }
-
     public void Start()
     {
     }
 
+    public void Execute()
+    {
+    }
+    
     public void Stop()
     {
     }

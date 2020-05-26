@@ -46,13 +46,14 @@ public class Character : MonoBehaviour, IAction
         _brain.Process();
     }
     
-    public bool ActionHandler(string tag, Vector3 position, bool priority) 
+    public bool ActionHandler(RaycastHit hit, bool priority) 
     {
-        if (_actions.ContainsKey(tag))
+        if (_actions.ContainsKey(hit.collider.gameObject.tag))
         {
             // Set the goal with the current data.
-            _goaldata.Position = position;
-            IGoal goal = _actions[tag].Invoke(_goaldata);
+            _goaldata.Position = hit.point;
+            _goaldata.Building = hit.collider.gameObject;
+            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
         
             // Add the goal to the brain.
             if (priority)
@@ -78,5 +79,8 @@ public class Character : MonoBehaviour, IAction
         
         goal = input => new Rest(input.Owner);
         _actions.Add("Rest", goal);
+        
+        goal = input =>  new Construct(input.Owner, input.Building);
+        _actions.Add("Building", goal);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Play : IState
+public class BuildState : IState
 {
     public void Start()
     {
