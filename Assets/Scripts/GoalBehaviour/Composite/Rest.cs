@@ -6,10 +6,12 @@
 public class Rest : CompositeGoal
 {
     private Vector3 _target;
-
-    public Rest(Character owner) : base(owner)
+    private Character _owner;
+    
+    public Rest(Character owner)
     {
         Name = "Rest";
+        _owner = owner;
     }
     
     public override void Activate()
@@ -17,8 +19,8 @@ public class Rest : CompositeGoal
         _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
 
         // Add the subgoals.
-        AddSubGoal(new MoveTo(Owner, _target));
-        AddSubGoal(new Sleep(Owner));
+        AddSubGoal(new MoveTo(_owner.gameObject, _target));
+        AddSubGoal(new Sleep(_owner));
 
         Status = GoalStatus.Active;
     }
@@ -28,14 +30,14 @@ public class Rest : CompositeGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (subGoals.Count == 0)
+        if (SubGoals.Count == 0)
         {
             Terminate();
         }
         else
         {
             // Process new subgoal.
-            subGoals.Peek().Process();
+            SubGoals.Peek().Process();
             RemoveCompletedSubgoals();
         }
 
