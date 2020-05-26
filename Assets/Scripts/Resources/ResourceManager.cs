@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Resources
 {
@@ -11,7 +12,8 @@ namespace Resources
     {
         private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
-
+        private ResourceSystem _resourceSystem;
+        
         public IEnumerable<Resource> Resources => this._resources.Values;
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace Resources
         /// </summary>
         /// <param name="resource"></param>
         /// <param name="amount"></param>
-        /// <returns>Whether </returns>
+        /// <returns>Whether amount can be decreased</returns>
         public bool DecreaseResource(string resource, int amount)
         {
             if (amount < 0)
@@ -72,10 +74,20 @@ namespace Resources
         {
             if (!this._resources.ContainsKey(resourceName))
             {
-                ResourceType type = new ResourceType(resourceName);
+                ResourceType type;
+                if (_resourceSystem.GetResourceType(resourceName, out type))
+                {
+                    throw new SystemException("Resource non-existent inside ResourceSystem.");
+                }
+                
                 Resource resource = new Resource(type, initialAmount);
                 this._resources.Add(resourceName, resource);
             }
+        }
+
+        public void SetResourceSystem(ResourceSystem resourceSystem)
+        {
+            this._resourceSystem = resourceSystem;
         }
 
         /// <summary>

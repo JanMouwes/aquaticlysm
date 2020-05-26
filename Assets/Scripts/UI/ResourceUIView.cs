@@ -12,13 +12,6 @@ public class ResourceUIView : MonoBehaviour
 
     public GameObject resourceElementPrefab;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        ResourceManager.Instance.AddResourceType("wood", 200);
-        ResourceManager.Instance.AddResourceType("paper", 100);
-    }
-
     // Update is called once per frame
     void Update()
     {
