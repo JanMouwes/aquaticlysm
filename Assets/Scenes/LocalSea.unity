@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.4430032, g: 0.49219626, b: 0.571926, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300273, g: 0.492195, b: 0.57192504, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -856,6 +856,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1345525973, guid: 9990c610e5b0eb945ad8eae5c92915f5, type: 3}
+      propertyPath: m_WalkableMask
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6513244160898891067, guid: 9990c610e5b0eb945ad8eae5c92915f5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1423,7 +1427,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_UseGeometry: 1
-  m_DefaultArea: 0
+  m_DefaultArea: 3
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 0
@@ -1642,7 +1646,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
 --- !u!114 &1751549845
 MonoBehaviour:
@@ -1790,6 +1794,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566643657360843190, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
+        type: 3}
+      propertyPath: m_WalkableMask
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 566643657360843195, guid: 1b5bb99533daf8c48876ed2d3f9f82f2,
         type: 3}

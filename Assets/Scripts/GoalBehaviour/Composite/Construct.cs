@@ -67,7 +67,7 @@ public class Construct : CompositeGoal
         for (int i = 0; i < 4; i++)
         {
             // If the nav mesh is in reach return the location.
-            if (NavMesh.SamplePosition(points[i], out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(points[i], out NavMeshHit hit, maxDistance, 1 << NavMesh.GetAreaFromName("Walkable")))
                 return hit.position;
         }  
 
