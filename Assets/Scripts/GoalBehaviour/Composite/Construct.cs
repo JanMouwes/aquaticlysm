@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class Construct : CompositeGoal
 {
-    private Character _owner;
-    private Vector3 _target;
-    private GameObject _building;
+    private readonly Character _owner;
+    private readonly Vector3 _target;
+    private readonly GameObject _building;
 
     public Construct(Character owner, GameObject building)
     {
@@ -39,20 +37,6 @@ public class Construct : CompositeGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (Status == GoalStatus.Failed)
-            return Status;
-
-        if (SubGoals.Count == 0)
-        {
-            Terminate();
-        }
-        else
-        {
-            // Process new subgoal.
-            SubGoals.Peek().Process();
-            RemoveCompletedSubgoals();
-        }
-
         return Status;
     }
 
@@ -73,20 +57,17 @@ public class Construct : CompositeGoal
         Vector3 offset = box.size / 2;
 
         // All accesable points of the box (north, south, east, west)
-        Vector3[] points = new Vector3[]
-        {
+        Vector3[] points = {
             location + new Vector3(0,0,offset.z),
             location - new Vector3(0,0,offset.z),
             location + new Vector3(offset.x,0,0),
             location - new Vector3(offset.x,0,0)
         };
 
-        NavMeshHit hit;
-
         for (int i = 0; i < 4; i++)
         {
             // If the nav mesh is in reach return the location.
-            if (NavMesh.SamplePosition(points[i], out hit, maxDistance, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(points[i], out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
                 return hit.position;
         }  
 

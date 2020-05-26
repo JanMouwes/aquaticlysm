@@ -21,6 +21,7 @@ public class Sleep : IGoal
 
     public GoalStatus Process()
     {
+        
         if (Status == GoalStatus.Inactive)
             Activate();
 
