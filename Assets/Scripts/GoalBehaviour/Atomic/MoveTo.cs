@@ -46,7 +46,7 @@ public class MoveTo : IGoal
 
         // Checks if the Owner arrived at the target.
         if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Status = GoalStatus.Completed; }
-
+        
         return Status;
     }
 
