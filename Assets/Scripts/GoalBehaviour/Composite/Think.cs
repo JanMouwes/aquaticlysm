@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 ///     Highest level of goal managing, makes decisions between strategies to
 ///     fulfill agents pressing needs.
 /// </summary>
