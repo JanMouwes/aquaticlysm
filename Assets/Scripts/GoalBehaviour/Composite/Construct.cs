@@ -5,12 +5,14 @@ using UnityEngine.AI;
 
 public class Construct : CompositeGoal
 {
+    private Character _owner;
     private Vector3 _target;
     private GameObject _building;
 
-    public Construct(Character owner, GameObject building) : base(owner)
+    public Construct(Character owner, GameObject building)
     {
         Name = "Build";
+        _owner = owner;
         _building = building;
         _target = GetReachableLocation(_building.GetComponent<BoxCollider>(), 1.5f);
     }
@@ -26,8 +28,8 @@ public class Construct : CompositeGoal
         }
 
         // Add the subgoals.
-        AddSubGoal(new MoveTo(Owner, _target));
-        AddSubGoal(new Build(Owner, _building));
+        AddSubGoal(new MoveTo(_owner.gameObject, _target));
+        AddSubGoal(new Build(_owner, _building));
 
         Status = GoalStatus.Active;
     }
@@ -40,14 +42,14 @@ public class Construct : CompositeGoal
         if (Status == GoalStatus.Failed)
             return Status;
 
-        if (subGoals.Count == 0)
+        if (SubGoals.Count == 0)
         {
             Terminate();
         }
         else
         {
             // Process new subgoal.
-            subGoals.Peek().Process();
+            SubGoals.Peek().Process();
             RemoveCompletedSubgoals();
         }
 

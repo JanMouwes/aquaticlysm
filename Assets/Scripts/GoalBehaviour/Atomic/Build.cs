@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Build : IGoal
 {
-    public Character Owner { get; private set; }
+    private Character _owner;
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
 
@@ -12,7 +12,7 @@ public class Build : IGoal
 
     public Build(Character owner, GameObject gameObject) 
     {
-        Owner = owner;
+        _owner = owner;
         Name  = "Construct";
         _dissolveController = gameObject.GetComponent<DissolveController>();
     }
@@ -28,7 +28,7 @@ public class Build : IGoal
             Activate();
     
         // Replenishes the energy level.
-        if (isExhausted(Owner.energyLevel))
+        if (isExhausted(_owner.energyLevel))
             Status = GoalStatus.Failed;
         
         // Build
