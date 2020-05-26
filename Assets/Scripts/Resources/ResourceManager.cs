@@ -12,6 +12,8 @@ namespace Resources
         private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
 
+        public IEnumerable<Resource> Resources => this._resources.Values;
+
         /// <summary>
         /// Fetch the single instance
         /// </summary>
