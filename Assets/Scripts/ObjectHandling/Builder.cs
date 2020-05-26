@@ -146,9 +146,8 @@ public class Builder : MonoBehaviour
             this._outline.OutlineColor = this._originalOutlineColour;
             _outline.enabled = false;
             _currentEntity = null;
-
-            if (_walkable)
-                BuildNavMeshes();
+            
+            BuildNavMeshes();
 
             // Create next entity
             CreateEntity();
