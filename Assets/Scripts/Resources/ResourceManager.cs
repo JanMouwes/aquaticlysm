@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Resources
 {
@@ -13,7 +15,7 @@ namespace Resources
         private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
         private ResourceSystem _resourceSystem;
-        
+
         public IEnumerable<Resource> Resources => this._resources.Values;
 
         /// <summary>
@@ -74,12 +76,8 @@ namespace Resources
         {
             if (!this._resources.ContainsKey(resourceName))
             {
-                ResourceType type;
-                if (_resourceSystem.GetResourceType(resourceName, out type))
-                {
-                    throw new SystemException("Resource non-existent inside ResourceSystem.");
-                }
-                
+                if (!_resourceSystem.GetResourceType(resourceName, out ResourceType type)) { throw new SystemException($"Resource '{resourceName}' is non-existent inside ResourceSystem."); }
+
                 Resource resource = new Resource(type, initialAmount);
                 this._resources.Add(resourceName, resource);
             }
