@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Util;
 
 public class Boat : MonoBehaviour, IAction
 {
-    // A dictionary with all the possible actions for the characters.
+    // A dictionary with all the possible actions for the boats.
     private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
-    private Think _brain;
-    private GoalCommand _goalData;
+    private ProcessBoatGoals _goalProcessor;
+    private GoalCommand _goaldata;
 
     public NavMeshAgent agent;
     public float fuel;
@@ -18,31 +17,50 @@ public class Boat : MonoBehaviour, IAction
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        _goalProcessor = new ProcessBoatGoals(this);
+
+        _goaldata = new GoalCommand(this);
+
+        if (_actions == null)
+        {
+            // Initialize the dictionary.
+            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
+            InitGoals();
+        }
     }
 
     // Update is called once per frame
     private void Update()
     {
-        // Test for move change to actions later
-        ////////////////////////////////////////////////
-        #region TestCode
-        if (Input.GetKeyDown(KeyCode.H))
+        _goalProcessor.Process();
+    }
+    public bool ActionHandler(RaycastHit hit, bool priority)
+    {
+
+        if (_actions.ContainsKey(hit.collider.gameObject.tag))
         {
-            RaycastHit hit;
-            MouseUtil.TryRaycastAtMousePosition(out hit);
-            agent.destination = hit.point;
+            // Set the goal with the current data.
+            _goaldata.Position = hit.point;
+            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+
+            // Add the goal to the brain.
+            if (priority)
+                _goalProcessor.AddSubGoal(goal);
+            else
+                _goalProcessor.PrioritizeSubGoal(goal);
+
+            return true;
         }
-        #endregion
-        ///////////////////////////////////////////////
+
+        return false;
     }
 
     private static void InitGoals()
     {
-        throw new NotImplementedException();
+        Func<GoalCommand, IGoal> goal;
+
+        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position);
+        _actions.Add("Sea", goal);
     }
 
-    public bool ActionHandler(RaycastHit hit, bool priority)
-    {
-        throw new NotImplementedException();
-    }
 }
