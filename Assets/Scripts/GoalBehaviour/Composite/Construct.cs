@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Construct : CompositeGoal
@@ -17,14 +18,15 @@ public class Construct : CompositeGoal
     
     public override void Activate()
     {
-
         // Check if the target is reachable.
         if (_target == Vector3.positiveInfinity)
         {
+            Debug.Log("äaaaaaag");
             Status = GoalStatus.Failed;
             return;
         }
 
+        Debug.Log("oeeeeeeh");
         // Add the subgoals.
         AddSubGoal(new MoveTo(_owner.gameObject, _target));
         AddSubGoal(new Build(_owner, _building));
@@ -34,10 +36,12 @@ public class Construct : CompositeGoal
 
     public override GoalStatus Process()
     {
-        if (Status == GoalStatus.Inactive)
-            Activate();
+        if (this.SubGoals.Any(subGoal => subGoal.Status == GoalStatus.Failed))
+            this.Status = GoalStatus.Failed;
 
-        return Status;
+        Debug.Log(this.Status);
+
+        return base.Process();
     }
 
     public override void Terminate()
