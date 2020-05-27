@@ -268,10 +268,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 306526477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1480996f8eb2473fad77cb17e2519722, type: 3}
+  m_Script: {fileID: 11500000, guid: 603f1d7ce4e64cbdbdd1db1b2bfd73c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceFilePath: ./Assets/SettingsData/resources.xml
+  resourceTypesFilePath: ./Assets/SettingsData/resources.xml
   resourceStartingValuesFilePath: ./Assets/SettingsData/starting-values.xml
 --- !u!1001 &389810454
 PrefabInstance:
