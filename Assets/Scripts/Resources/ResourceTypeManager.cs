@@ -17,7 +17,7 @@ namespace Resources
             foreach (ResourceType resourceType in ParseResourcesFromXmlFile(resourceFilePath))
             {
                 // Register resource type   
-                this._resourceTypes.Add(resourceType.shortName, resourceType);
+                this._resourceTypes.Add(resourceType.ShortName, resourceType);
             }
         }
 

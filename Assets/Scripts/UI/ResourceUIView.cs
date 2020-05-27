@@ -22,14 +22,14 @@ public class ResourceUIView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IEnumerable<Resource> resources = this._resourceManager.Resources.OrderBy(res => res.type.shortName);
+        IEnumerable<Resource> resources = this._resourceManager.Resources.OrderBy(res => res.type.ShortName);
 
         foreach (Resource resource in resources) { SetResourceValue(resource.type, resource.Amount); }
     }
 
     private void SetResourceValue(ResourceType resourceType, int value)
     {
-        if (!this._resourceUiElements.TryGetValue(resourceType.shortName, out GameObject element))
+        if (!this._resourceUiElements.TryGetValue(resourceType.ShortName, out GameObject element))
         {
             // If resource not yet registered, add it
             GameObject instance = PrefabInstanceManager.Instance.Spawn(this.resourceElementPrefab, Vector3.zero);
@@ -43,7 +43,7 @@ public class ResourceUIView : MonoBehaviour
             Sprite icon = UnityResources.Load<Sprite>(resourceType.IconPath);
 
             instance.GetComponent<Image>().sprite = icon;
-            this._resourceUiElements.Add(resourceType.shortName, instance);
+            this._resourceUiElements.Add(resourceType.ShortName, instance);
             element = instance;
         }
 
