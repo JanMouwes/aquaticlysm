@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class Construct : CompositeGoal
@@ -17,7 +18,6 @@ public class Construct : CompositeGoal
     
     public override void Activate()
     {
-
         // Check if the target is reachable.
         if (_target == Vector3.positiveInfinity)
         {
@@ -34,10 +34,10 @@ public class Construct : CompositeGoal
 
     public override GoalStatus Process()
     {
-        if (Status == GoalStatus.Inactive)
-            Activate();
-
-        return Status;
+        if (this.SubGoals.Any(subGoal => subGoal.Status == GoalStatus.Failed))
+            this.Status = GoalStatus.Failed;
+         
+        return base.Process();
     }
 
     public override void Terminate()
@@ -67,7 +67,7 @@ public class Construct : CompositeGoal
         for (int i = 0; i < 4; i++)
         {
             // If the nav mesh is in reach return the location.
-            if (NavMesh.SamplePosition(points[i], out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(points[i], out NavMeshHit hit, maxDistance, 1 << NavMesh.GetAreaFromName("Walkable")))
                 return hit.position;
         }  
 
