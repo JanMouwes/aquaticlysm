@@ -53,7 +53,8 @@ namespace Resources
             {
                 yield return new ResourceType(
                     GetValueOrDefault(node, "name", "unknown resource"),
-                    GetValueOrDefault(node, "icon-path", defaultPath)
+                    GetValueOrDefault(node, "icon-path", defaultPath),
+                    GetValueOrDefault(node, "description", "")
                 );
             }
         }
