@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <resource>
+        <name>wood</name>
+        <starting-amount>0</starting-amount>
+        <icon-path>Sprites/Wood</icon-path>
+        <description>this resource is made of trees</description>
+    </resource>
+    <resource>
+        <name>metal</name>
+        <starting-amount>0</starting-amount>
+        <icon-path>Sprites/Metal</icon-path>
+        <description>this resource is made of metal</description>
+    </resource>
+    <resource>
+        <name>plastic</name>
+        <starting-amount>0</starting-amount>
+        <icon-path>Sprites/Plastic</icon-path>
+        <description>this resource is made of oil</description>
+    </resource>
+    <resource>
+        <name>water</name>
+        <starting-amount>0</starting-amount>
+        <icon-path>Sprites/Water</icon-path>
+        <description>this resource is made of water</description>
+    </resource>
+</resources>
