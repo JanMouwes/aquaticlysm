@@ -3,6 +3,7 @@ using System.Xml;
 
 namespace Resources
 {
+    /// <inheritdoc cref="IResourceTypeManager"/>
     public class ResourceTypeManager : IResourceTypeManager
     {
         private Dictionary<string, ResourceType> _resourceTypes;
@@ -18,6 +19,11 @@ namespace Resources
                 // Register resource type   
                 this._resourceTypes.Add(resourceType.shortName, resourceType);
             }
+        }
+
+        public bool TryGetResourceType(string key, out ResourceType resourceType)
+        {
+            return this._resourceTypes.TryGetValue(key, out resourceType);
         }
 
         /// <summary>
@@ -69,11 +75,6 @@ namespace Resources
 
                 yield return success ? (resourceName, result) : (resourceName, 0);
             }
-        }
-
-        public bool TryGetResourceType(string key, out ResourceType resourceType)
-        {
-            return this._resourceTypes.TryGetValue(key, out resourceType);
         }
     }
 }
