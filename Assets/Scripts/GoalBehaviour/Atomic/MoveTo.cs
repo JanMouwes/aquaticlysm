@@ -1,28 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MoveTo : IGoal
 {
-    public Character Owner { get; private set; }
+    private GameObject _owner;
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
+    public float NearRange { get; set; }
+
+    private Vector3 _previousPosition;
 
     // Target position.
-    private Vector3 _target;
+    private readonly Vector3 _target;
 
-    public MoveTo(Character owner, Vector3 position)
+    public MoveTo(GameObject owner, Vector3 position)
     {
-        Owner = owner;
+        _owner = owner;
         Name = "MoveTo";
         _target = position;
+        NearRange = 2f;
     }
-    
+
     public void Activate()
     {
         // Set destination.
-        Owner.agent.destination = _target;
-        Status = GoalStatus.Active;
+        _owner.GetComponent<NavMeshAgent>().destination = _target;
+
+
+        NavMeshPath path = new NavMeshPath();
+
+        bool success = NavMesh.CalculatePath(_owner.transform.position, _target,
+                                             _owner.GetComponent<NavMeshAgent>().areaMask, path);
+
+        bool hasFailed = !success || path.status != NavMeshPathStatus.PathComplete;
+
+        this.Status = hasFailed ? GoalStatus.Failed : GoalStatus.Active;
     }
 
     public GoalStatus Process()
@@ -31,14 +45,10 @@ public class MoveTo : IGoal
             Activate();
 
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(Owner.transform.position, _target) < 2f)
-            Terminate();
-
+        if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Status = GoalStatus.Completed; }
+        
         return Status;
     }
 
-    public void Terminate()
-    {
-        Status = GoalStatus.Completed;
-    }
+    public void Terminate() { }
 }
