@@ -58,6 +58,11 @@ namespace Resources
             }
         }
 
+        /// <summary>
+        /// Retrieves resource starting values from xml-file
+        /// </summary>
+        /// <param name="filePath">Xml-file from which to get values</param>
+        /// <returns>All found starting values</returns>
         public static IEnumerable<(string resourceTypeName, int amount)> ParseResourceStartingValues(string filePath)
         {
             XmlDocument doc = new XmlDocument();
