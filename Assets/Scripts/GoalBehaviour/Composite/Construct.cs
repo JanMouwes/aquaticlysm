@@ -19,7 +19,7 @@ public class Construct : CompositeGoal
     public override void Activate()
     {
         // Check if the target is reachable.
-        if (_target == Vector3.positiveInfinity)
+        if (_target.Equals(Vector3.positiveInfinity))
         {
             Status = GoalStatus.Failed;
             return;
