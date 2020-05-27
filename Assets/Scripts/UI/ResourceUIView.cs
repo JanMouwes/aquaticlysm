@@ -38,7 +38,7 @@ public class ResourceUIView : MonoBehaviour
 
             RectTransform imageTransform = instance.GetComponent<RectTransform>();
             imageTransform.SetParent(this.gameObject.transform);
-            imageTransform.anchoredPosition = new Vector2((resourceCount * 50) + 30, 0);
+            imageTransform.anchoredPosition = new Vector2((resourceCount * 60) + 30, 0);
 
             Sprite icon = UnityResources.Load<Sprite>(resourceType.IconPath);
 

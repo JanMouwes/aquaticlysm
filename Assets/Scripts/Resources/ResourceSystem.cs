@@ -8,65 +8,83 @@ namespace Resources
     public class ResourceSystem : MonoBehaviour
     {
         private Dictionary<string, ResourceType> _resourceTypes;
-        public IEnumerable<ResourceType> ResourceTypes => _resourceTypes.Values;
-        
+        public IEnumerable<ResourceType> ResourceTypes => this._resourceTypes.Values;
+
         public string resourceFilePath;
+        public string resourceStartingValuesFilePath;
 
         private void Start()
         {
-            _resourceTypes = new Dictionary<string, ResourceType>();   
+            this._resourceTypes = new Dictionary<string, ResourceType>();
             ResourceManager.Instance.SetResourceSystem(this);
-            
-            InitResources();
-        }
 
-        private void InitResources()
-        {
-            ParseResourcesFromXml();
-
-            foreach (ResourceType resourceType in ResourceTypes)
+            foreach (ResourceType resourceType in ParseResourcesFromXmlFile(this.resourceFilePath))
             {
-                ResourceManager.Instance.AddResourceType(resourceType.shortName);
+                // Register resource type   
+                this._resourceTypes.Add(resourceType.shortName, resourceType);
+            }
+
+            foreach ((string resourceTypeName, int amount) in ParseResourceStartingValues(this.resourceStartingValuesFilePath))
+            {
+                // Registers resource to resource manager with starting amount - quick fix code
+                ResourceManager.Instance.AddResourceType(resourceTypeName, amount);
             }
         }
 
-        private void ParseResourcesFromXml()
+        /// <summary>
+        /// Parses xml-file as resourceTypes
+        /// </summary>
+        /// <param name="filePath">Path where to look for file</param>
+        /// <returns>All resource types found</returns>
+        public static IEnumerable<ResourceType> ParseResourcesFromXmlFile(string filePath)
         {
             XmlDocument doc = new XmlDocument();
-            doc.Load(resourceFilePath);
+            doc.Load(filePath);
 
             XmlNodeList nodeList = doc.GetElementsByTagName("resource");
 
             string GetValueOrDefault(XmlNode node, string elementName, string defaultValue = default)
             {
                 XmlNodeList temp = node.SelectNodes(elementName);
-                
-                if (temp == null || temp.Count == 0)
-                {
-                    return defaultValue;
-                }
-                
+
+                if (temp == null || temp.Count == 0) { return defaultValue; }
+
                 return temp[0].InnerText;
             }
-            
+
+            const string defaultPath = "Assets/Sprites/default-resource.png";
+
             foreach (XmlNode node in nodeList)
             {
-                string defaultPath = "Assets/Sprites/default-resource.png";
-                ResourceType resourceType = new ResourceType(
-                        GetValueOrDefault(node, "name", "unknown resource"),
-                        GetValueOrDefault(node, "icon-path", defaultPath)
+                yield return new ResourceType(
+                    GetValueOrDefault(node, "name", "unknown resource"),
+                    GetValueOrDefault(node, "icon-path", defaultPath)
                 );
-                
-                _resourceTypes.Add(resourceType.shortName, resourceType);
             }
         }
 
-        public bool GetResourceType(string key, out ResourceType resourceType)
+        public static IEnumerable<(string resourceTypeName, int amount)> ParseResourceStartingValues(string filePath)
         {
-            return _resourceTypes.TryGetValue(key, out resourceType);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+
+            XmlNodeList nodeList = doc.GetElementsByTagName("resource");
+
+            foreach (XmlNode node in nodeList)
+            {
+                if (node.Attributes == null) { continue; }
+
+                bool success = int.TryParse(node.InnerText, out int result);
+
+                string resourceName = node.Attributes["name"].Value;
+
+                yield return success ? (resourceName, result) : (resourceName, 0);
+            }
         }
-        
 
-
+        public bool TryGetResourceType(string key, out ResourceType resourceType)
+        {
+            return this._resourceTypes.TryGetValue(key, out resourceType);
+        }
     }
 }

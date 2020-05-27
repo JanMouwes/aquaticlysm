@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceFilePath: ./Assets/SettingsData/resources.xml
+  resourceStartingValuesFilePath: ./Assets/SettingsData/starting-values.xml
 --- !u!1001 &389810454
 PrefabInstance:
   m_ObjectHideFlags: 0
