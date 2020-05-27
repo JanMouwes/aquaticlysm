@@ -74,7 +74,11 @@ namespace Resources
         {
             if (!this._resources.ContainsKey(resourceName))
             {
-                if (!this._resourceTypeManager.TryGetResourceType(resourceName, out ResourceType type)) { throw new SystemException($"Resource '{resourceName}' is non-existent inside ResourceSystem."); }
+                if (!this._resourceTypeManager.TryGetResourceType(resourceName, out ResourceType type))
+                {
+                    // Resource not registered
+                    throw new SystemException($"Resource '{resourceName}' is non-existent inside {nameof(ResourceTypeManager)}.");
+                }
 
                 Resource resource = new Resource(type, initialAmount);
                 this._resources.Add(resourceName, resource);
