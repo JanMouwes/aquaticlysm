@@ -1139,7 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fa43b58072f2644aafa9faf2c357ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DateTimeText: {fileID: 1290384200}
+  dateTimeText: {fileID: 1290384200}
 --- !u!4 &1310879536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 206346880947961206, guid: 421f1fb2ac547a042a3e87d4f7b53e7c,
@@ -1561,20 +1561,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 8
   m_ObstacleAvoidanceType: 4
---- !u!114 &1751549845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1751549843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfb6506d320f629449ab1a8e0d840692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 1751549844}
-  fuel: 0
 --- !u!1 &1761289266
 GameObject:
   m_ObjectHideFlags: 0

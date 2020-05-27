@@ -486,6 +486,8 @@ GameObject:
   - component: {fileID: 1342241625695158353}
   - component: {fileID: 1751549844}
   - component: {fileID: 1751549845}
+  - component: {fileID: -4826488097326263815}
+  - component: {fileID: -864836215137914562}
   m_Layer: 0
   m_Name: fishingBoat
   m_TagString: Untagged
@@ -563,6 +565,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1751549844}
   fuel: 0
+--- !u!114 &-4826488097326263815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589782053155880917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab3af3d6e3374b42b59ed627b8192cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-864836215137914562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589782053155880917}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9811321, g: 0.569988, b: 0.013883919, a: 0}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &9173072016257004870
 GameObject:
   m_ObjectHideFlags: 0
