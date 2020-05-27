@@ -17,7 +17,7 @@ namespace Resources
             foreach (ResourceType resourceType in ParseResourcesFromXmlFile(resourceFilePath))
             {
                 // Register resource type   
-                this._resourceTypes.Add(resourceType.shortName, resourceType);
+                this._resourceTypes.Add(resourceType.ShortName, resourceType);
             }
         }
 
@@ -53,7 +53,8 @@ namespace Resources
             {
                 yield return new ResourceType(
                     GetValueOrDefault(node, "name", "unknown resource"),
-                    GetValueOrDefault(node, "icon-path", defaultPath)
+                    GetValueOrDefault(node, "icon-path", defaultPath),
+                    GetValueOrDefault(node, "description", "")
                 );
             }
         }

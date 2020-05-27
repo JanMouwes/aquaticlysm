@@ -15,7 +15,7 @@ namespace Tests.EditMode
             Mock<IResourceTypeManager> managerMock = new Mock<IResourceTypeManager>();
             ResourceType type;
             managerMock.Setup(manager => manager.TryGetResourceType(It.IsAny<string>(), out type))
-                       .Callback(() => { type.shortName = "wood"; })
+                       .Callback(() => { type.ShortName = "wood"; })
                        .Returns(true);
 
             this._resourceTypeManager = managerMock.Object;
