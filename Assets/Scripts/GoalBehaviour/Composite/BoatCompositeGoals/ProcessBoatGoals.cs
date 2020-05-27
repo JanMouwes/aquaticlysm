@@ -1,4 +1,6 @@
-﻿    class ProcessBoatGoals : CompositeGoal
+﻿using UnityEngine;
+
+class ProcessBoatGoals : CompositeGoal
     {
         private Boat _owner;
 
@@ -13,6 +15,7 @@
         /// </summary>
         public void FindSubGoal()
         {
+            if (needsToGatherFish(_owner.AmountOfFish)) { AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));  }
         }
 
         public override void Activate()
@@ -31,4 +34,6 @@
         }
 
         public override void Terminate() { }
+
+    public static bool needsToGatherFish(float fishAmount) => fishAmount <= 20f;
     }

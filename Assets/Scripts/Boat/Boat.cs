@@ -10,8 +10,10 @@ public class Boat : MonoBehaviour, IAction
     private ProcessBoatGoals _goalProcessor;
     private GoalCommand _goaldata;
 
+    public float MaxCarrierAmount = 21f;
     public NavMeshAgent agent;
-    public float fuel;
+    public float Fuel;
+    public float AmountOfFish;
 
     // Start is called before the first frame update
     private void Start()
