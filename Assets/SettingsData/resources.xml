@@ -24,4 +24,8 @@
         <description>this resource is made of water</description>
         <scarcity>2</scarcity>
     </resource>
+    <resource>
+      <name>fish</name>
+      <description>this resource is made of fish</description>
+    </resource>
 </resources>

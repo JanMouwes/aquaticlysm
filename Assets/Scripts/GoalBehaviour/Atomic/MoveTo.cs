@@ -10,17 +10,15 @@ public class MoveTo : IGoal
     public string Name { get; private set; }
     public float NearRange { get; set; }
 
-    private Vector3 _previousPosition;
-
     // Target position.
     private readonly Vector3 _target;
 
-    public MoveTo(GameObject owner, Vector3 position)
+    public MoveTo(GameObject owner, Vector3 position, float range)
     {
         _owner = owner;
         Name = "MoveTo";
         _target = position;
-        NearRange = 2f;
+        NearRange = range;
     }
 
     public void Activate()
@@ -36,8 +34,6 @@ public class MoveTo : IGoal
         bool hasFailed = !success || path.status != NavMeshPathStatus.PathComplete;
 
         this.Status = hasFailed ? GoalStatus.Failed : GoalStatus.Active;
-
-        Debug.Log("Moving to by " + _owner.GetType());
     }
 
     public GoalStatus Process()
