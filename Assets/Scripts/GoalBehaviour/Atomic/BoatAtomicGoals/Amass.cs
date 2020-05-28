@@ -21,7 +21,11 @@ class Amass : IGoal
     public void Activate()
     {
         _accumulateAmount = (int)Random.Range(0, _owner.MaxCarrierAmount);
-        _owner.GetComponent<MeshRenderer>().enabled = false;
+
+        Renderer[] rends = _owner.gameObject.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < rends.Length; i++)
+            rends[i].enabled = false;
+
         Status = GoalStatus.Active;
     }
 
@@ -41,7 +45,11 @@ class Amass : IGoal
     public void Terminate()
     {
         AccumulateRandomResources(_owner, _accumulateAmount);
-        _owner.GetComponent<MeshRenderer>().enabled = true;
+
+        Renderer[] rends = _owner.gameObject.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < rends.Length; i++)
+            rends[i].enabled = true;
+        
         Status = GoalStatus.Completed;
     }
 
