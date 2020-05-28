@@ -1,17 +1,19 @@
-﻿using System.Linq;
+﻿using Resources;
+using System.Linq;
 using UnityEngine;
 
 public class GatherFish : CompositeGoal
 {
     private readonly Boat _owner;
     private readonly Vector3 _target;
-    private readonly Vector3 _returnTarget = new Vector3(-16.0f, 0.5f, 7.6f);
+    private readonly Vector3 _returnTarget;
 
     public GatherFish(Boat boat, Vector3 target)
     { 
         Name = "Gather fish";
         _owner = boat;
         _target = target;
+        _returnTarget = GameObject.FindGameObjectWithTag("Storage").GetComponent<GameObject>().transform.position;
     }
 
     public override void Activate()

@@ -10,10 +10,10 @@ public class Boat : MonoBehaviour, IAction
     private ProcessBoatGoals _goalProcessor;
     private GoalCommand _goaldata;
 
-    public float MaxCarrierAmount = 21f;
+    public Dictionary<string, float> CarriedResources;
+    public float MaxCarrierAmount;
     public NavMeshAgent agent;
     public float Fuel;
-    public float AmountOfFish;
 
     // Start is called before the first frame update
     private void Start()
@@ -29,6 +29,9 @@ public class Boat : MonoBehaviour, IAction
             _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
             InitGoals();
         }
+
+        CarriedResources = new Dictionary<string, float>();
+        MaxCarrierAmount = 20f;
     }
 
     // Update is called once per frame
