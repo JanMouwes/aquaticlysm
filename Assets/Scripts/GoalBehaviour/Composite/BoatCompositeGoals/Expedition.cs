@@ -17,7 +17,7 @@ public class Expedition : CompositeGoal
     {
         AddSubGoal(new MoveTo(_owner.gameObject, GetRandomOutermostEdgeVector3(_gridSize)));
         AddSubGoal(new Amass(_owner, Random.Range(20f, 50f)));
-        //AddSubGoal(new MoveTo(_owner.gameObject, _returnTarget));
+        AddSubGoal(new DropOff(_owner));
 
         Status = GoalStatus.Active;
     }
