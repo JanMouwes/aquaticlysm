@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 class Amass : IGoal
 {
@@ -14,6 +9,7 @@ class Amass : IGoal
     public string Name { get; private set; }
 
     private float _time;
+    private float _accumulateAmount;
 
     public Amass(Boat owner, float duration)
     {
@@ -23,6 +19,7 @@ class Amass : IGoal
 
     public void Activate()
     {
+        _accumulateAmount = Random.Range(0, _owner.MaxCarrierAmount);
         _owner.GetComponent<MeshRenderer>().enabled = false;
         Status = GoalStatus.Active;
     }
