@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-class ProcessBoatGoals : CompositeGoal
+class BoatAutomaton : CompositeGoal
     {
         private Boat _owner;
 
-        public ProcessBoatGoals(Boat owner)
+        public BoatAutomaton(Boat owner)
         {
             Name = "Process boat commands";
             this._owner = owner;

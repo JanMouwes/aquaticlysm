@@ -7,7 +7,7 @@ public class Boat : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the boats.
     private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
-    private ProcessBoatGoals _goalProcessor;
+    private BoatAutomaton _goalProcessor;
     private GoalCommand _goaldata;
 
     public Dictionary<string, float> CarriedResources;
@@ -19,7 +19,7 @@ public class Boat : MonoBehaviour, IAction
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _goalProcessor = new ProcessBoatGoals(this);
+        _goalProcessor = new BoatAutomaton(this);
 
         _goaldata = new GoalCommand(this);
 
