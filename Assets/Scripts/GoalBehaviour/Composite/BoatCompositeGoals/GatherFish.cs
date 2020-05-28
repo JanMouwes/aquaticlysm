@@ -30,6 +30,8 @@ public class GatherFish : CompositeGoal
 
     public override GoalStatus Process()
     {
+        Debug.Log("Processing GatherFish");
+
         if (SubGoals.Any(subGoal => subGoal.Status == GoalStatus.Failed))
             Status = GoalStatus.Failed;
 
