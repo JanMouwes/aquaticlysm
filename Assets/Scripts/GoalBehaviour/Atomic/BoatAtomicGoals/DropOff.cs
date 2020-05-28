@@ -9,14 +9,12 @@ class DropOff : CompositeGoal
     private Boat _owner;
     private Vector3 _storagePosition;
 
-    public GoalStatus Status { get; private set; }
-    public string Name { get; private set; }
-
     public DropOff(Boat boat)
     {
         _owner = boat;
         Name = "Drop off";
-        _storagePosition = GameObject.FindGameObjectWithTag("Storage").GetComponent<GameObject>().transform.position;
+        _storagePosition = GameObject.FindGameObjectWithTag("Storage").transform.position;
+        Debug.Log("Creating DropOff");
     }
 
     public override void Activate()

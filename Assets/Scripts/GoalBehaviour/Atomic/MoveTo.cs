@@ -28,7 +28,6 @@ public class MoveTo : IGoal
         // Set destination.
         _owner.GetComponent<NavMeshAgent>().destination = _target;
 
-
         NavMeshPath path = new NavMeshPath();
 
         bool success = NavMesh.CalculatePath(_owner.transform.position, _target,
@@ -37,6 +36,8 @@ public class MoveTo : IGoal
         bool hasFailed = !success || path.status != NavMeshPathStatus.PathComplete;
 
         this.Status = hasFailed ? GoalStatus.Failed : GoalStatus.Active;
+
+        Debug.Log("Moving to by " + _owner.GetType());
     }
 
     public GoalStatus Process()
