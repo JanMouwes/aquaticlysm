@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Resources;
+using UnityEngine;
 
 class Amass : IGoal
 {
@@ -9,7 +10,7 @@ class Amass : IGoal
     public string Name { get; private set; }
 
     private float _time;
-    private float _accumulateAmount;
+    private int _accumulateAmount;
 
     public Amass(Boat owner, float duration)
     {
@@ -19,7 +20,7 @@ class Amass : IGoal
 
     public void Activate()
     {
-        _accumulateAmount = Random.Range(0, _owner.MaxCarrierAmount);
+        _accumulateAmount = (int)Random.Range(0, _owner.MaxCarrierAmount);
         _owner.GetComponent<MeshRenderer>().enabled = false;
         Status = GoalStatus.Active;
     }
@@ -39,9 +40,22 @@ class Amass : IGoal
 
     public void Terminate()
     {
-        // SET THE STUFF HERE THAT THE GAMEOBJECT GATHERD
-
+        AccumulateRandomResources(_owner, _accumulateAmount);
         _owner.GetComponent<MeshRenderer>().enabled = true;
         Status = GoalStatus.Completed;
+    }
+
+    public static void AccumulateRandomResources(Boat boat, int amount) 
+    {
+        while (amount > 0) 
+        {
+            string type = ResourceManager.Instance.GetRandomType();
+            int accumalationAmount = Random.Range(1, amount);
+
+            float resourceAmount = boat.TryGetResourceValue(type);
+            boat.CarriedResources[type] = accumalationAmount;
+
+            amount -= accumalationAmount;
+        }
     }
 }

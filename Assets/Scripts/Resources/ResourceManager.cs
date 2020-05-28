@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Resources
 {
@@ -142,6 +143,20 @@ namespace Resources
                 return this._resources[resource].Amount >= amount;
 
             return false;
+        }
+
+        public string GetRandomType()
+        {
+            int counter = 0;
+            int scarcitySum = _resourceTypeManager.ResourceTypes.Select(t => t.Scarcity).Sum();
+            string[] types = new string[scarcitySum];
+
+            foreach (ResourceType type in _resourceTypeManager.ResourceTypes)
+                for (int i = 0; i < type.Scarcity; i++, counter++)
+                    types[counter] = type.ShortName;
+
+
+            return types[UnityEngine.Random.Range(0, scarcitySum)];
         }
     }
 }
