@@ -33,7 +33,6 @@ public abstract class CompositeGoal : IGoal
         if (SubGoals.Count > 0)
         {
             foreach (IGoal subGoal in SubGoals) { subGoal.Terminate(); }
-
             SubGoals.Clear();
         }
 
@@ -44,6 +43,9 @@ public abstract class CompositeGoal : IGoal
 
     public virtual GoalStatus Process()
     {
+        if (this.Status == GoalStatus.Failed)
+            return GoalStatus.Failed;
+
         this.Status = ProcessSubgoals(SubGoals);
 
         return this.Status;
@@ -60,17 +62,18 @@ public abstract class CompositeGoal : IGoal
     {
         RemoveCompletedSubgoals(subGoals);
 
-        if (subGoals.Count == 0) { return GoalStatus.Completed; }
+        if (subGoals.Count == 0) 
+            return GoalStatus.Completed;
 
         IGoal current = subGoals.Peek();
 
-        if (current.Status == GoalStatus.Inactive) { current.Activate(); }
+        if (current.Status == GoalStatus.Inactive)
+            current.Activate();
 
-        current.Process();
+        if (current.Status == GoalStatus.Active)
+            current.Process();
 
-        bool isCurrentActive = !(current.Status == GoalStatus.Completed && subGoals.Count > 1);
-
-        return isCurrentActive ? GoalStatus.Active : current.Status;
+        return GoalStatus.Active;
     }
 
     /// <summary>
@@ -79,6 +82,7 @@ public abstract class CompositeGoal : IGoal
     /// <param name="subGoals">Queue from which to remove completed goals</param>
     public static void RemoveCompletedSubgoals(Queue<IGoal> subGoals)
     {
-        while (subGoals.Count > 0 && (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed)) { subGoals.Dequeue(); }
+        while (subGoals.Count > 0 && (subGoals.Peek().Status == GoalStatus.Completed || subGoals.Peek().Status == GoalStatus.Failed))
+            subGoals.Dequeue();
     }
 }
