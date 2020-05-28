@@ -23,6 +23,7 @@ public class MoveTo : IGoal
         _target = position;
         NearRange = 2f;
         _playerAnim = _owner.GetComponent<Animator>();
+        _playerAnim.SetFloat("Speed", 0.5f);
     }
 
     public void Activate()
@@ -32,7 +33,6 @@ public class MoveTo : IGoal
 
 
         NavMeshPath path = new NavMeshPath();
-        _playerAnim.SetFloat("Speed", 0.5f);
 
         bool success = NavMesh.CalculatePath(_owner.transform.position, _target,
                                              _owner.GetComponent<NavMeshAgent>().areaMask, path);
