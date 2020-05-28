@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
@@ -10,6 +11,8 @@ public class SelectionController : MonoBehaviour
     // All selected entities.
     public static List<Selectable> selectedEntities = new List<Selectable>();
 
+    public static CharacterSystem characterSystem;
+    
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
 
@@ -76,6 +79,19 @@ public class SelectionController : MonoBehaviour
         }
     }
 
+
+    public static void AddSelectable(Selectable selectable)
+    {
+        SelectionController.selectables.Add(selectable);
+        characterSystem.CharacterManager.UpdateList();
+    }
+    
+    public static void RemoveSelectable(Selectable selectable)
+    {
+        SelectionController.selectables.Remove(selectable);
+        characterSystem.CharacterManager.UpdateList();
+    }
+    
     private void SelectSingleUnit(RaycastHit raycastHit)
     {
         // Clear all selected items.
