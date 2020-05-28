@@ -26,14 +26,12 @@ class Fish : IGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        Debug.Log(Name);
         if (Status == GoalStatus.Active)
         {
             if (IsFullOfResources(_owner.CountResourcesCarried(), _fishAmount))
                 Terminate();
             else
             {
-                Debug.Log(_fishAmount);
                 _fishAmount += 1.5f * Time.deltaTime;
             }
         }

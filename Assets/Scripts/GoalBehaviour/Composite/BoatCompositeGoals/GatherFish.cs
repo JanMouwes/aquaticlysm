@@ -22,16 +22,16 @@ public class GatherFish : CompositeGoal
             return;
         }
 
+        Status = GoalStatus.Active;
+
         // Add subgoals
-        AddSubGoal(new MoveTo(_owner.gameObject, _target));
+        AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
         AddSubGoal(new Fish(_owner));
         AddSubGoal(new DropOff(_owner));
     }
 
     public override GoalStatus Process()
     {
-        Debug.Log("Processing GatherFish");
-
         if (SubGoals.Any(subGoal => subGoal.Status == GoalStatus.Failed))
             Status = GoalStatus.Failed;
 

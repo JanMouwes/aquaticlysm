@@ -39,6 +39,7 @@ public class Boat : MonoBehaviour, IAction
     {
         _goalProcessor.Process();
     }
+
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
 
@@ -64,8 +65,11 @@ public class Boat : MonoBehaviour, IAction
     {
         Func<GoalCommand, IGoal> goal;
 
-        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position);
+        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position, 2f);
         _actions.Add("Sea", goal);
+
+        goal = input => new DropOff(input.OwnerBoat);
+        _actions.Add("Storage", goal);
     }
 
     public float CountResourcesCarried()

@@ -20,4 +20,8 @@
         <icon-path>Sprites/Water</icon-path>
         <description>this resource is made of water</description>
     </resource>
+    <resource>
+      <name>fish</name>
+      <description>this resource is made of fish</description>
+    </resource>
 </resources>
