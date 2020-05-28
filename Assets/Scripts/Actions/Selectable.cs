@@ -8,22 +8,15 @@ public class Selectable : MonoBehaviour
 
     public bool Selected
     {
-        get => _selected;
+        get => this._selected;
         set
         {
-            if (value)
-            {
-                _selected = true;
-                OnSelected();
-            }
-            else
-            {
-                _selected = false;
-                OnDeselected();
-            }
+            this._selected = value;
+
+            if (value) { OnSelected(); }
+            else { OnDeselected(); }
         }
     }
-
 
     public void OnEnable()
     {
@@ -38,14 +31,20 @@ public class Selectable : MonoBehaviour
         // Remove the selectable of the list of selectable entities.
         SelectionController.RemoveSelectable(this);
     }
+    
+    private void OnDestroy()
+    {
+        // Remove the selectable of the list of selectable entities.
+        SelectionController.RemoveSelectable(this);
+    }
 
     private void OnSelected()
     {
-        _outline.enabled = true;
+        this._outline.enabled = true;
     }
 
     private void OnDeselected()
     {
-        _outline.enabled = false;
+        this._outline.enabled = false;
     }
 }

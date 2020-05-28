@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +14,8 @@ public class Character : MonoBehaviour, IAction
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public int Age { get; private set; }
+
+    public Sprite Portrait { get; set; }
 
     public NavMeshAgent agent;
     public float energyLevel;
