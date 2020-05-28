@@ -15,7 +15,7 @@ class ProcessBoatGoals : CompositeGoal
         /// </summary>
         public void FindSubGoal()
         {
-            if (needsToGatherFish(_owner.AmountOfFish)) { AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));  }
+           // if (needsToGatherFish(_owner.)) { AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));  }
         }
 
         public override void Activate()

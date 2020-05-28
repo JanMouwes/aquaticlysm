@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-
 class Fish : IGoal
 {
     private Boat _owner;
     private static float _maxCarrierAmount;
+    private float _fishAmount;
+
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
 
@@ -11,6 +12,7 @@ class Fish : IGoal
     {
         _owner = boat;
         _maxCarrierAmount = boat.MaxCarrierAmount;
+        _fishAmount = _owner.TryGetResourceValue("fish");
         Name = "Fishing";
     }
 
@@ -26,10 +28,10 @@ class Fish : IGoal
 
         if (Status == GoalStatus.Active)
         {
-            if (IsFullOfFish(_owner.AmountOfFish))
+            if (IsFullOfResources(_owner.CountResourcesCarried(), _fishAmount))
                 Terminate();
             else
-                _owner.AmountOfFish += 1.5f * Time.deltaTime;
+                _fishAmount += 1.5f * Time.deltaTime;
         }
 
         return Status;
@@ -37,6 +39,7 @@ class Fish : IGoal
 
     public void Terminate()
     {
+        _owner.CarriedResources["fish"] = _fishAmount;
         Status = GoalStatus.Completed;
     }
 
@@ -45,8 +48,8 @@ class Fish : IGoal
     /// </summary>
     /// <param name="fishAmount">Amount of fish on the boat currently.</param>
     /// <returns>true or false</returns>
-    private static bool IsFullOfFish(float fishAmount)
+    private static bool IsFullOfResources(float carriedAmount, float currentlyAddedAmount)
     { 
-        return fishAmount >= _maxCarrierAmount;
+        return carriedAmount + currentlyAddedAmount >= _maxCarrierAmount;
     }
 }

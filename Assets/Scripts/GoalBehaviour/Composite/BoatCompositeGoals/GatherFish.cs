@@ -6,14 +6,12 @@ public class GatherFish : CompositeGoal
 {
     private readonly Boat _owner;
     private readonly Vector3 _target;
-    private readonly Vector3 _returnTarget;
 
     public GatherFish(Boat boat, Vector3 target)
     { 
         Name = "Gather fish";
         _owner = boat;
         _target = target;
-        _returnTarget = GameObject.FindGameObjectWithTag("Storage").GetComponent<GameObject>().transform.position;
     }
 
     public override void Activate()
@@ -27,7 +25,7 @@ public class GatherFish : CompositeGoal
         // Add subgoals
         AddSubGoal(new MoveTo(_owner.gameObject, _target));
         AddSubGoal(new Fish(_owner));
-        AddSubGoal(new MoveTo(_owner.gameObject, _returnTarget));
+        AddSubGoal(new DropOff(_owner));
     }
 
     public override GoalStatus Process()

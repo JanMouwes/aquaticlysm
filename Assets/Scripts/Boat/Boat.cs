@@ -68,4 +68,28 @@ public class Boat : MonoBehaviour, IAction
         _actions.Add("Sea", goal);
     }
 
+    public float CountResourcesCarried()
+    {
+        float resources = 0f;
+
+        if (CarriedResources.Count != 0)
+        {
+            foreach (KeyValuePair<string, float> resource in CarriedResources)
+            {
+                resources += resource.Value;
+            }
+        }
+
+        return resources;
+    }
+
+    public float TryGetResourceValue(string resource)
+    {
+        if (CarriedResources.TryGetValue(resource, out float amountOfResourceCurrently))
+            return amountOfResourceCurrently;
+        else
+            return 0f;
+    }
+
+    public void ClearCarriedResources() => CarriedResources.Clear();
 }
