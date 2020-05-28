@@ -67,10 +67,11 @@ public abstract class CompositeGoal : IGoal
 
         IGoal current = subGoals.Peek();
 
-        if (current.Status == GoalStatus.Inactive) 
+        if (current.Status == GoalStatus.Inactive)
             current.Activate();
 
-        current.Process();
+        if (current.Status == GoalStatus.Active)
+            current.Process();
 
         return GoalStatus.Active;
     }
