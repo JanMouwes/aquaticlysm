@@ -16,7 +16,8 @@ class BoatAutomation : CompositeGoal
         /// </summary>
         public void FindSubGoal()
         {
-           if (_owner.TryGetResourceValue("fish") <= 0f) { AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));  }
+           if (_owner.TryGetResourceValue("fish") <= 0f) 
+            AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));
         }
 
         public override void Activate()
@@ -29,7 +30,8 @@ class BoatAutomation : CompositeGoal
             if (Status == GoalStatus.Inactive)
                 Activate();
 
-            if (SubGoals.Count == 0) { FindSubGoal(); }
+            if (SubGoals.Count == 0) 
+                FindSubGoal();
 
             return base.Process();
         }

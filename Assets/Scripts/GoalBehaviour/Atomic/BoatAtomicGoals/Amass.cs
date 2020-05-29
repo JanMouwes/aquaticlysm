@@ -11,20 +11,21 @@ class Amass : IGoal
 
     private float _time;
     private int _accumulateAmount;
+    private Renderer[] _renderers;
 
     public Amass(Boat owner, float duration)
     {
         _owner = owner;
         _time = duration;
+        _renderers = _owner.gameObject.GetComponentsInChildren<Renderer>();
     }
 
     public void Activate()
     {
         _accumulateAmount = (int)Random.Range(0, _owner.MaxCarrierAmount);
 
-        Renderer[] rends = _owner.gameObject.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < rends.Length; i++)
-            rends[i].enabled = false;
+        for (int i = 0; i < _renderers.Length; i++)
+            _renderers[i].enabled = false;
 
         Status = GoalStatus.Active;
     }
@@ -46,9 +47,8 @@ class Amass : IGoal
     {
         AccumulateRandomResources(_owner, _accumulateAmount);
 
-        Renderer[] rends = _owner.gameObject.GetComponentsInChildren<Renderer>();
-        for (int i = 0; i < rends.Length; i++)
-            rends[i].enabled = true;
+        for (int i = 0; i < _renderers.Length; i++)
+            _renderers[i].enabled = true;
         
         Status = GoalStatus.Completed;
     }

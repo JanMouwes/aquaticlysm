@@ -70,6 +70,9 @@ public class Boat : MonoBehaviour, IAction
 
         goal = input => new DropOff(input.OwnerBoat);
         _actions.Add("Storage", goal);
+
+        goal = input => new Expedition(input.OwnerBoat, 100);
+        _actions.Add("Expedition", goal);
     }
 
     public float CountResourcesCarried()
