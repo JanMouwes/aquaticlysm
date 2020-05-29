@@ -91,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6871499a96b88194ab2f4fbf0ec5a21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Materials: []
   progress: 0
 --- !u!1 &5105373171231059650
 GameObject:
@@ -232,6 +231,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9815917234c3b9d47a0ac6586451b541, type: 2}
+  - {fileID: 2100000, guid: 3c9a8c15ce232cc4daabbde93ff74768, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
