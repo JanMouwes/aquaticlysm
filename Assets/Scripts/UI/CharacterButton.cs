@@ -5,14 +5,13 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    
     public class CharacterButton : MonoBehaviour
     {
         public Character Character { get; set; }
-        private float _doubleClickTimer;
 
         public void OnClick()
         {
+            // If button is clicked, grab selectable from Character and set selected on true.
             if(Character != null)
                 Character.GetComponent<Selectable>().Selected = true;
         }

@@ -9,6 +9,7 @@ namespace UI
 {
     public class CharacterUIView : MonoBehaviour
     {
+        
         private readonly Dictionary<int, GameObject> _characterUiElements = new Dictionary<int, GameObject>();
 
         public CharacterSystem characterSystem;
