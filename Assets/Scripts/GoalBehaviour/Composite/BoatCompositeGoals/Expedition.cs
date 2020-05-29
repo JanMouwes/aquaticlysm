@@ -7,6 +7,7 @@ public class Expedition : CompositeGoal
 {
     private readonly Boat _owner;
     private readonly int _gridSize;
+
     public Expedition(Boat owner, int gridSize)
     {
         _owner = owner;
@@ -35,8 +36,15 @@ public class Expedition : CompositeGoal
         Status = GoalStatus.Completed;
     }
 
+    /// <summary>
+    /// Get's the outermost edge of a rectangular plane/grid.
+    /// </summary>
+    /// <param name="size">Total width or length.</param>
+    /// <returns>A random position on the outermost edge.</returns>
     public static Vector3 GetRandomOutermostEdgeVector3(int size) 
     {
+        size /= 2;
+
         if (0.5 < Random.value)
             return new Vector3
             {

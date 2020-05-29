@@ -146,6 +146,10 @@ namespace Resources
             return false;
         }
 
+        /// <summary>
+        /// A simple algorithm to randomly pick a resource type based on the scarcity.
+        /// </summary>
+        /// <returns>A random resource type.</returns>
         public string GetRandomType()
         {
             int counter = 0;

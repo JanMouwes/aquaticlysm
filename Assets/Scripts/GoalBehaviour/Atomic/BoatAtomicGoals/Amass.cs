@@ -4,9 +4,7 @@ using UnityEngine;
 class Amass : IGoal
 {
     private Boat _owner;
-
     public GoalStatus Status { get; private set; }
-
     public string Name { get; private set; }
 
     private float _time;
@@ -22,8 +20,10 @@ class Amass : IGoal
 
     public void Activate()
     {
+        // The random amount of stuff it wil accumulate.
         _accumulateAmount = (int)Random.Range(0, _owner.MaxCarrierAmount);
 
+        // Make the boat invisible.
         for (int i = 0; i < _renderers.Length; i++)
             _renderers[i].enabled = false;
 
@@ -47,12 +47,18 @@ class Amass : IGoal
     {
         AccumulateRandomResources(_owner, _accumulateAmount);
 
+        // Make the boat visiable again.
         for (int i = 0; i < _renderers.Length; i++)
             _renderers[i].enabled = true;
         
         Status = GoalStatus.Completed;
     }
 
+    /// <summary>
+    /// Fills the boat with random resources.
+    /// </summary>
+    /// <param name="boat">The boat where it will save the resources.</param>
+    /// <param name="amount">The total amount of resources.</param>
     public static void AccumulateRandomResources(Boat boat, int amount) 
     {
         while (amount > 0) 
