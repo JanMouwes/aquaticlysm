@@ -43,14 +43,14 @@ namespace UI
             int SIZE = 50;
             int characterId = character.GetInstanceID();
 
-            if (!this._characterUiElements.TryGetValue(characterId, out GameObject element))
+            if (!this._characterUiElements.TryGetValue(characterId, out GameObject buttonGameObject))
             {
-                element = PrefabInstanceManager.Instance.Spawn(this.characterButtonPrefab, Vector3.zero);
-                this._characterUiElements[characterId] = element;
+                buttonGameObject = PrefabInstanceManager.Instance.Spawn(this.characterButtonPrefab, Vector3.zero);
+                this._characterUiElements[characterId] = buttonGameObject;
             }
-            Image image = element.GetComponent<Image>();
-            Button btn = element.GetComponent<Button>();
-            CharacterButton charbtn = element.GetComponent<CharacterButton>();
+            Image image = buttonGameObject.GetComponent<Image>();
+            Button btn = buttonGameObject.GetComponent<Button>();
+            CharacterButton charbtn = buttonGameObject.GetComponent<CharacterButton>();
 
             if (charbtn.Character == null)
             {
@@ -61,13 +61,13 @@ namespace UI
                 btn.Select();
             }
             
-            RectTransform imageTransform = element.GetComponent<RectTransform>();
-            float imageYPos = index * -(SIZE);
+            RectTransform imageTransform = buttonGameObject.GetComponent<RectTransform>();
+            float imageYPos = index * -SIZE;
 
             imageTransform.SetParent(this.gameObject.transform);
             imageTransform.anchoredPosition = new Vector2(80, imageYPos);
             
-            // image.sprite = character.Portrait;
+            image.sprite = character.Portrait;
         }
     }
 }
