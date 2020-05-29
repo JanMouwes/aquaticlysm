@@ -15,6 +15,7 @@ namespace UI
 
         public GameObject characterButtonPrefab;
 
+        
         public IEnumerable<Character> Characters => this.characterSystem.CharacterManager.characters;
 
         private void Update()
@@ -39,6 +40,7 @@ namespace UI
 
         public void Draw(Character character, int index)
         {
+            int SIZE = 50;
             int characterId = character.GetInstanceID();
 
             if (!this._characterUiElements.TryGetValue(characterId, out GameObject element))
@@ -46,15 +48,26 @@ namespace UI
                 element = PrefabInstanceManager.Instance.Spawn(this.characterButtonPrefab, Vector3.zero);
                 this._characterUiElements[characterId] = element;
             }
+            Image image = element.GetComponent<Image>();
+            Button btn = element.GetComponent<Button>();
+            CharacterButton charbtn = element.GetComponent<CharacterButton>();
 
+            if (charbtn.Character == null)
+            {
+                charbtn.Character = character;
+            }
+            if (character.GetComponent<Selectable>().Selected)
+            {
+                btn.Select();
+            }
+            
             RectTransform imageTransform = element.GetComponent<RectTransform>();
-            float imageYPos = index * -100;
+            float imageYPos = index * -(SIZE);
 
             imageTransform.SetParent(this.gameObject.transform);
             imageTransform.anchoredPosition = new Vector2(80, imageYPos);
-
-            Image image = element.GetComponent<Image>();
-            image.sprite = character.Portrait;
+            
+            // image.sprite = character.Portrait;
         }
     }
 }

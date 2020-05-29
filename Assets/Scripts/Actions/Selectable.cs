@@ -41,6 +41,7 @@ public class Selectable : MonoBehaviour
     private void OnSelected()
     {
         this._outline.enabled = true;
+        SelectionController.SelectedEntities.Add(this);
     }
 
     private void OnDeselected()

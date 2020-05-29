@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UI;
+using UnityEngine;
 
 public class CharacterSystem : MonoBehaviour
 {
@@ -23,9 +24,9 @@ public class CharacterSystem : MonoBehaviour
 
     private void SpawnCharacter()
     {
-        GameObject instance = PrefabInstanceManager.Instance.Spawn(this.characterPrefab, Vector3.zero);
+        GameObject instance = PrefabInstanceManager.Instance.Spawn(this.characterPrefab, new Vector3(0,3,0));
         Character character = instance.GetComponent<Character>();
-
+        
         character.Portrait = UnityEngine.Resources.Load<Sprite>("Sprites/John");
 
         instance.transform.parent = this.entitiesGameObject.transform;

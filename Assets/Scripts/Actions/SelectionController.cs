@@ -83,13 +83,12 @@ public class SelectionController : MonoBehaviour
     public static void AddSelectable(Selectable selectable)
     {
         Selectables.Add(selectable);
-        // characterSystem.CharacterManager.UpdateList();
+        // selectable.Selected = false;
     }
     
     public static void RemoveSelectable(Selectable selectable)
     {
         Selectables.Remove(selectable);
-        // characterSystem.CharacterManager.UpdateList();
     }
     
     private void SelectSingleUnit(RaycastHit raycastHit)
@@ -102,7 +101,6 @@ public class SelectionController : MonoBehaviour
         if (s != null)
         {
             s.Selected = true;
-            SelectedEntities.Add(s);
         }
 
         // Register the mouse coordinates within the canvas.
@@ -129,7 +127,6 @@ public class SelectionController : MonoBehaviour
                 if (boundingBox.Contains(new Vector2(selectable.gameObject.transform.position.x, selectable.gameObject.transform.position.z)))
                 {
                     selectable.Selected = true;
-                    SelectedEntities.Add(selectable);
                 }
             }
         }
