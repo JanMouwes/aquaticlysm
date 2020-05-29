@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-class BoatAutomation : CompositeGoal
+class BoatAutomaton : CompositeGoal
     {
         private Boat _owner;
 
-        public BoatAutomation(Boat owner)
+        public BoatAutomaton(Boat owner)
         {
             Name = "Process boat commands";
             this._owner = owner;

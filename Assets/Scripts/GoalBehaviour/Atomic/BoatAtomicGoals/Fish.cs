@@ -10,10 +10,10 @@ public class Fish : IGoal
 
     public Fish(Boat boat)
     {
+        Name = "Fishing";
         _owner = boat;
         _maxCarrierAmount = boat.MaxCarrierAmount;
         _fishAmount = _owner.TryGetResourceValue("fish");
-        Name = "Fishing";
     }
 
     public void Activate()
@@ -26,15 +26,11 @@ public class Fish : IGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (Status == GoalStatus.Active)
-        {
-            if (IsFullOfResources(_owner.CountResourcesCarried(), _fishAmount))
-                Terminate();
-            else
-            {
-                _fishAmount += 1.5f * Time.deltaTime;
-            }
-        }
+        // Gather fish 
+        if (IsFullOfResources(_owner.CountResourcesCarried(), _fishAmount))
+            Terminate();
+        else
+            _fishAmount += 1.5f * Time.deltaTime;
 
         return Status;
     }

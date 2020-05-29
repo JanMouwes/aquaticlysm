@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
+using Resources;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -9,6 +10,7 @@ namespace Tests
 {
     public class BoatGoalsTest
     {
+
         [Test]
         public void WhenCountingCarriedResources_ShouldReturnAmountOfAllResources()
         {
@@ -53,6 +55,19 @@ namespace Tests
             mockBoat.Object.CarriedResources.Add("metal", 5f);
 
             Assert.AreEqual(mockBoat.Object.TryGetResourceValue("fish"), 5f);
+        }
+
+        [Test]
+        public void WhenGetRandomOutermostEdgeVector3_ShouldReturnVector3() 
+        {
+            //Arrange
+            Vector3 point;
+
+            //Act
+            point = Expedition.GetRandomOutermostEdgeVector3(30);
+
+            //Assert
+            Assert.IsTrue(point.x == 15 || point.x == -15 || point.z == 15 || point.z == -15);
         }
     }
 }

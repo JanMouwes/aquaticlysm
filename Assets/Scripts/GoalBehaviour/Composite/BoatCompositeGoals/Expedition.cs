@@ -10,6 +10,7 @@ public class Expedition : CompositeGoal
 
     public Expedition(Boat owner, int gridSize)
     {
+        Name = "Expedition";
         _owner = owner;
         _gridSize = gridSize;
     }

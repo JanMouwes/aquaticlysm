@@ -1,7 +1,7 @@
 ﻿using Resources;
 using UnityEngine;
 
-class Amass : IGoal
+public class Amass : IGoal
 {
     private Boat _owner;
     public GoalStatus Status { get; private set; }
@@ -13,6 +13,7 @@ class Amass : IGoal
 
     public Amass(Boat owner, float duration)
     {
+        Name = "Amass";
         _owner = owner;
         _time = duration;
         _renderers = _owner.gameObject.GetComponentsInChildren<Renderer>();
