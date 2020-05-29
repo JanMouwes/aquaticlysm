@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-class Fish : IGoal
+public class Fish : IGoal
 {
     private Boat _owner;
     private static float _maxCarrierAmount;
