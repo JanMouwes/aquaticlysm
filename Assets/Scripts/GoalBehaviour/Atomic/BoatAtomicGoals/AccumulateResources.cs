@@ -1,7 +1,7 @@
 ﻿using Resources;
 using UnityEngine;
 
-public class Amass : IGoal
+public class AccumulateResources : IGoal
 {
     private Boat _owner;
     public GoalStatus Status { get; private set; }
@@ -11,7 +11,7 @@ public class Amass : IGoal
     private int _accumulateAmount;
     private Renderer[] _renderers;
 
-    public Amass(Boat owner, float duration)
+    public AccumulateResources(Boat owner, float duration)
     {
         Name = "Amass";
         _owner = owner;
