@@ -18,7 +18,7 @@ public class CharacterSystem : MonoBehaviour
     private void Start()
     {
         // Spawn a number of Character instances.
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 6; i++)
         {
             SpawnCharacter();
         }
