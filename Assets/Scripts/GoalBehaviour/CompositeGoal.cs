@@ -48,6 +48,9 @@ public abstract class CompositeGoal : IGoal
 
         this.Status = ProcessSubgoals(SubGoals);
 
+        if (this.Status == GoalStatus.Completed)
+            Terminate();
+
         return this.Status;
     }
 
@@ -62,7 +65,7 @@ public abstract class CompositeGoal : IGoal
     {
         RemoveCompletedSubgoals(subGoals);
 
-        if (subGoals.Count == 0) 
+        if (subGoals.Count == 0)
             return GoalStatus.Completed;
 
         IGoal current = subGoals.Peek();
