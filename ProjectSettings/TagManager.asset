@@ -10,6 +10,7 @@ TagManager:
   - Walkway
   - Sea
   - Building
+  - Storage
   layers:
   - Default
   - TransparentFX

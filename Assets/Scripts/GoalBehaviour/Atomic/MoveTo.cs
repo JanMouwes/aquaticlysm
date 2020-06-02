@@ -11,17 +11,15 @@ public class MoveTo : IGoal
     public float NearRange { get; set; }
     private Animator _playerAnim;
 
-    private Vector3 _previousPosition;
-
     // Target position.
     private readonly Vector3 _target;
 
-    public MoveTo(GameObject owner, Vector3 position)
+    public MoveTo(GameObject owner, Vector3 position, float range)
     {
         _owner = owner;
         Name = "MoveTo";
         _target = position;
-        NearRange = 2f;
+        NearRange = range;
         _playerAnim = _owner.GetComponent<Animator>();
         _playerAnim.SetFloat("Speed", 0.5f);
     }
@@ -30,7 +28,6 @@ public class MoveTo : IGoal
     {
         // Set destination.
         _owner.GetComponent<NavMeshAgent>().destination = _target;
-
 
         NavMeshPath path = new NavMeshPath();
 
