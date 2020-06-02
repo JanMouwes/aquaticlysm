@@ -9,7 +9,6 @@ namespace UI
 {
     public class CharacterUIView : MonoBehaviour
     {
-        
         private readonly Dictionary<int, GameObject> _characterUiElements = new Dictionary<int, GameObject>();
 
         public CharacterSystem characterSystem;
@@ -56,7 +55,7 @@ namespace UI
                 this._characterUiElements[characterId] = buttonGameObject;
             }
 
-            Image image = buttonGameObject.GetComponent<Image>();
+            Image image = buttonGameObject.transform.GetChild(0).GetComponent<Image>();
             Button btn = buttonGameObject.GetComponent<Button>();
             CharacterButton charbtn = buttonGameObject.GetComponent<CharacterButton>();
 
