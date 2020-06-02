@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -74,7 +73,7 @@ public class Character : MonoBehaviour, IAction
     {
         Func<GoalCommand, IGoal> goal;
 
-        goal = input => new MoveTo(input.Owner.gameObject, input.Position);
+        goal = input => new MoveTo(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Walkway", goal);
         
         goal = input => new Rest(input.Owner);
