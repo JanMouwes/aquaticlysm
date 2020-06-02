@@ -5,9 +5,9 @@ using Util;
 
 public class Barrels : MonoBehaviour
 {
-    private readonly LinkedList<GameObject> barrels = new LinkedList<GameObject>();
-    private NoiseGenerator waterLevels;
-    private int gridSize;
+    private readonly LinkedList<GameObject> _barrels = new LinkedList<GameObject>();
+    private NoiseGenerator _waterLevels;
+    private int _gridSize;
 
     public GameObject barrelPrefab;
     public GameObject water;
@@ -15,8 +15,8 @@ public class Barrels : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.waterLevels = this.water.GetComponent<NoiseGenerator>();
-        this.gridSize = this.water.GetComponent<ProceduralGrid>().size;
+        this._waterLevels = this.water.GetComponent<NoiseGenerator>();
+        this._gridSize = this.water.GetComponent<ProceduralGrid>().size;
 
         SpawnBarrels(5);
     }
@@ -24,15 +24,15 @@ public class Barrels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Mesh mesh = this.waterLevels.MeshFilter.mesh;
+        Mesh mesh = this._waterLevels.MeshFilter.mesh;
 
-        foreach (GameObject barrel in this.barrels)
+        foreach (GameObject barrel in this._barrels)
         {
             Vector3 position = barrel.transform.position;
 
             barrel.transform.position = new Vector3(
                 position.x,
-                GetYForPosition(position, this.gridSize, mesh),
+                GetYForPosition(position, this._gridSize, mesh),
                 position.z
             );
         }
@@ -49,7 +49,7 @@ public class Barrels : MonoBehaviour
 
 
             GameObject barrel = PrefabInstanceManager.Instance.Spawn(this.barrelPrefab, randomPosition, rotation);
-            this.barrels.AddLast(barrel);
+            this._barrels.AddLast(barrel);
 
             barrel.transform.parent = this.gameObject.transform;
         }
