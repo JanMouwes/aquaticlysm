@@ -29,6 +29,12 @@ public class Barrels : MonoBehaviour
 
         foreach (GameObject barrel in this._barrels)
         {
+            if (barrel == null) 
+            {
+                _barrels.Remove(barrel);
+                break;
+            }
+
             Vector3 position = barrel.transform.position;
 
             barrel.transform.position = new Vector3(

@@ -11,11 +11,13 @@ public class OpenBarrel : IGoal
 
     private float _time;
     private int _accumulateAmount;
-    public OpenBarrel(Boat owner, float duration)
+    private GameObject _barrel;
+    public OpenBarrel(Boat owner, GameObject gameObject, float duration)
     {
         Name = "AccumulateResources";
         _owner = owner;
         _time = duration;
+        _barrel = gameObject;
     }
 
     public void Activate()
@@ -43,6 +45,7 @@ public class OpenBarrel : IGoal
     {
         AccumulateRandomResource(_owner, _accumulateAmount);
         ScrapBarrel(_owner);
+        GameObject.Destroy(_barrel);
 
         Status = GoalStatus.Completed;
     }

@@ -48,6 +48,8 @@ public class Boat : MonoBehaviour, IAction
         {
             // Set the goal with the current data.
             _goaldata.Position = hit.point;
+            _goaldata.Building = hit.collider.gameObject;
+
             IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
 
             // Add the goal to the brain.
@@ -75,7 +77,7 @@ public class Boat : MonoBehaviour, IAction
         goal = input => new Expedition(input.OwnerBoat, 100);
         _actions.Add("Expedition", goal);
        
-        goal = input => new FetchBarrel(input.OwnerBoat, input.Position);
+        goal = input => new FetchBarrel(input.OwnerBoat, input.Building);
         _actions.Add("Barrel", goal);
     }
 

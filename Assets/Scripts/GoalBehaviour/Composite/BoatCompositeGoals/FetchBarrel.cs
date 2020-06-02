@@ -7,12 +7,14 @@ public class FetchBarrel : CompositeGoal
 {
     private readonly Boat _owner;
     private readonly Vector3 _target;
+    private GameObject _gameObject;
 
-    public FetchBarrel(Boat boat, Vector3 target)
+    public FetchBarrel(Boat boat, GameObject gameObject)
     {
         Name = "Gather fish";
         _owner = boat;
-        _target = target;
+        _gameObject = gameObject;
+        _target = gameObject.transform.position;
     }
 
     public override void Activate()
@@ -21,7 +23,7 @@ public class FetchBarrel : CompositeGoal
 
         // Add subgoals
         AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
-        AddSubGoal(new OpenBarrel(_owner, 2f));
+        AddSubGoal(new OpenBarrel(_owner, _gameObject, 2f));
         AddSubGoal(new DropOff(_owner));
     }
 
