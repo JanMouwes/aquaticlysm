@@ -65,6 +65,11 @@ public class ProceduralGrid : MonoBehaviour
         return new Vector3(offset + xIndex, 0, offset + yIndex);
     }
 
+    /// <summary>
+    /// Generate the triangles used to display the contents on.
+    /// </summary>
+    /// <param name="size">Size of the grid.</param>
+    /// <returns>Triangles positions.</returns>
     public static int[] GenerateTriangles(int size)
     {
         int[] triangles = new int[size * size * 6];

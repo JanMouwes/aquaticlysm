@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
 
 public class Barrels : MonoBehaviour
 {
-    private readonly LinkedList<GameObject> barrels = new LinkedList<GameObject>();
-    private NoiseGenerator waterLevels;
-    private int gridSize;
+    private readonly LinkedList<GameObject> _barrels = new LinkedList<GameObject>();
+    private NoiseGenerator _waterLevels;
+    private int _gridSize;
 
     public GameObject barrelPrefab;
     public GameObject water;
@@ -15,32 +16,37 @@ public class Barrels : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.waterLevels = this.water.GetComponent<NoiseGenerator>();
-        this.gridSize = this.water.GetComponent<ProceduralGrid>().size;
+        this._waterLevels = this.water.GetComponent<NoiseGenerator>();
+        this._gridSize = this.water.GetComponent<ProceduralGrid>().size;
 
-        SpawnBarrels(5);
+        SpawnBarrels(5, new Vector3(10, 0, 10));
     }
 
     // Update is called once per frame
     void Update()
     {
-        Mesh mesh = this.waterLevels.MeshFilter.mesh;
+        Mesh mesh = this._waterLevels.MeshFilter.mesh;
 
-        foreach (GameObject barrel in this.barrels)
+        foreach (GameObject barrel in this._barrels)
         {
             Vector3 position = barrel.transform.position;
 
             barrel.transform.position = new Vector3(
                 position.x,
-                GetYForPosition(position, this.gridSize, mesh),
+                GetYForPosition(position, this._gridSize, mesh),
                 position.z
             );
         }
     }
 
-    private void SpawnBarrels(int amount)
+    /// <summary>
+    /// Spawns the barrels at the centerpoint location.
+    /// </summary>
+    /// <param name="amount">Amount of barrels.</param>
+    /// <param name="centrePoint">The position where the barrels spawn.</param>
+    private void SpawnBarrels(int amount, Vector3 centrePoint)
     {
-        Vector3 centrePoint = new Vector3(10, 0, 10);
+        BoxCollider[] boxes = FindObjectsOfType<BoxCollider>();
 
         for (int i = 0; i < amount; i++)
         {
@@ -49,21 +55,25 @@ public class Barrels : MonoBehaviour
 
             GameObject barrel = PrefabInstanceManager.Instance.Spawn(this.barrelPrefab, randomPosition, rotation);
 
-            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Walkway"))
+            if(!boxes.Any(obj => obj.GetComponent<BoxCollider>().bounds
+                .Intersects(barrel.GetComponent<BoxCollider>().bounds)))
             {
-                if (!barrel.GetComponent<BoxCollider>().bounds.Intersects(gameObject.GetComponent<BoxCollider>().bounds))
-                {
-                    this.barrels.AddLast(barrel);
-                    barrel.transform.parent = this.gameObject.transform;
-                }
-                else
-                {
-                    GameObject.Destroy(barrel);
-                }
+                this._barrels.AddLast(barrel);
+                barrel.transform.parent = this.gameObject.transform;
+            }
+            else
+            {
+                Destroy(barrel);
             }
         }
     }
 
+    /// <summary>
+    /// Get the Y position for the barrel.
+    /// </summary>
+    /// <param name="position">Barrel position.</param>
+    /// <param name="gridSize">Size of the grid.</param>
+    /// <param name="mesh">The watermesh of the grid.</param>
     private static float GetYForPosition(Vector3 position, int gridSize, Mesh mesh)
     {
         Vector3[] newNeighbours = GetNearestFourNeighbours(position, gridSize, mesh);
@@ -83,6 +93,12 @@ public class Barrels : MonoBehaviour
         return actualY;
     }
 
+    /// <summary>
+    /// Get the nearest four neighbours nodes for the barrel.
+    /// </summary>
+    /// <param name="position">Barrel position.</param>
+    /// <param name="gridSize">Size of the grid.</param>
+    /// <param name="mesh">The watermesh of the grid.</param>
     private static Vector3[] GetNearestFourNeighbours(Vector3 position, int gridSize, Mesh mesh)
     {
         int indexOffset = (gridSize * (gridSize + 1)) / 2;
