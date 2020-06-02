@@ -61,7 +61,7 @@ namespace UI
 
             if (charbtn.Character == null) { charbtn.Character = character; }
 
-            if (character.GetComponent<Selectable>().Selected) { btn.Select(); Debug.Log("Set selected"); }
+            if (character.GetComponent<Selectable>().Selected) { btn.Select(); }
 
             RectTransform imageTransform = buttonGameObject.GetComponent<RectTransform>();
             float imageYPos = index * -size;

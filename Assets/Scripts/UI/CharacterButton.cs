@@ -16,13 +16,10 @@ namespace UI
 
         public void OnClick()
         {
-            Debug.Log("????");
-            Debug.Log(Character.gameObject.name);
             // If button is clicked, grab selectable from Character and set selected on true.
             if (Character != null)
             {
                 Character.GetComponent<Selectable>().Selected = true;
-                
             }
         }
         
