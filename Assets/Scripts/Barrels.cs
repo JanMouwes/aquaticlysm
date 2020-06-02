@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
 
@@ -45,15 +46,25 @@ public class Barrels : MonoBehaviour
     /// <param name="centrePoint">The position where the barrels spawn.</param>
     private void SpawnBarrels(int amount, Vector3 centrePoint)
     {
+        BoxCollider[] boxes = FindObjectsOfType<BoxCollider>();
+
         for (int i = 0; i < amount; i++)
         {
             Vector3 randomPosition = Vector3Util.RandomVector3InRange(centrePoint, 10, 0, 10);
             Quaternion rotation = Quaternion.Euler(Vector3Util.RandomVector3(90, 90, 0));
 
             GameObject barrel = PrefabInstanceManager.Instance.Spawn(this.barrelPrefab, randomPosition, rotation);
-            this._barrels.AddLast(barrel);
 
-            barrel.transform.parent = this.gameObject.transform;
+            if(!boxes.Any(obj => obj.GetComponent<BoxCollider>().bounds
+                .Intersects(barrel.GetComponent<BoxCollider>().bounds)))
+            {
+                this._barrels.AddLast(barrel);
+                barrel.transform.parent = this.gameObject.transform;
+            }
+            else
+            {
+                Destroy(barrel);
+            }
         }
     }
 
