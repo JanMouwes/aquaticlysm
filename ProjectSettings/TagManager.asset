@@ -8,6 +8,9 @@ TagManager:
   - Boat
   - Character
   - Walkway
+  - Sea
+  - Building
+  - Storage
   layers:
   - Default
   - TransparentFX

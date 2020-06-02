@@ -13,12 +13,12 @@ public class GlobalStateMachine : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        _currentState = new Load();
+        _currentState = new LoadState();
     }
 
     private void Start()
     {
-        ChangeState(new Play());
+        ChangeState(new PlayState());
     }
 
     private void Update()
@@ -27,12 +27,12 @@ public class GlobalStateMachine : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            ChangeState(new Build());
+            ChangeState(new BuildState());
             Debug.Log("Build");
         }        
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ChangeState(new Play());
+            ChangeState(new PlayState());
             Debug.Log("Play");
         }
     }

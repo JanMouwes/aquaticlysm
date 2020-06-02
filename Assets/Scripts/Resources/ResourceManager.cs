@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Resources
 {
@@ -11,6 +14,9 @@ namespace Resources
     {
         private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
+        private IResourceTypeManager _resourceTypeManager;
+
+        public IEnumerable<Resource> Resources => this._resources.Values;
 
         /// <summary>
         /// Fetch the single instance
@@ -44,7 +50,7 @@ namespace Resources
         /// </summary>
         /// <param name="resource"></param>
         /// <param name="amount"></param>
-        /// <returns>Whether </returns>
+        /// <returns>Whether amount can be decreased</returns>
         public bool DecreaseResource(string resource, int amount)
         {
             if (amount < 0)
@@ -70,10 +76,20 @@ namespace Resources
         {
             if (!this._resources.ContainsKey(resourceName))
             {
-                ResourceType type = new ResourceType(resourceName);
+                if (!this._resourceTypeManager.TryGetResourceType(resourceName, out ResourceType type))
+                {
+                    // Resource not registered
+                    throw new SystemException($"Resource '{resourceName}' is non-existent inside {nameof(ResourceTypeManager)}.");
+                }
+
                 Resource resource = new Resource(type, initialAmount);
                 this._resources.Add(resourceName, resource);
             }
+        }
+
+        public void SetResourceTypeManager(IResourceTypeManager resourceTypeManager)
+        {
+            this._resourceTypeManager = resourceTypeManager;
         }
 
         /// <summary>
@@ -128,6 +144,24 @@ namespace Resources
                 return this._resources[resource].Amount >= amount;
 
             return false;
+        }
+
+        /// <summary>
+        /// A simple algorithm to randomly pick a resource type based on the scarcity.
+        /// </summary>
+        /// <returns>A random resource type.</returns>
+        public string GetRandomType()
+        {
+            int counter = 0;
+            int scarcitySum = _resourceTypeManager.ResourceTypes.Select(t => t.Scarcity).Sum();
+            string[] types = new string[scarcitySum];
+
+            foreach (ResourceType type in _resourceTypeManager.ResourceTypes)
+                for (int i = 0; i < type.Scarcity; i++, counter++)
+                    types[counter] = type.ShortName;
+
+
+            return types[UnityEngine.Random.Range(0, scarcitySum)];
         }
     }
 }

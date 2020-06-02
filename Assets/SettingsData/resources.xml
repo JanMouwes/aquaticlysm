@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <resource>
+        <name>wood</name>
+        <icon-path>Sprites/Wood</icon-path>
+        <description>this resource is made of trees</description>
+        <scarcity>3</scarcity>
+    </resource>
+    <resource>
+        <name>metal</name>
+        <icon-path>Sprites/Metal</icon-path>
+        <description>this resource is made of metal</description>
+        <scarcity>1</scarcity>
+    </resource>
+    <resource>
+        <name>plastic</name>
+        <icon-path>Sprites/Plastic</icon-path>
+        <description>this resource is made of oil</description>
+        <scarcity>4</scarcity>
+    </resource>
+    <resource>
+        <name>water</name>
+        <icon-path>Sprites/Water</icon-path>
+        <description>this resource is made of water</description>
+        <scarcity>2</scarcity>
+    </resource>
+    <resource>
+      <name>fish</name>
+      <description>this resource is made of fish</description>
+    </resource>
+</resources>
