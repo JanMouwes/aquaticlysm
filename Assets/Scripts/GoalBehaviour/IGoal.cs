@@ -4,11 +4,13 @@
 public interface IGoal
 {
     // Status to keep a record of the status of the goal
+    Character Owner { get; }
     GoalStatus Status { get; }
     string Name { get; }
-
     void Activate();
+
     GoalStatus Process();
+
     void Terminate();
 }
 

@@ -6,11 +6,6 @@ TagManager:
   tags:
   - Rest
   - Boat
-  - Character
-  - Walkway
-  - Sea
-  - Building
-  - Storage
   layers:
   - Default
   - TransparentFX
@@ -20,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - Building
+  - 
   - 
   - 
   - 
