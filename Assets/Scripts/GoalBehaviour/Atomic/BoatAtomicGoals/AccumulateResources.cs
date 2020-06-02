@@ -13,7 +13,7 @@ public class AccumulateResources : IGoal
 
     public AccumulateResources(Boat owner, float duration)
     {
-        Name = "Amass";
+        Name = "AccumulateResources";
         _owner = owner;
         _time = duration;
         _renderers = _owner.gameObject.GetComponentsInChildren<Renderer>();
@@ -22,7 +22,7 @@ public class AccumulateResources : IGoal
     public void Activate()
     {
         // The random amount of stuff it wil accumulate.
-        _accumulateAmount = (int)Random.Range(0, _owner.MaxCarrierAmount);
+        _accumulateAmount = (int)Random.Range(0, _owner.maxCarrierAmount);
 
         // Make the boat invisible.
         for (int i = 0; i < _renderers.Length; i++)
@@ -65,12 +65,12 @@ public class AccumulateResources : IGoal
         while (amount > 0) 
         {
             string type = ResourceManager.Instance.GetRandomType();
-            int accumalationAmount = Random.Range(1, amount);
+            int accumulationAmount = Random.Range(1, amount);
 
             float resourceAmount = boat.TryGetResourceValue(type);
-            boat.CarriedResources[type] = accumalationAmount;
+            boat.carriedResources[type] = accumulationAmount;
 
-            amount -= accumalationAmount;
+            amount -= accumulationAmount;
         }
     }
 }

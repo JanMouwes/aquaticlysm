@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class Boat : MonoBehaviour, IAction
 {
@@ -10,10 +11,10 @@ public class Boat : MonoBehaviour, IAction
     private BoatAutomaton _goalProcessor;
     private GoalCommand _goaldata;
 
-    public Dictionary<string, float> CarriedResources;
-    public float MaxCarrierAmount;
+    public Dictionary<string, float> carriedResources;
+    public float maxCarrierAmount;
     public NavMeshAgent agent;
-    public float Fuel;
+    public float fuel;
 
     // Start is called before the first frame update
     private void Start()
@@ -30,8 +31,8 @@ public class Boat : MonoBehaviour, IAction
             InitGoals();
         }
 
-        CarriedResources = new Dictionary<string, float>();
-        MaxCarrierAmount = 20f;
+        carriedResources = new Dictionary<string, float>();
+        maxCarrierAmount = 20f;
     }
 
     // Update is called once per frame
@@ -79,9 +80,9 @@ public class Boat : MonoBehaviour, IAction
     {
         float resources = 0f;
 
-        if (CarriedResources.Count != 0)
+        if (carriedResources.Count != 0)
         {
-            foreach (KeyValuePair<string, float> resource in CarriedResources)
+            foreach (KeyValuePair<string, float> resource in carriedResources)
             {
                 resources += resource.Value;
             }
@@ -92,11 +93,11 @@ public class Boat : MonoBehaviour, IAction
 
     public float TryGetResourceValue(string resource)
     {
-        if (CarriedResources.TryGetValue(resource, out float amountOfResourceCurrently))
+        if (carriedResources.TryGetValue(resource, out float amountOfResourceCurrently))
             return amountOfResourceCurrently;
 
         return 0f;
     }
 
-    public void ClearCarriedResources() => CarriedResources.Clear();
+    public void ClearCarriedResources() => carriedResources.Clear();
 }

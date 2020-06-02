@@ -18,10 +18,10 @@ namespace Tests
             Mock<Boat> mockBoat = new Mock<Boat>(MockBehavior.Strict);
 
             // Act
-            mockBoat.Object.CarriedResources = new Dictionary<string, float>();
-            mockBoat.Object.CarriedResources.Add("fish", 5f);
-            mockBoat.Object.CarriedResources.Add("wood", 10f);
-            mockBoat.Object.CarriedResources.Add("metal", 5f);
+            mockBoat.Object.carriedResources = new Dictionary<string, float>();
+            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("wood", 10f);
+            mockBoat.Object.carriedResources.Add("metal", 5f);
 
             //Assert
             Assert.AreEqual(mockBoat.Object.CountResourcesCarried(), 20f);
@@ -34,10 +34,10 @@ namespace Tests
             Mock<Boat> mockBoat = new Mock<Boat>(MockBehavior.Strict);
 
             //Act
-            mockBoat.Object.CarriedResources = new Dictionary<string, float>();
-            mockBoat.Object.CarriedResources.Add("fish", 5f);
-            mockBoat.Object.CarriedResources.Add("wood", 10f);
-            mockBoat.Object.CarriedResources.Add("metal", 5f);
+            mockBoat.Object.carriedResources = new Dictionary<string, float>();
+            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("wood", 10f);
+            mockBoat.Object.carriedResources.Add("metal", 5f);
 
             Assert.AreEqual(mockBoat.Object.TryGetResourceValue("food"), 0f);
         }
@@ -49,10 +49,10 @@ namespace Tests
             Mock<Boat> mockBoat = new Mock<Boat>(MockBehavior.Strict);
 
             //Act
-            mockBoat.Object.CarriedResources = new Dictionary<string, float>();
-            mockBoat.Object.CarriedResources.Add("fish", 5f);
-            mockBoat.Object.CarriedResources.Add("wood", 10f);
-            mockBoat.Object.CarriedResources.Add("metal", 5f);
+            mockBoat.Object.carriedResources = new Dictionary<string, float>();
+            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("wood", 10f);
+            mockBoat.Object.carriedResources.Add("metal", 5f);
 
             Assert.AreEqual(mockBoat.Object.TryGetResourceValue("fish"), 5f);
         }
