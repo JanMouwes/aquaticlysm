@@ -13,7 +13,7 @@ namespace Tests.EditMode
         public void SetUp()
         {
             Mock<IResourceTypeManager> managerMock = new Mock<IResourceTypeManager>();
-            ResourceType type;
+            ResourceType type = default;
             managerMock.Setup(manager => manager.TryGetResourceType(It.IsAny<string>(), out type))
                        .Callback(() => { type.ShortName = "wood"; })
                        .Returns(true);
