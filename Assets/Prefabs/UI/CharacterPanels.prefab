@@ -49,5 +49,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterSystem: {fileID: 0}
-  characterButtonPrefab: {fileID: 928347564433566889, guid: ca357f545a0c792479ead83e9f71e45b,
+  characterButtonPrefab: {fileID: 4625480671613606053, guid: d04738c53477a79429f0fc5804897a44,
     type: 3}
