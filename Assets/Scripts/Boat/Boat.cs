@@ -80,7 +80,7 @@ public class Boat : MonoBehaviour, IAction
     {
         float resources = 0f;
 
-        if (carriedResources.Count != 0)
+        if (carriedResources.Count > 0)
         {
             foreach (KeyValuePair<string, float> resource in carriedResources)
             {
@@ -93,8 +93,8 @@ public class Boat : MonoBehaviour, IAction
 
     public float TryGetResourceValue(string resource)
     {
-        if (carriedResources.TryGetValue(resource, out float amountOfResourceCurrently))
-            return amountOfResourceCurrently;
+        if (carriedResources.TryGetValue(resource, out float amountOfResourcesCurrently))
+            return amountOfResourcesCurrently;
 
         return 0f;
     }
