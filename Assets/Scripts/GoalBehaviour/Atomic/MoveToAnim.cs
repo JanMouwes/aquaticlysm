@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveTo : IGoal
+public class MoveToAnim : IGoal
 {
     private GameObject _owner;
     public GoalStatus Status { get; private set; }
@@ -14,14 +14,14 @@ public class MoveTo : IGoal
     // Target position.
     private readonly Vector3 _target;
 
-    public MoveTo(GameObject owner, Vector3 position, float range)
+    public MoveToAnim(GameObject owner, Vector3 position, float range)
     {
         _owner = owner;
         Name = "MoveTo";
         _target = position;
         NearRange = range;
-        // _playerAnim = _owner.GetComponent<Animator>();
-        // _playerAnim.SetFloat("Speed", 0.5f);
+        _playerAnim = _owner.GetComponent<Animator>();
+        _playerAnim.SetFloat("Speed", 0.5f);
     }
 
     public void Activate()
@@ -52,7 +52,7 @@ public class MoveTo : IGoal
 
     public void Terminate()
     {
-        // _playerAnim.SetFloat("Speed", 0);
+        _playerAnim.SetFloat("Speed", 0);
         Status = GoalStatus.Completed;
     }
 }
