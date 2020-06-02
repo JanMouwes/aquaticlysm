@@ -451,7 +451,7 @@ PrefabInstance:
         type: 3}
       propertyPath: characterButtonPrefab
       value: 
-      objectReference: {fileID: 5925915724636682155, guid: 13d2c2795987ccf45930098499ff34c7,
+      objectReference: {fileID: 4625480671613606053, guid: d04738c53477a79429f0fc5804897a44,
         type: 3}
     - target: {fileID: 7002327989038864047, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
         type: 3}
