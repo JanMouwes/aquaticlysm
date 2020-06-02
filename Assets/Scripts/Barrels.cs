@@ -18,7 +18,7 @@ public class Barrels : MonoBehaviour
         this._waterLevels = this.water.GetComponent<NoiseGenerator>();
         this._gridSize = this.water.GetComponent<ProceduralGrid>().size;
 
-        SpawnBarrels(5);
+        SpawnBarrels(5, new Vector3(10, 0, 10));
     }
 
     // Update is called once per frame
@@ -38,15 +38,17 @@ public class Barrels : MonoBehaviour
         }
     }
 
-    private void SpawnBarrels(int amount)
+    /// <summary>
+    /// Spawns the barrels at the centerpoint location.
+    /// </summary>
+    /// <param name="amount">Amount of barrels.</param>
+    /// <param name="centrePoint">The position where the barrels spawn.</param>
+    private void SpawnBarrels(int amount, Vector3 centrePoint)
     {
-        Vector3 centrePoint = new Vector3(10, 0, 10);
-
         for (int i = 0; i < amount; i++)
         {
             Vector3 randomPosition = Vector3Util.RandomVector3InRange(centrePoint, 10, 0, 10);
             Quaternion rotation = Quaternion.Euler(Vector3Util.RandomVector3(90, 90, 0));
-
 
             GameObject barrel = PrefabInstanceManager.Instance.Spawn(this.barrelPrefab, randomPosition, rotation);
             this._barrels.AddLast(barrel);
@@ -55,6 +57,12 @@ public class Barrels : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Get the Y position for the barrel.
+    /// </summary>
+    /// <param name="position">Barrel position.</param>
+    /// <param name="gridSize">Size of the grid.</param>
+    /// <param name="mesh">The watermesh of the grid.</param>
     private static float GetYForPosition(Vector3 position, int gridSize, Mesh mesh)
     {
         Vector3[] newNeighbours = GetNearestFourNeighbours(position, gridSize, mesh);
@@ -74,6 +82,12 @@ public class Barrels : MonoBehaviour
         return actualY;
     }
 
+    /// <summary>
+    /// Get the nearest four neighbours nodes for the barrel.
+    /// </summary>
+    /// <param name="position">Barrel position.</param>
+    /// <param name="gridSize">Size of the grid.</param>
+    /// <param name="mesh">The watermesh of the grid.</param>
     private static Vector3[] GetNearestFourNeighbours(Vector3 position, int gridSize, Mesh mesh)
     {
         int indexOffset = (gridSize * (gridSize + 1)) / 2;
