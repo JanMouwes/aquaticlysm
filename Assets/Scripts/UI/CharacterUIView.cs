@@ -45,7 +45,7 @@ namespace UI
         /// <param name="index">Index of this character within the list of characters. Determines element position</param>
         public void Draw(Character character, int index)
         {
-            const int size = 50;
+            const int size = 100;
             int characterId = character.GetInstanceID();
 
             // Add UI element when not present
@@ -67,7 +67,7 @@ namespace UI
             float imageYPos = index * -size;
 
             imageTransform.SetParent(this.gameObject.transform);
-            imageTransform.anchoredPosition = new Vector2(80, imageYPos);
+            imageTransform.anchoredPosition = new Vector2(100, imageYPos);
 
             image.sprite = character.Portrait;
         }
