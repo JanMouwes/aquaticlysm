@@ -47,11 +47,20 @@ public class Barrels : MonoBehaviour
             Vector3 randomPosition = Vector3Util.RandomVector3InRange(centrePoint, 10, 0, 10);
             Quaternion rotation = Quaternion.Euler(Vector3Util.RandomVector3(90, 90, 0));
 
-
             GameObject barrel = PrefabInstanceManager.Instance.Spawn(this.barrelPrefab, randomPosition, rotation);
-            this.barrels.AddLast(barrel);
 
-            barrel.transform.parent = this.gameObject.transform;
+            foreach (GameObject gameObject in GameObject.FindGameObjectsWithTag("Walkway"))
+            {
+                if (!barrel.GetComponent<BoxCollider>().bounds.Intersects(gameObject.GetComponent<BoxCollider>().bounds))
+                {
+                    this.barrels.AddLast(barrel);
+                    barrel.transform.parent = this.gameObject.transform;
+                }
+                else
+                {
+                    GameObject.Destroy(barrel);
+                }
+            }
         }
     }
 
