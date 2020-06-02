@@ -9,11 +9,20 @@ namespace UI
     {
         public Character Character { get; set; }
 
+        public void Start()
+        {
+            Character = null;
+        }
+
         public void OnClick()
         {
+            Debug.Log("????");
             // If button is clicked, grab selectable from Character and set selected on true.
-            if(Character != null)
+            if (Character != null)
+            {
                 Character.GetComponent<Selectable>().Selected = true;
+                
+            }
         }
         
     }
