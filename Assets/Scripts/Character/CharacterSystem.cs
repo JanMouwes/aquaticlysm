@@ -32,7 +32,7 @@ public class CharacterSystem : MonoBehaviour
         GameObject instance = PrefabInstanceManager.Instance.Spawn(this.characterPrefab, new Vector3(0,3,0));
         Character character = instance.GetComponent<Character>();
         
-        character.Portrait = UnityEngine.Resources.Load<Sprite>("Sprites/John");
+        character.Portrait = UnityEngine.Resources.Load<Sprite>("Sprites/character-default");
 
         instance.transform.parent = this.entitiesGameObject.transform;
     }
