@@ -74,6 +74,9 @@ public class Boat : MonoBehaviour, IAction
 
         goal = input => new Expedition(input.OwnerBoat, 100);
         _actions.Add("Expedition", goal);
+       
+        goal = input => new FetchBarrel(input.OwnerBoat, input.Position);
+        _actions.Add("Barrel", goal);
     }
 
     public float CountResourcesCarried()

@@ -11,6 +11,7 @@ TagManager:
   - Sea
   - Building
   - Storage
+  - Barrel
   layers:
   - Default
   - TransparentFX
