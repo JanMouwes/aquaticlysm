@@ -45,6 +45,18 @@ namespace Resources
                 if (temp == null || temp.Count == 0) { return defaultValue; }
 
                 return temp[0].InnerText;
+            }          
+            
+            int GetIntValueOrDefault(XmlNode node, string elementName, int defaultValue = default)
+            {
+                XmlNodeList temp = node.SelectNodes(elementName);
+
+                if (temp == null || temp.Count == 0) { return defaultValue; }
+
+                int x = 0;
+                System.Int32.TryParse(temp[0].InnerText, out x);
+
+                return x;
             }
 
             const string defaultPath = "Assets/Sprites/default-resource.png";
@@ -54,7 +66,8 @@ namespace Resources
                 yield return new ResourceType(
                     GetValueOrDefault(node, "name", "unknown resource"),
                     GetValueOrDefault(node, "icon-path", defaultPath),
-                    GetValueOrDefault(node, "description", "")
+                    GetValueOrDefault(node, "description", ""),
+                    GetIntValueOrDefault(node, "scarcity", 0)
                 );
             }
         }
