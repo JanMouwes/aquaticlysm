@@ -30,7 +30,7 @@ public class Barrels : MonoBehaviour
         Mesh mesh = this._waterLevels.MeshFilter.mesh;
 
         if (_timer <= 0)
-            SpawnAlgorithm(40f, 100f);
+            SpawnAlgorithm(100f, 500f);
         else
             _timer -= Time.deltaTime;
 
