@@ -4,12 +4,12 @@
     {
         public void Start(Farm owner)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Execute(Farm owner)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void Stop(Farm owner)

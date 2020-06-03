@@ -25,5 +25,10 @@ namespace Buildings.Farm
             _state = state;
             _state.Start(this);
         }
+
+        public Character FindFarmer()
+        {
+            return FindObjectOfType<Character>();
+        }
     }
 }
