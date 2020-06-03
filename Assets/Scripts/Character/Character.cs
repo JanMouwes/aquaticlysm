@@ -2,14 +2,15 @@
 using UnityEngine.AI;
 using System;
 using System.Collections.Generic;
+using Actions;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
-public class Character : MonoBehaviour, IAction
+public class Character : MonoBehaviour
 {
     // A dictionary with all the possible actions for the characters.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+    private static Dictionary<string, Func<GoalCommand<Character>, IGoal>> _actions;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -19,19 +20,19 @@ public class Character : MonoBehaviour, IAction
     public float energyLevel;
 
     private Think _brain;
-    private GoalCommand _goaldata;
+    private GoalCommand<Character> _goaldata;
 
     // Start is called before the first frame update.
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
-        _goaldata = new GoalCommand(this);
+        _goaldata = new GoalCommand<Character>(this);
 
         if (_actions == null)
         {
             // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
+            _actions = new Dictionary<string, Func<GoalCommand<Character>, IGoal>>();
             InitGoals();
         }
     }
@@ -71,7 +72,7 @@ public class Character : MonoBehaviour, IAction
     /// </summary>
     private static void InitGoals()
     {
-        Func<GoalCommand, IGoal> goal;
+        Func<GoalCommand<Character>, IGoal> goal;
 
         goal = input => new MoveTo(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Walkway", goal);

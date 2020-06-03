@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Actions;
+using Actions.GameActions;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Util;
 
@@ -32,11 +34,10 @@ public class ActionController : MonoBehaviour
                 if (MouseUtil.TryRaycastAtMousePosition(100, out RaycastHit hit))
                     foreach (Selectable selectable in SelectionController.selectedEntities)
                     {
-                        IAction action = selectable.gameObject.GetComponent<IAction>();
-                        if(action != null)
-                            action.ActionHandler(hit, _priority);
-                    }
+                        IActionComponent actionComponent = selectable.gameObject.GetComponent<IActionComponent>();
 
+                        actionComponent?.HandleAction(hit, this._priority);
+                    }
             }
         }
     }

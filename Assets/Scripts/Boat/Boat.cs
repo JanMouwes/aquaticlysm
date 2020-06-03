@@ -1,20 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Actions;
+using Actions.GameActions;
+using GoalBehaviour;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
-public class Boat : MonoBehaviour, IAction
+public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the boats.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+    // private static Dictionary<string, Func<GoalCommand<Boat>, IGoal>> _actions;
     private BoatAutomaton _goalProcessor;
-    private GoalCommand _goaldata;
+    private GoalCommand<Boat> _goaldata;
+
+    private GameAction[] _actions;
+    public IEnumerable<GameAction> Actions => this._actions;
+
+    private GameActionButtonModel[] _buttonModels;
+    public IEnumerable<GameActionButtonModel> ButtonModels => this._buttonModels;
 
     public Dictionary<string, float> carriedResources;
     public float maxCarrierAmount;
     public NavMeshAgent agent;
     public float fuel;
+
+    private Action<GoalCommand<Boat>> _handler;
 
     // Start is called before the first frame update
     private void Start()
@@ -22,13 +33,16 @@ public class Boat : MonoBehaviour, IAction
         agent = GetComponent<NavMeshAgent>();
         _goalProcessor = new BoatAutomaton(this);
 
-        _goaldata = new GoalCommand(this);
+        _goaldata = new GoalCommand<Boat>(this);
+
+        this._buttonModels = GetGameActionButtonModels(this).ToArray();
 
         if (_actions == null)
         {
-            // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
-            InitGoals();
+            // this._actions = GetGoalTypes()
+            //                .Select(tuple => new SetGoalGameAction<Boat>(tuple.goal, "action-boat-" + tuple.hitTagName, this))
+            //                .Cast<GameAction>()
+            //                .ToArray();
         }
 
         carriedResources = new Dictionary<string, float>();
@@ -41,39 +55,72 @@ public class Boat : MonoBehaviour, IAction
         _goalProcessor.Process();
     }
 
-    public bool ActionHandler(RaycastHit hit, bool priority)
+    public bool HandleAction(RaycastHit hit, bool priority)
     {
-
-        if (_actions.ContainsKey(hit.collider.gameObject.tag))
+        if (this._handler != null)
         {
-            // Set the goal with the current data.
-            _goaldata.Position = hit.point;
-            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+            GoalCommand<Boat> command = new GoalCommand<Boat>(this)
+            {
+                Position = hit.point
+            };
 
-            // Add the goal to the brain.
-            if (priority)
-                _goalProcessor.AddSubGoal(goal);
-            else
-                _goalProcessor.PrioritizeSubGoal(goal);
+            this._handler.Invoke(command);
 
             return true;
         }
+        // else if (_actions.ContainsKey(hit.collider.gameObject.tag))
+        // {
+        //     // Set the goal with the current data.
+        //     _goaldata.Position = hit.point;
+        //     IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+        //
+        //     // Add the goal to the brain.
+        //     if (priority)
+        //         _goalProcessor.AddSubGoal(goal);
+        //     else
+        //         _goalProcessor.PrioritizeSubGoal(goal);
+        //
+        //     return true;
+        // }
 
         return false;
     }
 
-    private static void InitGoals()
+    private static IEnumerable<(string hitTagName, Func<GoalCommand<Boat>, IGoal> goal)> GetGoalTypes()
     {
-        Func<GoalCommand, IGoal> goal;
+        yield return ("Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f));
 
-        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position, 2f);
-        _actions.Add("Sea", goal);
+        yield return ("Storage", input => new DropOff(input.Owner));
 
-        goal = input => new DropOff(input.OwnerBoat);
-        _actions.Add("Storage", goal);
+        yield return ("Expedition", input => new Expedition(input.Owner, 100));
+    }
 
-        goal = input => new Expedition(input.OwnerBoat, 100);
-        _actions.Add("Expedition", goal);
+    private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Boat owner)
+    {
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatMove",
+            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/John"),
+            OnClick = () =>
+            {
+                Debug.Log("clicked!");
+                owner._handler = input => owner.AddSubgoal(new MoveTo(input.Owner.gameObject, input.Position, 2f));
+            }
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatDropOff",
+            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/George")
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatExpedition",
+            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/Janica")
+        };
+
+        // yield return ("Storage", input => new DropOff(input.Owner));
+        //
+        // yield return ("Expedition", input => new Expedition(input.Owner, 100));
     }
 
     public float CountResourcesCarried()
@@ -82,10 +129,7 @@ public class Boat : MonoBehaviour, IAction
 
         if (carriedResources.Count > 0)
         {
-            foreach (KeyValuePair<string, float> resource in carriedResources)
-            {
-                resources += resource.Value;
-            }
+            foreach (KeyValuePair<string, float> resource in carriedResources) { resources += resource.Value; }
         }
 
         return resources;
@@ -100,4 +144,8 @@ public class Boat : MonoBehaviour, IAction
     }
 
     public void ClearCarriedResources() => carriedResources.Clear();
+
+    public void AddSubgoal(IGoal goal) => this._goalProcessor.AddSubGoal(goal);
+
+    public void PrioritiseSubgoal(IGoal goal) => this._goalProcessor.PrioritizeSubGoal(goal);
 }
