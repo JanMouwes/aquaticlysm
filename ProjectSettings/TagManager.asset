@@ -12,6 +12,7 @@ TagManager:
   - Building
   - Storage
   - Barrel
+  - Farm
   layers:
   - Default
   - TransparentFX
