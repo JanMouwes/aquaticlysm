@@ -42,13 +42,13 @@ public class Barrels : MonoBehaviour
                 break;
             }
 
-            Vector3 position = barrel.transform.position;
+            //Vector3 position = barrel.transform.position;
 
-            barrel.transform.position = new Vector3(
-                position.x,
-                GetYForPosition(position, this._gridSize, mesh),
-                position.z
-            );
+            //barrel.transform.position = new Vector3(
+            //    position.x,
+            //    GetYForPosition(position, this._gridSize, mesh),
+            //    position.z
+            //);
         }
     }
 
