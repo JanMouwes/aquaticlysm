@@ -13,19 +13,26 @@ public class Barrels : MonoBehaviour
     public GameObject barrelPrefab;
     public GameObject water;
 
+    private float _timer;
+
     // Start is called before the first frame update
     void Start()
     {
         this._waterLevels = this.water.GetComponent<NoiseGenerator>();
         this._gridSize = this.water.GetComponent<ProceduralGrid>().size;
 
-        SpawnBarrels(5, new Vector3(10, 0, 10));
+        SpawnAlgorithm(30f, 80f);
     }
 
     // Update is called once per frame
     void Update()
     {
         Mesh mesh = this._waterLevels.MeshFilter.mesh;
+
+        if (_timer <= 0)
+            SpawnAlgorithm(40f, 100f);
+        else
+            _timer -= Time.deltaTime;
 
         foreach (GameObject barrel in this._barrels)
         {
@@ -43,6 +50,21 @@ public class Barrels : MonoBehaviour
                 position.z
             );
         }
+    }
+
+    /// <summary>
+    /// Spawning algorithm that decides the new time and spawns the barrels at a random location.
+    /// </summary>
+    /// <param name="minTime">Minimum spawn time.</param>
+    /// <param name="maxTime">Maximum spawn time.</param>
+    private void SpawnAlgorithm(float minTime, float maxTime) 
+    {
+        _timer = UnityEngine.Random.Range(minTime, maxTime);
+
+        int xPos = UnityEngine.Random.Range(-_gridSize / 2, _gridSize / 2);
+        int zPos = UnityEngine.Random.Range(-_gridSize / 2, _gridSize / 2);
+
+        SpawnBarrels(5, new Vector3(xPos, 0, zPos));
     }
 
     /// <summary>
