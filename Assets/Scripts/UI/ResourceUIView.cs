@@ -17,6 +17,7 @@ public class ResourceUIView : MonoBehaviour
     public ResourceUIView()
     {
         this._resourceManager = ResourceManager.Instance;
+        
     }
 
     // Update is called once per frame

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Selectable : MonoBehaviour
 {
@@ -7,27 +8,20 @@ public class Selectable : MonoBehaviour
 
     public bool Selected
     {
-        get => _selected;
+        get => this._selected;
         set
         {
-            if (value)
-            {
-                _selected = true;
-                OnSelected();
-            }
-            else
-            {
-                _selected = false;
-                OnDeselected();
-            }
+            this._selected = value;
+
+            if (value) { OnSelected(); }
+            else { OnDeselected(); }
         }
     }
-
 
     public void OnEnable()
     {
         // Add the selectable to a list of selectable entities.
-        SelectionController.selectables.Add(this);
+        SelectionController.AddSelectable(this);
         this._outline = GetComponent<Outline>();
         OnDeselected();
     }
@@ -35,16 +29,23 @@ public class Selectable : MonoBehaviour
     public void OnDisable()
     {
         // Remove the selectable of the list of selectable entities.
-        SelectionController.selectables.Remove(this);
+        SelectionController.RemoveSelectable(this);
+    }
+    
+    private void OnDestroy()
+    {
+        // Remove the selectable of the list of selectable entities.
+        SelectionController.RemoveSelectable(this);
     }
 
     private void OnSelected()
     {
-        _outline.enabled = true;
+        this._outline.enabled = true;
+        SelectionController.SelectedEntities.Add(this);
     }
 
     private void OnDeselected()
     {
-        _outline.enabled = false;
+        this._outline.enabled = false;
     }
 }
