@@ -7,6 +7,7 @@ public class DissolveController : MonoBehaviour
     private Renderer[] _materials;
 
     public float progress;
+    public string completionTag;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,13 @@ public class DissolveController : MonoBehaviour
 
         foreach (Renderer material in _materials)
             material.material.SetFloat("Dissolve", progress);
-        
-        return progress == 0;
+
+        if (progress == 0)
+        {
+            this.tag = completionTag;
+            return true;
+        }
+
+        return false;
     }
 }
