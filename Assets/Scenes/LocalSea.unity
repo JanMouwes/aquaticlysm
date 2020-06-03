@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.3635535, g: 0.56774515, b: 0.84646064, a: 1}
+  m_IndirectSpecularColor: {r: 0.36344054, g: 0.567706, b: 0.8464634, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -413,6 +413,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6834867388507719496, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6834867388507719496, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+        type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7002327989125427702, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
         type: 3}
       propertyPath: m_Name
@@ -1357,6 +1367,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1153440415}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1314295292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6834867388507719498, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 570519273}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1314295294 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6834867388507719496, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 570519273}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314295292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1314295296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314295292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98fa43b58072f2644aafa9faf2c357ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DateTimeText: {fileID: 1314295294}
+  Day: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
+  Night: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
 --- !u!1 &1410997366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3784799114617638757, guid: 421f1fb2ac547a042a3e87d4f7b53e7c,
