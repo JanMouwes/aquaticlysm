@@ -1113,6 +1113,7 @@ GameObject:
   - component: {fileID: 5030294159009161957}
   - component: {fileID: 5030294159009161956}
   - component: {fileID: 5030294159009161959}
+  - component: {fileID: 4764109065831660133}
   m_Layer: 0
   m_Name: Villager
   m_TagString: Character
@@ -1221,6 +1222,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3af3d6e3374b42b59ed627b8192cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &4764109065831660133
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268030032086963879}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6905073
+  m_Height: 3.3500004
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.63, z: -0.19050734}
 --- !u!1 &8482739146634659009
 GameObject:
   m_ObjectHideFlags: 0
