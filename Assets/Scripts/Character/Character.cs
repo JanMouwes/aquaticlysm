@@ -15,6 +15,8 @@ public class Character : MonoBehaviour, IAction
     public string LastName { get; private set; }
     public int Age { get; private set; }
 
+    public Sprite Portrait { get; set; }
+
     public NavMeshAgent agent;
     public float energyLevel;
 
