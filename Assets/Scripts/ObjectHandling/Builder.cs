@@ -115,6 +115,7 @@ public class Builder : MonoBehaviour
             }
             else
             {
+                // Show a warning by calling the ShowText component
                 StartCoroutine(GameObject.Find("NotEnoughRecoures").GetComponent<ShowText>().ShowTextFor5Seconds());
                 CancelBuilding();
             }
@@ -208,6 +209,10 @@ public class Builder : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Compares the currently owned values and the costs of the current entity. Return true, if owned enough resources for building.
+    /// </summary>
+    /// <returns>bool</returns>
     private bool TryGetBuildingResources()
     {
 
