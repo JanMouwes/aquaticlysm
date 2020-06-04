@@ -30,7 +30,7 @@ namespace Buildings.Farm
         /// <returns>Whether it was successful</returns>
         public bool TryClaimFarm(Character farmer)
         {
-            if (this.CurrentFarmer != null) { return false; }
+            if (this.CurrentFarmer != null && CurrentFarmer != farmer) { return false; }
 
             this.CurrentFarmer = farmer;
 

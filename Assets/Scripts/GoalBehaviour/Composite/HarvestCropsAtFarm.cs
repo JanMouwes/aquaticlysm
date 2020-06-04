@@ -22,6 +22,13 @@ namespace GoalBehaviour.Composite
 
         public override void Activate()
         {
+            if (!this._farm.TryClaimFarm(this._owner))
+            {
+                Status = GoalStatus.Failed;
+
+                return;
+            }
+            
             Status = GoalStatus.Active;
             AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
             AddSubGoal(new HarvestCrops(_owner, _farm, 4f));
@@ -38,6 +45,7 @@ namespace GoalBehaviour.Composite
         public override void Terminate()
         {
             Status = GoalStatus.Completed;
+            this._farm.ReleaseFarm(this._owner);
         }
 
         /// <summary>
