@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 45761509260218469}
   - component: {fileID: 8313224449462912791}
   - component: {fileID: 198468174290548414}
+  - component: {fileID: 2594582998707037958}
   m_Layer: 0
   m_Name: barge
   m_TagString: Building
@@ -92,6 +93,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progress: 0
+--- !u!114 &2594582998707037958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675793768008181234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47793a0ebc897354d931d3944f715cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingCostsList:
+  - resourceName: wood
+    resourceAmount: 10
 --- !u!1 &5105373171231059650
 GameObject:
   m_ObjectHideFlags: 0

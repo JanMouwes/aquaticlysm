@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ using Util;
 public class Builder : MonoBehaviour
 {
     public GameObject[] prefabs;
-
     private NavMeshSurface[] _navMeshSurfaces;
     private IEnumerable<BoxCollider> _buildingBoxColliders;
     private GameObject _currentEntity;
@@ -100,7 +100,6 @@ public class Builder : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             CancelBuilding();
-
             return;
         }
 
@@ -109,7 +108,17 @@ public class Builder : MonoBehaviour
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
-            BuildEntity();
+        {
+            if (TryGetBuildingResources())
+            {
+                BuildEntity();
+            }
+            else
+            {
+                StartCoroutine(GameObject.Find("NotEnoughRecoures").GetComponent<ShowText>().ShowTextFor5Seconds());
+                CancelBuilding();
+            }
+        }
     }
 
     /// <summary>
@@ -197,6 +206,21 @@ public class Builder : MonoBehaviour
         {
             navMeshSurface.BuildNavMesh();
         }
+    }
+
+    private bool TryGetBuildingResources()
+    {
+
+        foreach (Building.BuildingCosts resource in _currentEntity.GetComponent<Building>().BuildingCostsList)
+        {
+            if (ResourceManager.Instance.GetResourceAmount(resource.resourceName) >= (int)resource.resourceAmount)
+            {
+                ResourceManager.Instance.DecreaseResource(resource.resourceName, (int)resource.resourceAmount);
+            }
+            else
+                return false;
+        }
+        return true;
     }
 
     /// <summary>
