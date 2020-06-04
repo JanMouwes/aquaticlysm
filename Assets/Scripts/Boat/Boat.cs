@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entity;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Inventory))]
 public class Boat : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the boats.
@@ -16,6 +18,8 @@ public class Boat : MonoBehaviour, IAction
     public NavMeshAgent agent;
     public float fuel;
 
+    public Inventory inventory;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -23,6 +27,8 @@ public class Boat : MonoBehaviour, IAction
         _goalProcessor = new BoatAutomaton(this);
 
         _goaldata = new GoalCommand(this);
+
+        this.inventory = this.gameObject.GetComponent<Inventory>();
 
         if (_actions == null)
         {
@@ -43,7 +49,6 @@ public class Boat : MonoBehaviour, IAction
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
-
         if (_actions.ContainsKey(hit.collider.gameObject.tag))
         {
             // Set the goal with the current data.
@@ -76,7 +81,7 @@ public class Boat : MonoBehaviour, IAction
 
         goal = input => new Expedition(input.OwnerBoat, 100);
         _actions.Add("Expedition", goal);
-       
+
         goal = input => new FetchBarrel(input.OwnerBoat, input.Building);
         _actions.Add("Barrel", goal);
     }
@@ -87,10 +92,7 @@ public class Boat : MonoBehaviour, IAction
 
         if (carriedResources.Count > 0)
         {
-            foreach (KeyValuePair<string, float> resource in carriedResources)
-            {
-                resources += resource.Value;
-            }
+            foreach (KeyValuePair<string, float> resource in carriedResources) { resources += resource.Value; }
         }
 
         return resources;

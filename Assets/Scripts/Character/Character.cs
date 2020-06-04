@@ -2,14 +2,21 @@
 using UnityEngine.AI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Entity;
+using UnityEngine.Serialization;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
+[RequireComponent(typeof(Inventory))]
 public class Character : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the characters.
     private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+
+    private Think _brain;
+    private GoalCommand _goaldata;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -20,8 +27,7 @@ public class Character : MonoBehaviour, IAction
     public NavMeshAgent agent;
     public float energyLevel;
 
-    private Think _brain;
-    private GoalCommand _goaldata;
+    public Inventory inventory;
 
     // Start is called before the first frame update.
     public void Start()
@@ -29,6 +35,8 @@ public class Character : MonoBehaviour, IAction
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
         _goaldata = new GoalCommand(this);
+
+        this.inventory = this.gameObject.GetComponent<Inventory>();
 
         if (_actions == null)
         {
@@ -45,9 +53,11 @@ public class Character : MonoBehaviour, IAction
         energyLevel -= 2 * Time.deltaTime;
 
         _brain.Process();
+
+        if (this.inventory.Items.Any()) { Debug.Log(GetInstanceID() + ": " + string.Join(",", this.inventory.Items)); }
     }
-    
-    public bool ActionHandler(RaycastHit hit, bool priority) 
+
+    public bool ActionHandler(RaycastHit hit, bool priority)
     {
         if (_actions.ContainsKey(hit.collider.gameObject.tag))
         {
@@ -55,7 +65,7 @@ public class Character : MonoBehaviour, IAction
             _goaldata.Position = hit.point;
             _goaldata.Building = hit.collider.gameObject;
             IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
-        
+
             // Add the goal to the brain.
             if (priority)
                 _brain.AddSubGoal(goal);
@@ -77,11 +87,11 @@ public class Character : MonoBehaviour, IAction
 
         goal = input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Walkway", goal);
-        
+
         goal = input => new Rest(input.Owner);
         _actions.Add("Rest", goal);
-        
-        goal = input =>  new Construct(input.Owner, input.Building);
+
+        goal = input => new Construct(input.Owner, input.Building);
         _actions.Add("Building", goal);
     }
 }

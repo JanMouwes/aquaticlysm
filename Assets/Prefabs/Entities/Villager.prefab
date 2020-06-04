@@ -1114,6 +1114,7 @@ GameObject:
   - component: {fileID: 5030294159009161956}
   - component: {fileID: 5030294159009161959}
   - component: {fileID: 4764109065831660133}
+  - component: {fileID: 6710847183996083738}
   m_Layer: 0
   m_Name: Villager
   m_TagString: Character
@@ -1236,6 +1237,19 @@ CapsuleCollider:
   m_Height: 3.3500004
   m_Direction: 1
   m_Center: {x: 0, y: 1.63, z: -0.19050734}
+--- !u!114 &6710847183996083738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268030032086963879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e310faf995440c0aa524a07a8b6427c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capacity: 1
 --- !u!1 &8482739146634659009
 GameObject:
   m_ObjectHideFlags: 0

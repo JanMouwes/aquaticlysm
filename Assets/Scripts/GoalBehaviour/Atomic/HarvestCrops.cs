@@ -1,5 +1,6 @@
 ﻿using Buildings.Farm;
 using Buildings.Farm.States;
+using Items;
 using Resources;
 using UnityEngine;
 
@@ -56,8 +57,12 @@ namespace GoalBehaviour.Atomic
         private void Harvest()
         {
             // Change status of Farm to first growing phase.
-            ResourceManager.Instance.IncreaseResource("food", 50);
             _farm.ChangeState(Empty.Instance);
+
+            WheatItem wheatItem = new WheatItem();
+
+            if (!this._owner.inventory.TryAddItem(wheatItem)) { Debug.Log("Dropped WheatItem!"); }
+
             Terminate();
         }
     }
