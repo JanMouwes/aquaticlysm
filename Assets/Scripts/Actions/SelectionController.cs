@@ -24,11 +24,6 @@ public class SelectionController : MonoBehaviour
     private Vector2 _startWorldSpace;
     private Vector2 _endWorldSpace;
 
-    private void Awake()
-    {
-        GlobalStateMachine.instance.StateChanged += ToggleEnable;
-    }
-
     private void ToggleEnable(IState state) => this.enabled = state is PlayState;
 
     // Start is called before the first frame update.
