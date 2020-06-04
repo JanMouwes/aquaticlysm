@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DissolveController : MonoBehaviour
 {
-    private Renderer[] _materials;
+    private Renderer[] _renderers;
 
     public float progress;
     public string completionTag;
@@ -13,7 +13,7 @@ public class DissolveController : MonoBehaviour
     void Start()
     {
         progress = 1;
-        _materials = GetComponentsInChildren<Renderer>();
+        _renderers = GetComponentsInChildren<Renderer>();
     }
 
     /// <summary>
@@ -26,8 +26,11 @@ public class DissolveController : MonoBehaviour
         progress -= addProgress;
         progress = Mathf.Clamp(progress, 0, 1);
 
-        foreach (Renderer material in _materials)
-            material.material.SetFloat("Dissolve", progress);
+        foreach (Renderer renderer in _renderers)
+        {
+            renderer.materials[0].SetFloat("transparant", Mathf.Clamp(progress, 0, 0.6f));
+            renderer.materials[1].SetFloat("Dissolve", progress);
+        }
 
         if (progress == 0)
         {
