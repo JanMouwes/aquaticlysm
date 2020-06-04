@@ -32,6 +32,6 @@ public class DateTime : MonoBehaviour
         DateTimeText.text = "DAY " + _dayCounter;
     }
 
-    private static bool IsDay(float passedGameTime) => passedGameTime <= 50f;
+    public static bool IsDay(float passedGameTime) => passedGameTime >= 50f;
     private static bool dayHasPassed(float passedGameTime) => passedGameTime <= 0f;
 }
