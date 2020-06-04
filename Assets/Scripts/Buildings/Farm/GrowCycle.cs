@@ -5,16 +5,17 @@ namespace Buildings.Farm
     public class GrowCycle : IFarmingState
     {
         private float _time;
-        private MeshRenderer _dirt;
+        private GameObject _oldGrowthPhase;
+        private GameObject _growthPhase;
 
         public void Start(Farm owner)
         {
             _time = 4f;
-            
-            Transform trans = owner.transform;
-            _dirt = trans.Find("Dirt").GetComponent<MeshRenderer>();
 
-            _dirt.material.color = Color.yellow;
+            Transform trans = owner.transform;
+            _oldGrowthPhase = trans.Find("GrowthPhase1").gameObject;
+            _growthPhase = trans.Find("GrowthPhase5").gameObject;
+
         }
 
         public void Execute(Farm owner)
@@ -27,7 +28,8 @@ namespace Buildings.Farm
 
         public void Stop(Farm owner)
         {
-            
+            _oldGrowthPhase.SetActive(false);
+            _growthPhase.SetActive(true);
         }
     }
 }

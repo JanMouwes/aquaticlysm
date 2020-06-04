@@ -6,14 +6,14 @@ namespace Buildings.Farm
     public class CropsGrown : IFarmingState
     {
         private Character _farmer;
-        private MeshRenderer _dirt;
+        private GameObject _oldGrowthPhase;
+        private GameObject _growthPhase;
 
         public void Start(Farm owner)
         {
             Transform trans = owner.transform;
-            _dirt = trans.Find("Dirt").GetComponent<MeshRenderer>();
 
-            _dirt.material.color = Color.green;
+            _oldGrowthPhase = trans.Find("GrowthPhase5").gameObject;
         }
 
         public void Execute(Farm owner)
@@ -31,7 +31,7 @@ namespace Buildings.Farm
 
         public void Stop(Farm owner)
         {
-            _dirt.material.color = new Color(139,69,19);
+            _oldGrowthPhase.SetActive(false);
         }
     }
 }

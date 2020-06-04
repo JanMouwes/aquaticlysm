@@ -6,14 +6,12 @@ namespace Buildings.Farm
     {
 
         private Character _farmer;
-        private MeshRenderer _dirt;
+        private GameObject _growthPhase;
         
         public void Start(Farm owner)
         {
             Transform trans = owner.transform;
-            _dirt = trans.Find("Dirt").GetComponent<MeshRenderer>();
-
-           _dirt.enabled = false;
+            _growthPhase = trans.Find("GrowthPhase1").gameObject;
         }
 
         public void Execute(Farm owner)
@@ -32,8 +30,7 @@ namespace Buildings.Farm
 
         public void Stop(Farm owner)
         {
-            Debug.Log(_dirt);
-            _dirt.enabled = true;
+            _growthPhase.SetActive(true);
         }
     }
 }
