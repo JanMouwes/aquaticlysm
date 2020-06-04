@@ -9,7 +9,7 @@ namespace Buildings.Farm
 
         private void Start()
         {
-            _state = new Empty();
+            _state = new Disabled();
             _state.Start(this);
         }
 

@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progress: 0
+  completionTag: Building
 --- !u!1 &5105373171231059650
 GameObject:
   m_ObjectHideFlags: 0
