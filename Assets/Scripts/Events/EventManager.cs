@@ -58,8 +58,7 @@ public class EventManager
                 createdEvent.events.Add(action);
                 break;
         }
-        Debug.Log(createdEvent.Title);
-        EventCreated?.Invoke(createdEvent);
+        EventCreated.Invoke(createdEvent);
     }
 }
 

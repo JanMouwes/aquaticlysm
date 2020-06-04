@@ -7,19 +7,14 @@ public class RandomEvents : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.Instance.CreateEvent(2);
+        StartCoroutine(Test());
     }
 
     IEnumerator Test()
     {
         //Wait for 4 seconds
         yield return new WaitForSeconds(4);
-       
+        EventManager.Instance.CreateEvent(1);
         Start();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
