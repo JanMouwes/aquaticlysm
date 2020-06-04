@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Util;
 
 public class SelectionController : MonoBehaviour
 {
     // All selectable entities.
-    public static List<Selectable> selectables = new List<Selectable>();
+    public static List<Selectable> Selectables = new List<Selectable>();
     
     // All selected entities.
-    public static List<Selectable> selectedEntities = new List<Selectable>();
+    public static List<Selectable> SelectedEntities = new List<Selectable>();
 
+    // public static CharacterSystem characterSystem;
+    
     [Tooltip("The canvas of the selection box")]
     public Canvas canvas;
 
@@ -17,31 +20,26 @@ public class SelectionController : MonoBehaviour
     public RectTransform selectionBox;
 
     // The start position of the mouseclick inside of the canvas.
-    private Vector2 startScreenPosition;
-    private Vector2 startWorldSpace;
-    private Vector2 endWorldSpace;
-
-    private void Awake()
-    {
-        GlobalStateMachine.instance.StateChanged += ToggleEnable;
-    }
+    private Vector2 _startScreenPosition;
+    private Vector2 _startWorldSpace;
+    private Vector2 _endWorldSpace;
 
     private void ToggleEnable(IState state) => this.enabled = state is PlayState;
 
     // Start is called before the first frame update.
     private void Start()
     {
-        startWorldSpace = new Vector2();
-        endWorldSpace = new Vector2();
+        this._startWorldSpace = new Vector2();
+        this._endWorldSpace = new Vector2();
 
         // Initialize the selection box.
-        if (selectionBox != null)
+        if (this.selectionBox != null)
         {
             // We need to reset anchors and pivot to ensure proper positioning.
-            selectionBox.pivot = Vector2.one * .5f;
-            selectionBox.anchorMin = Vector2.one * .5f;
-            selectionBox.anchorMax = Vector2.one * .5f;
-            selectionBox.gameObject.SetActive(false);
+            this.selectionBox.pivot = Vector2.one * .5f;
+            this.selectionBox.anchorMin = Vector2.one * .5f;
+            this.selectionBox.anchorMax = Vector2.one * .5f;
+            this.selectionBox.gameObject.SetActive(false);
         }
     }
 
@@ -65,8 +63,8 @@ public class SelectionController : MonoBehaviour
             UpdateSelectionBox(Input.mousePosition);
 
             // Set the pos of the raycasthit.
-            endWorldSpace.x = raycastHit.point.x;
-            endWorldSpace.y = raycastHit.point.z;
+            this._endWorldSpace.x = raycastHit.point.x;
+            this._endWorldSpace.y = raycastHit.point.z;
         }
 
         // Return true when the left mouse button is released.
@@ -75,7 +73,19 @@ public class SelectionController : MonoBehaviour
             SelectMultipleUnits();
         }
     }
-
+    
+    
+    public static void AddSelectable(Selectable selectable)
+    {
+        Selectables.Add(selectable);
+        // selectable.Selected = false;
+    }
+    
+    public static void RemoveSelectable(Selectable selectable)
+    {
+        Selectables.Remove(selectable);
+    }
+    
     private void SelectSingleUnit(RaycastHit raycastHit)
     {
         // Clear all selected items.
@@ -86,34 +96,32 @@ public class SelectionController : MonoBehaviour
         if (s != null)
         {
             s.Selected = true;
-            selectedEntities.Add(s);
         }
 
         // Register the mouse coordinates within the canvas.
-        startScreenPosition = Input.mousePosition;
+        this._startScreenPosition = Input.mousePosition;
 
         // Set the pos of the raycasthit.
-        startWorldSpace.x = raycastHit.point.x;
-        startWorldSpace.y = raycastHit.point.z;
+        this._startWorldSpace.x = raycastHit.point.x;
+        this._startWorldSpace.y = raycastHit.point.z;
     }
 
     private void SelectMultipleUnits()
     {
         // Close the selection box.
-        selectionBox.gameObject.SetActive(false);
+        this.selectionBox.gameObject.SetActive(false);
 
         // Create a bounding box with the positions in the worldspace.
-        Bounds boundingBox = CreateBoundingBox(startWorldSpace, endWorldSpace);
+        Bounds boundingBox = CreateBoundingBox(this._startWorldSpace, this._endWorldSpace);
 
         // Foreach through all selectables and check if it's inside of the bounding box and a unit or boat.
-        foreach (Selectable selectable in selectables)
+        foreach (Selectable selectable in Selectables)
         {
             if (selectable.CompareTag("Character"))
             {
                 if (boundingBox.Contains(new Vector2(selectable.gameObject.transform.position.x, selectable.gameObject.transform.position.z)))
                 {
                     selectable.Selected = true;
-                    selectedEntities.Add(selectable);
                 }
             }
         }
@@ -124,9 +132,9 @@ public class SelectionController : MonoBehaviour
     /// </summary>
     private void ClearSelected() 
     {
-        selectedEntities.ForEach(s => s.Selected = false);
+        SelectedEntities.ForEach(s => s.Selected = false);
 
-        selectedEntities.Clear();
+        SelectedEntities.Clear();
     }
 
     /// <summary>
@@ -136,17 +144,16 @@ public class SelectionController : MonoBehaviour
     private void UpdateSelectionBox(Vector2 mousePosition)
     {
         // Open the selection box if its closed.
-        if (!selectionBox.gameObject.activeInHierarchy)
-            selectionBox.gameObject.SetActive(true);
+        if (!this.selectionBox.gameObject.activeInHierarchy) this.selectionBox.gameObject.SetActive(true);
 
         // Create a bounding box with the positions in the localspace.
-        Bounds boundingBox = CreateBoundingBox(startScreenPosition, mousePosition);
+        Bounds boundingBox = CreateBoundingBox(this._startScreenPosition, mousePosition);
 
         // Set the position of the selection box.
-        selectionBox.position = boundingBox.center;
+        this.selectionBox.position = boundingBox.center;
 
         // Set the size of the selection box.
-        selectionBox.sizeDelta = canvas.transform.InverseTransformVector(boundingBox.size);
+        this.selectionBox.sizeDelta = this.canvas.transform.InverseTransformVector(boundingBox.size);
     }
 
     // Create bounds (AABB, a rectangle if your not familiar with it).

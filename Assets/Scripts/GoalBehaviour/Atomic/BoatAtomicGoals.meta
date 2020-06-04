@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Sound.meta
+guid: c1b481779f8169f488fba0b58985fa7b
+=======
 guid: 42d945c96cc3b20479f3cb3da57feab1
+>>>>>>> develop:Assets/Scripts/GoalBehaviour/Atomic/BoatAtomicGoals.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

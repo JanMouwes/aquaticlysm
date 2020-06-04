@@ -15,6 +15,8 @@ public class Character : MonoBehaviour, IAction
     public string LastName { get; private set; }
     public int Age { get; private set; }
 
+    public Sprite Portrait { get; set; }
+
     public NavMeshAgent agent;
     public float energyLevel;
 
@@ -73,7 +75,7 @@ public class Character : MonoBehaviour, IAction
     {
         Func<GoalCommand, IGoal> goal;
 
-        goal = input => new MoveTo(input.Owner.gameObject, input.Position, 2f);
+        goal = input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Walkway", goal);
         
         goal = input => new Rest(input.Owner);
