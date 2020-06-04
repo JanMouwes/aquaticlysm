@@ -1,34 +1,19 @@
-﻿using Resources;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Buildings.Farm
+namespace Buildings.Farm.States
 {
-    public class FullGrown : IFarmingState
+    public class FullGrown : FarmingState
     {
-        private Character _farmer;
         private GameObject _growthPhase;
 
-        public void Start(Farm owner)
+        public override void Start(Farm owner)
         {
-            _growthPhase = owner.transform.Find("GrowthPhase5").gameObject;
+            this._growthPhase = owner.transform.Find("GrowthPhase5").gameObject;
         }
 
-        public void Execute(Farm owner)
+        public override void Stop(Farm owner)
         {
-            if (_farmer == null)
-            {
-                _farmer = owner.FindFarmer();
-
-                if (_farmer != null)
-                {
-                    _farmer.StartHarvesting(owner);
-                }
-            }
-        }
-
-        public void Stop(Farm owner)
-        {
-            _growthPhase.SetActive(false);
+            this._growthPhase.SetActive(false);
         }
     }
 }

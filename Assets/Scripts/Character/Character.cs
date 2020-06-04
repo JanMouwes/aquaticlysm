@@ -2,8 +2,6 @@
 using UnityEngine.AI;
 using System;
 using System.Collections.Generic;
-using Buildings.Farm;
-using GoalBehaviour.Composite;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
@@ -85,17 +83,5 @@ public class Character : MonoBehaviour, IAction
         
         goal = input =>  new Construct(input.Owner, input.Building);
         _actions.Add("Building", goal);
-    }
-
-    public void StartFarming(Farm farm)
-    {
-        IGoal farmGoal = new StartSeeding(this, farm);
-        _brain.AddSubGoal(farmGoal);
-    }
-
-    public void StartHarvesting(Farm farm)
-    {
-        IGoal farmGoal = new StartHarvesting(this, farm);
-        _brain.AddSubGoal(farmGoal);
     }
 }

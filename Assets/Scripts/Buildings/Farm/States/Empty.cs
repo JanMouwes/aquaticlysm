@@ -1,31 +1,19 @@
-﻿using UnityEngine;
-
-namespace Buildings.Farm
+﻿namespace Buildings.Farm.States
 {
-    public class Empty : IFarmingState
+    public class Empty : FarmingState
     {
-        private Character _farmer;
-        
-        public void Start(Farm owner)
-        {
-        }
+        private static Empty instance;
 
-        public void Execute(Farm owner)
+        public static Empty Instance
         {
-            if (_farmer == null)
+            get
             {
-                _farmer = owner.FindFarmer();
+                if (instance == null) { instance = new Empty(); }
 
-                if (_farmer != null)
-                {
-                    _farmer.StartFarming(owner);
-                }
+                return instance;
             }
-            
         }
 
-        public void Stop(Farm owner)
-        {
-        }
+        private Empty() { }
     }
 }

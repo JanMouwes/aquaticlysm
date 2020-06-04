@@ -6,14 +6,14 @@ using UnityEngine.AI;
 
 namespace GoalBehaviour.Composite
 {
-    public class StartSeeding : CompositeGoal
+    public class SowSeedsAtFarm : CompositeGoal
     {
 
         private Character _owner;
         private Farm _farm;
         private Vector3 _target;
         
-        public StartSeeding(Character owner, Farm farm)
+        public SowSeedsAtFarm(Character owner, Farm farm)
         {
             Name = "Start Seeding";
             _owner = owner;
@@ -25,7 +25,7 @@ namespace GoalBehaviour.Composite
         {
             Status = GoalStatus.Active;
             AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
-            AddSubGoal(new PlantSeeds(_owner, _farm, 2f));
+            AddSubGoal(new SowSeeds(_owner, _farm, 2f));
         }
 
         public override GoalStatus Process()

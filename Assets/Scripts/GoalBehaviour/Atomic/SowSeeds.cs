@@ -1,10 +1,11 @@
 ﻿using Buildings.Farm;
+using Buildings.Farm.States;
 using Resources;
 using UnityEngine;
 
 namespace GoalBehaviour.Atomic
 {
-    public class PlantSeeds : IGoal
+    public class SowSeeds : IGoal
     {
         public GoalStatus Status { get; private set; }
         public string Name { get; }
@@ -14,9 +15,9 @@ namespace GoalBehaviour.Atomic
         private readonly Vector3 _target;
         private float _time;
         
-        public PlantSeeds(Character owner, Farm farm, float duration)
+        public SowSeeds(Character owner, Farm farm, float duration)
         {
-            Name = "PlantSeeds";
+            Name = "SowSeeds";
             _owner = owner;
             _farm = farm;
             _target = farm.transform.position;
@@ -25,18 +26,22 @@ namespace GoalBehaviour.Atomic
         
         public void Activate()
         {
+            if (!this._farm.TryClaimFarm(this._owner))
+            {
+                Status = GoalStatus.Failed;
+                return;
+            }
+            
             Status = GoalStatus.Active;
         }
 
         public GoalStatus Process()
         {
-            if (Status == GoalStatus.Inactive)
-                Activate();
+            if (Status == GoalStatus.Inactive) { Activate(); }
             
             _time -= Time.deltaTime;
             
-            if (_time <= 0)
-                Plant();
+            if (_time <= 0) { Plant(); }
 
             return Status;
         }
@@ -44,6 +49,7 @@ namespace GoalBehaviour.Atomic
         public void Terminate()
         {
             Status = GoalStatus.Completed;
+            this._farm.ReleaseFarm(this._owner);
         }
 
         private void Plant()
