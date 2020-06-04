@@ -14,8 +14,8 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     private BoatAutomaton _goalProcessor;
     private GoalCommand<Boat> _goaldata;
 
-    private GameAction[] _actions;
-    public IEnumerable<GameAction> Actions => this._actions;
+    // private GameAction[] _actions;
+    // public IEnumerable<GameAction> Actions => this._actions;
 
     private GameActionButtonModel[] _buttonModels;
     public IEnumerable<GameActionButtonModel> ButtonModels => this._buttonModels;
@@ -37,13 +37,13 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 
         this._buttonModels = GetGameActionButtonModels(this).ToArray();
 
-        if (_actions == null)
-        {
-            // this._actions = GetGoalTypes()
-            //                .Select(tuple => new SetGoalGameAction<Boat>(tuple.goal, "action-boat-" + tuple.hitTagName, this))
-            //                .Cast<GameAction>()
-            //                .ToArray();
-        }
+        // if (_actions == null)
+        // {
+        //     // this._actions = GetGoalTypes()
+        //     //                .Select(tuple => new SetGoalGameAction<Boat>(tuple.goal, "action-boat-" + tuple.hitTagName, this))
+        //     //                .Cast<GameAction>()
+        //     //                .ToArray();
+        // }
 
         carriedResources = new Dictionary<string, float>();
         maxCarrierAmount = 20f;

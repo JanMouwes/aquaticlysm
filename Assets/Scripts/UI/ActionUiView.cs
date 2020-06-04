@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Actions;
@@ -31,7 +30,7 @@ namespace UI
             foreach (GameActionButtonModel buttonModel in actions.Where(action => !this._actionUiElements.ContainsKey(action.Name)))
             {
                 int index = this._actionUiElements.Count;
-                SetActionButtonIcon(buttonModel, index);
+                SetActionButtonModel(buttonModel, index);
             }
         }
 
@@ -47,12 +46,13 @@ namespace UI
             return element;
         }
 
-        private void SetActionButtonIcon(GameActionButtonModel model, int index)
+        private void SetActionButtonModel(GameActionButtonModel model, int index)
         {
             string key = model.Name;
             Sprite sprite = model.Icon;
 
             GameObject element = GetActionUiElement(key);
+            element.name = "Button for " + model.Name;
 
             const float distance = 70;
 
@@ -70,11 +70,17 @@ namespace UI
 
             if (model.OnClick != null)
             {
-                Debug.Log(model);
-                Debug.Log(model.OnClick);
-                element.GetComponent<Button>()
-                       .onClick
-                       .AddListener(model.OnClick);
+                Button button = element.GetComponent<Button>();
+
+                Debug.Log(button.name);
+                
+                button.onClick
+                      .AddListener(() =>
+                       {
+                           model.OnClick();
+                           Debug.Log("Called onClick");
+                       });
+                button.onClick.Invoke();
             }
         }
     }
