@@ -33,4 +33,8 @@
         <description>this resource is made of wheat</description>
         <icon-path>Sprites/Food</icon-path>
     </resource>
+    <resource>
+        <name>energy</name>
+        <description>this resource is made of zap zap</description>
+    </resource>
 </resources>
