@@ -4,14 +4,10 @@ namespace Buildings.Farm
 {
     public class SoilEmpty : IFarmingState
     {
-
         private Character _farmer;
-        private GameObject _growthPhase;
         
         public void Start(Farm owner)
         {
-            Transform trans = owner.transform;
-            _growthPhase = trans.Find("GrowthPhase1").gameObject;
         }
 
         public void Execute(Farm owner)
@@ -30,7 +26,6 @@ namespace Buildings.Farm
 
         public void Stop(Farm owner)
         {
-            _growthPhase.SetActive(true);
         }
     }
 }
