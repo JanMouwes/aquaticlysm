@@ -2,7 +2,7 @@
 
 namespace Buildings.Farm
 {
-    public class GrowCycle : IFarmingState
+    public class Growing : IFarmingState
     {
         private GameObject _growthPhase;
         private float _time;
@@ -22,7 +22,7 @@ namespace Buildings.Farm
 
             if (_time <= 0)
                 if (_phase == 4)
-                    owner.ChangeState(new CropsGrown());
+                    owner.ChangeState(new FullGrown());
                 else
                     ChangePhase(owner);
         }
@@ -42,7 +42,7 @@ namespace Buildings.Farm
         private void ChangePhase(Farm owner)
         {
             _phase++;
-            _time = 10f;
+            _time = 20f;
             _growthPhase.SetActive(false);
             _growthPhase = owner.transform.Find(_growthPhases[_phase]).gameObject;
             _growthPhase.SetActive(true);

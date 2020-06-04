@@ -2,7 +2,7 @@
 
 namespace Buildings.Farm
 {
-    public class SoilEmpty : IFarmingState
+    public class Empty : IFarmingState
     {
         private Character _farmer;
         

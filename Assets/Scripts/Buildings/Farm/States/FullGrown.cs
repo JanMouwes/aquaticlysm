@@ -3,17 +3,14 @@ using UnityEngine;
 
 namespace Buildings.Farm
 {
-    public class CropsGrown : IFarmingState
+    public class FullGrown : IFarmingState
     {
         private Character _farmer;
-        private GameObject _oldGrowthPhase;
         private GameObject _growthPhase;
 
         public void Start(Farm owner)
         {
-            Transform trans = owner.transform;
-
-            _oldGrowthPhase = trans.Find("GrowthPhase5").gameObject;
+            _growthPhase = owner.transform.Find("GrowthPhase5").gameObject;
         }
 
         public void Execute(Farm owner)
@@ -31,7 +28,7 @@ namespace Buildings.Farm
 
         public void Stop(Farm owner)
         {
-            _oldGrowthPhase.SetActive(false);
+            _growthPhase.SetActive(false);
         }
     }
 }

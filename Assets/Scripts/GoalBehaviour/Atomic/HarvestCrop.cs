@@ -53,7 +53,7 @@ namespace GoalBehaviour.Atomic
         {
             // Change status of Farm to first growing phase.
             ResourceManager.Instance.IncreaseResource("food", 50);
-            _farm.ChangeState(new SoilEmpty());
+            _farm.ChangeState(new Empty());
             Terminate();
             
         }

@@ -9,7 +9,7 @@ namespace Buildings.Farm
 
         private void Start()
         {
-            _state = new SoilEmpty();
+            _state = new Empty();
             _state.Start(this);
         }
 
