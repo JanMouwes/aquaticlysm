@@ -1,27 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Buildings.Farm
+﻿namespace Buildings.Farm.States
 {
-    class Disabled : IFarmingState
+    public class Disabled : FarmingState
     {
-        public void Start(Farm owner)
-        {
-
-        }
-
-        public void Execute(Farm owner)
+        public override void Execute(Farm owner)
         {
             if(owner.CompareTag("Farm"))
-                owner.ChangeState(new Empty());
+                owner.ChangeState(Empty.Instance);
 
-        }
-
-        public void Stop(Farm owner)
-        {
         }
     }
 }

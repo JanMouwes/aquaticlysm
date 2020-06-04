@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Buildings.Farm
+namespace Buildings.Farm.States
 {
-    public class Growing : IFarmingState
+    public class Growing : FarmingState
     {
         private GameObject _growthPhase;
         private float _time;
         private int _phase;
 
-        private string[] _growthPhases = {
+        private string[] _growthPhases =
+        {
             "GrowthPhase1",
             "GrowthPhase2",
             "GrowthPhase3",
@@ -16,36 +17,34 @@ namespace Buildings.Farm
             "GrowthPhase5",
         };
 
-        public void Execute(Farm owner)
+        public override void Execute(Farm owner)
         {
-            _time -= Time.deltaTime;
+            this._time -= Time.deltaTime;
 
-            if (_time <= 0)
-                if (_phase == 4)
+            if (this._time <= 0)
+            {
+                if (this._phase == 4)
                     owner.ChangeState(new FullGrown());
                 else
                     ChangePhase(owner);
+            }
         }
 
-        public void Start(Farm owner)
+        public override void Start(Farm owner)
         {
-            _phase = 1;
-            _time = 5f;
-            _growthPhase = owner.transform.Find(_growthPhases[_phase]).gameObject;
-            _growthPhase.SetActive(true);
-        }
-
-        public void Stop(Farm owner)
-        {
+            this._phase = 1;
+            this._time = 5f;
+            this._growthPhase = owner.transform.Find(this._growthPhases[this._phase]).gameObject;
+            this._growthPhase.SetActive(true);
         }
 
         private void ChangePhase(Farm owner)
         {
-            _phase++;
-            _time = 20f;
-            _growthPhase.SetActive(false);
-            _growthPhase = owner.transform.Find(_growthPhases[_phase]).gameObject;
-            _growthPhase.SetActive(true);
+            this._phase++;
+            this._time = 2f;
+            this._growthPhase.SetActive(false);
+            this._growthPhase = owner.transform.Find(this._growthPhases[this._phase]).gameObject;
+            this._growthPhase.SetActive(true);
         }
     }
 }

@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 8296172669162005287}
   - component: {fileID: 8296172669162005288}
   - component: {fileID: 8296172669162005289}
+  - component: {fileID: 5068613836200104238}
   m_Layer: 0
   m_Name: fishingBoat
   m_TagString: Untagged
@@ -247,10 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb6506d320f629449ab1a8e0d840692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxCarrierAmount: 21
+  maxCarrierAmount: 0
   agent: {fileID: 8296172669162005286}
-  Fuel: 0
-  AmountOfFish: 0
+  fuel: 0
 --- !u!114 &8296172669162005288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +281,18 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &5068613836200104238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4107500611104668791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e310faf995440c0aa524a07a8b6427c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4940295382210864376
 GameObject:
   m_ObjectHideFlags: 0
