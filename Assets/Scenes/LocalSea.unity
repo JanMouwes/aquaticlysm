@@ -426,7 +426,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &516862153
 GameObject:
@@ -527,6 +527,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 700102252}
     m_Modifications:
+    - target: {fileID: 3789413495754135501, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+        type: 3}
+      propertyPath: OneOptionUI
+      value: 
+      objectReference: {fileID: 3915012539228925420, guid: 46abca94e1dbdb944bebccd211483e98,
+        type: 3}
+    - target: {fileID: 3789413495754135501, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+        type: 3}
+      propertyPath: TwoOptionsUI
+      value: 
+      objectReference: {fileID: 3832789200202317639, guid: 06cfeef4495f7a546af9915edb4dadf8,
+        type: 3}
     - target: {fileID: 6194803699646802654, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
         type: 3}
       propertyPath: characterSystem
@@ -836,6 +848,31 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: e9cb504080f3cbe4db26e216461f5ff8, type: 2}
+--- !u!1 &954015646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4107500611104668791, guid: 76235159ce9e14144a5b8f986a46c277,
+    type: 3}
+  m_PrefabInstance: {fileID: 1751549842}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &954015653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954015646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c53efb0b441464f8a1025046e9184a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingCosts:
+  - resource: wood
+    amount: 6
+  - resource: water
+    amount: 10
+  - resource: steel
+    amount: 15
 --- !u!1 &1051519568
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,20 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class RandomEvents : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        StartCoroutine(Test());
+        EventManager.Instance.CreateEvent(0);
+        StartCoroutine(EventTimer());
     }
 
-    IEnumerator Test()
+    private IEnumerator EventTimer()
     {
-        //Wait for 4 seconds
-        yield return new WaitForSeconds(4);
-        EventManager.Instance.CreateEvent(1);
-        Start();
+        //Wait for between 60 and 300 seconds
+        yield return new WaitForSeconds(Random.Range(60,300));
+        // 50%
+        if (Random.value < 0.5f)
+        {
+            EventManager.Instance.CreateEvent(1);
+        }
+        // 50%
+        else
+        {
+            EventManager.Instance.CreateEvent(2);
+        }
+        ResetState();
+    }
+
+    private void ResetState()
+    {
+        StartCoroutine(EventTimer());
     }
 }

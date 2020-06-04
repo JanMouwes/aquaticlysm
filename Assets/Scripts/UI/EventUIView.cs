@@ -1,75 +1,101 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 public class EventUIView : MonoBehaviour
 {
-    public GameObject Agree;
-    public GameObject Ok;
-    private GameObject UI; 
-    private int _eventid;
     private Event _event;
-    private bool firstrun = false;
+    public GameObject OneOptionUI;
+    public GameObject TwoOptionsUI;
+    private GameObject UI;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        EventManager.Instance.EventCreated += UpdateEventUIView;
+        EventManager.Instance.EventCreated += BuildEventUiView;
     }
 
-    void UpdateEventUIView(Event input)
-    {
-        Debug.Log("call");
 
+    /// <summary>
+    ///     Builds the Ui for the event Based on the information given with the Event that is given.
+    /// </summary>
+    /// <param name="input">Information For the Event</param>
+    private void BuildEventUiView(Event input)
+    {
+        // save input
         _event = input;
-        if (input.Buttonstyle == buttonstyle.AgreeDisagree)
+        Debug.Log(_event.ButtonStyle);
+        switch (_event.ButtonStyle)
         {
-            UI = Instantiate (Agree, Agree.transform.position, Agree.transform.rotation) as GameObject;
-            UI.transform.Find("YesButton").GetComponent<Button>().onClick.AddListener(YesPressed);
-            UI.transform.Find("NoButton").GetComponent<Button>().onClick.AddListener(NoPressed);
+            // check the button style of the event 
+            case ButtonStyle.TwoOptions:
+                // create the TwoOptionsUI and link the buttons to the actions
+                UI = Instantiate(TwoOptionsUI, TwoOptionsUI.transform.position, TwoOptionsUI.transform.rotation);
+                UI.transform.Find("YesButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
+                UI.transform.Find("NoButton").GetComponent<Button>().onClick.AddListener(RedPressed);
+                break;
+            case ButtonStyle.OneOption:
+                // create the OneOptionsUI and link the button to the action
+                UI = Instantiate(OneOptionUI, OneOptionUI.transform.position, OneOptionUI.transform.rotation);
+                UI.transform.Find("OkayButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
+                break;
+            default:
+                throw new Exception("Unknown UI created");
         }
-        else
-        {
-            UI = Instantiate (Ok, Ok.transform.position, Ok.transform.rotation);
-            UI.transform.Find("OkayButton").GetComponent<Button>().onClick.AddListener(OkayPressed);
-        }
+
+        // set create ui to be the child of this gameobject
         UI.transform.SetParent(transform, false);
+        // change the title
         UI.transform.Find("EventContainer/EventTitle").GetComponent<Text>().text = _event.Title;
+        // change the body text
         UI.transform.Find("EventContainer/Content/EventText").GetComponent<Text>().text = _event.Text;
+        //change the state to an event state
         GlobalStateMachine.instance.ChangeState(new EventState());
-        iTween.ScaleFrom(UI,iTween.Hash("scale", new Vector3(0,0,0), "ignoretimescale", true, "time", 0.5f));
+        //animate
+        iTween.ScaleFrom(UI, iTween.Hash("scale", new Vector3(0, 0, 0), "ignoretimescale", true, "time", 0.5f));
     }
 
-    void DismissEventUi()
+    /// <summary>
+    ///     when Event is dismissed animation is played and stated is changed to the play state
+    /// </summary>
+    private void DismissEventUi()
     {
-        iTween.ScaleTo(UI,iTween.Hash("scale", new Vector3(0,0,0), "ignoretimescale", true, "time", 0.5f, "oncomplete", "DestroyUI", "oncompletetarget", gameObject));
+        // animate
+        iTween.ScaleTo(UI,
+                       iTween.Hash("scale", new Vector3(0, 0, 0), "ignoretimescale", true, "time", 0.5f, "oncomplete",
+                                   "DestroyUI", "oncompletetarget", gameObject));
+        // change state to play state
         GlobalStateMachine.instance.ChangeState(new PlayState());
     }
 
-    void DestroyUI()
+
+    /// <summary>
+    ///     Destroys the UI object,
+    ///     gets called when ITween animation is completed
+    /// </summary>
+    private void DestroyUI()
     {
         Destroy(UI);
     }
 
-    void YesPressed()
+
+    /// <summary>
+    ///     Runs when the green button on the UI is pressed
+    /// </summary>
+    private void GreenPressed()
     {
         DismissEventUi();
-        _event.events[0]();
+        if (_event.Actions.Count != 0)
+            _event.Actions[0]();
     }
 
-    void NoPressed()
+    /// <summary>
+    ///     Runs when the red button on the UI is pressed
+    /// </summary>
+    private void RedPressed()
     {
         DismissEventUi();
-        _event.events[1]();
-    }
-
-    void OkayPressed()
-    {
-        DismissEventUi();
-        _event.events[0]();
+        if (_event.Actions.Count > 1)
+            _event.Actions[1]();
     }
 }

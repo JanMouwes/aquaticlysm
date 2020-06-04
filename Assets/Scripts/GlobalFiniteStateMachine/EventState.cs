@@ -20,6 +20,6 @@ public class EventState : MonoBehaviour, IState
     public void Stop()
     {
         Time.timeScale = 1f;
-        _selectionContoller.enabled = false;
+        _selectionContoller.enabled = true;
     }
 }
