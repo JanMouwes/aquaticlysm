@@ -1,28 +1,31 @@
-﻿using Buildings.Farm;
+﻿using System;
+using System.IO;
+using Buildings.Farm;
 using Resources;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GoalBehaviour.Atomic
 {
-    public class PlantSeeds : IGoal
+    public class HarvestCrop : IGoal
     {
         public GoalStatus Status { get; private set; }
-        public string Name { get; }
-
-        private Character _owner;
-        private readonly Farm _farm;
-        private readonly Vector3 _target;
-        private float _time;
+        public string Name { get; private set; }
         
-        public PlantSeeds(Character owner, Farm farm, float duration)
+        private Character _owner;
+        private Farm _farm;
+        private Vector3 _target;
+        private float _time;
+
+        public HarvestCrop(Character owner, Farm farm, float duration)
         {
-            Name = "PlantSeeds";
+            Name = "Harvest crops";
             _owner = owner;
             _farm = farm;
             _target = farm.transform.position;
             _time = duration;
         }
-        
+
         public void Activate()
         {
             Status = GoalStatus.Active;
@@ -36,7 +39,7 @@ namespace GoalBehaviour.Atomic
             _time -= Time.deltaTime;
             
             if (_time <= 0)
-                Plant();
+                Harvest();
 
             return Status;
         }
@@ -46,19 +49,13 @@ namespace GoalBehaviour.Atomic
             Status = GoalStatus.Completed;
         }
 
-        private void Plant()
+        private void Harvest()
         {
             // Change status of Farm to first growing phase.
-            if (ResourceManager.Instance.DecreaseResource("water", 15))
-            {
-                _farm.ChangeState(new GrowCycle());
-                Terminate();
-            }
-            else
-            {
-                Debug.Log("Not enough water to plant seed!");
-                Status = GoalStatus.Failed;
-            }
+            ResourceManager.Instance.IncreaseResource("food", 50);
+            _farm.ChangeState(new SoilEmpty());
+            Terminate();
+            
         }
     }
 }

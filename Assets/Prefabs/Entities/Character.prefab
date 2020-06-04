@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  energyLevel: 10
+  energyLevel: 100
 --- !u!195 &566643657360843190
 NavMeshAgent:
   m_ObjectHideFlags: 0

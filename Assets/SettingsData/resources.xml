@@ -28,4 +28,9 @@
       <name>fish</name>
       <description>this resource is made of fish</description>
     </resource>
+    <resource>
+        <name>food</name>
+        <description>this resource is made of wheat</description>
+        <icon-path>Sprites/Food</icon-path>
+    </resource>
 </resources>

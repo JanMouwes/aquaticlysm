@@ -7,16 +7,15 @@ namespace Buildings.Farm
     {
         private IFarmingState _state;
 
-
         private void Start()
         {
             _state = new SoilEmpty();
+            _state.Start(this);
         }
 
         private void Update()
         {
-            _state.Execute(this);    
-
+            _state.Execute(this);
         }
         
         public void ChangeState(IFarmingState state)

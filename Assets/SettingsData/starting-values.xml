@@ -5,4 +5,5 @@
     <resource name="plastic">30</resource>
     <resource name="water">40</resource>
     <resource name="fish">0</resource>
+    <resource name="food">0</resource>
 </resources>

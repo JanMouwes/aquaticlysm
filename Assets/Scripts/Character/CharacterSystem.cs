@@ -6,7 +6,7 @@ public class CharacterSystem : MonoBehaviour
     public CharacterManager CharacterManager { get; set; }
 
     public GameObject characterPrefab;
-
+    public int spawnAmount = 1;
     [Tooltip("The Entities object inside of the scene where Characters need to be a child of.")]
     public GameObject entitiesGameObject;
 
@@ -18,7 +18,7 @@ public class CharacterSystem : MonoBehaviour
     private void Start()
     {
         // Spawn a number of Character instances.
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < spawnAmount; i++)
         {
             SpawnCharacter();
         }

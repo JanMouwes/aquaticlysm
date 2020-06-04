@@ -4,10 +4,17 @@ namespace Buildings.Farm
 {
     public class GrowCycle : IFarmingState
     {
-        private float _time; 
+        private float _time;
+        private MeshRenderer _dirt;
+
         public void Start(Farm owner)
         {
-            _time = 15f;
+            _time = 4f;
+            
+            Transform trans = owner.transform;
+            _dirt = trans.Find("Dirt").GetComponent<MeshRenderer>();
+
+            _dirt.material.color = Color.yellow;
         }
 
         public void Execute(Farm owner)
