@@ -213,17 +213,24 @@ public class Builder : MonoBehaviour
     /// Compares the currently owned values and the costs of the current entity. Return true, if owned enough resources for building.
     /// </summary>
     /// <returns>bool</returns>
-    private bool TryGetBuildingResources()
+    public bool TryGetBuildingResources()
     {
+        // Here to keep every needed and found resource to later decrease them from currently owned resources.
+        Dictionary<string, int> resourcesTakenOut = new Dictionary<string, int>();
 
         foreach (Building.BuildingCosts resource in _currentEntity.GetComponent<Building>().BuildingCostsList)
         {
             if (ResourceManager.Instance.GetResourceAmount(resource.resourceName) >= (int)resource.resourceAmount)
             {
-                ResourceManager.Instance.DecreaseResource(resource.resourceName, (int)resource.resourceAmount);
+                resourcesTakenOut.Add(resource.resourceName, resource.resourceAmount);
             }
             else
                 return false;
+        }
+
+        foreach (KeyValuePair<string, int> resource in resourcesTakenOut)
+        { 
+            ResourceManager.Instance.DecreaseResource(resource.Key, resource.Value);
         }
         return true;
     }

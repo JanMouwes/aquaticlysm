@@ -108,6 +108,8 @@ MonoBehaviour:
   BuildingCostsList:
   - resourceName: wood
     resourceAmount: 10
+  - resourceName: metal
+    resourceAmount: 10
 --- !u!1 &5105373171231059650
 GameObject:
   m_ObjectHideFlags: 0
