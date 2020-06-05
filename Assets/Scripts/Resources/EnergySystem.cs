@@ -7,7 +7,6 @@ namespace Resources
 {
     public class EnergySystem : MonoBehaviour
     {
-
         public static int MaximumCharge = 0;
         public static int ChargeStepAmount = 0;
         
