@@ -8,7 +8,7 @@ namespace UI
 {
     public class ActionUiView : MonoBehaviour
     {
-        private IEnumerable<Selectable> CurrentSelection => SelectionController.selectedEntities;
+        private IEnumerable<Selectable> CurrentSelection => SelectionController.SelectedEntities;
 
         private Dictionary<string, GameObject> _actionUiElements;
 

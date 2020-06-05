@@ -161,7 +161,6 @@ GameObject:
   - component: {fileID: 4609178692111251785}
   - component: {fileID: 4609178693471326610}
   - component: {fileID: 4609178693471326611}
-  - component: {fileID: 3340351112684868719}
   m_Layer: 5
   m_Name: InformationPanel
   m_TagString: Untagged
@@ -226,17 +225,3 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3340351112684868719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4609178693471326620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 935dbaec95580459e93a267e4b9989e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resourceElementPrefab: {fileID: 6599151552655929161, guid: db1aa10ccec0b4137a0709d24691405d,
-    type: 3}
