@@ -25,6 +25,8 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     public string LastName { get; private set; }
     public int Age { get; private set; }
 
+    public Sprite Portrait { get; set; }
+
     public NavMeshAgent agent;
     public float energyLevel;
 

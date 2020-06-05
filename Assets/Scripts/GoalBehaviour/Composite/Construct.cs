@@ -26,7 +26,7 @@ public class Construct : CompositeGoal
         }
 
         // Add the subgoals.
-        AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
+        AddSubGoal(new MoveToAnim(_owner.gameObject, _target, 2f));
         AddSubGoal(new Build(_owner, _building));
 
         Status = GoalStatus.Active;
