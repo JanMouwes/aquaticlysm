@@ -2,7 +2,7 @@
 <resources>
     <resource>
         <name>wood</name>
-        <icon-path>Sprites/Wood</icon-path>
+        <icon-path>Sprites/wood</icon-path>
         <description>this resource is made of trees</description>
         <scarcity>3</scarcity>
     </resource>
