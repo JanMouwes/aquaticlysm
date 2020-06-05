@@ -6,7 +6,7 @@
         {
             if(owner.CompareTag("Farm"))
                 owner.ChangeState(Empty.Instance);
-
+            
         }
     }
 }

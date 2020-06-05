@@ -112,6 +112,22 @@ namespace Resources
 
             return 0;
         }
+        
+        /// <summary>
+        /// Directly set the value of a resource.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="amount"></param>
+        /// <returns>true if key exists, false if key doesn't exist</returns>
+        public bool SetResourceAmount(string resource, int amount)
+        {
+            if (!DoesResourceExist(resource))
+                return false;
+            
+            this._resources[resource].Set(amount);
+
+            return true;
+        }
 
         /// <summary>
         /// Remove a certain resource from the dictionary
