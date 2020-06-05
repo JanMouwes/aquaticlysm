@@ -24,6 +24,11 @@ public class CoroutineManager : MonoBehaviour
         StartCoroutine(textObject.GetComponent<ShowText>().ShowTextForSeconds(seconds));
     }
 
+    /// <summary>
+    /// Find the given object from the screen by its name.
+    /// </summary>
+    /// <param name="textObjectName">Name of the searched text object.</param>
+    /// <returns></returns>
     private static GameObject TextObjectFound(string textObjectName)
     {
         return GameObject.Find(textObjectName);
