@@ -15,6 +15,8 @@ namespace Buildings.Farm
 
         public Character CurrentFarmer { get; private set; }
 
+        public int harvestAmount;
+
         private void Start()
         {
             _state = new Disabled();
