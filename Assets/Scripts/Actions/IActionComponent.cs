@@ -9,6 +9,5 @@ namespace Actions
         IEnumerable<GameActionButtonModel> ButtonModels { get; }
 
         bool HandleAction(RaycastHit hit, bool priority);
-        // IEnumerable<GameAction> Actions { get; }
     }
 }

@@ -80,7 +80,7 @@ namespace UI
                            model.OnClick();
                            Debug.Log("Called onClick");
                        });
-                button.onClick.Invoke();
+                //button.onClick.Invoke();
             }
         }
     }
