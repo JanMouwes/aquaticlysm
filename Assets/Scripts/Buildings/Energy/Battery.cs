@@ -17,11 +17,13 @@ namespace Buildings.Energy
 
         private void OnEnable()
         {
+            // Add maximumcharge to EnergySystem when object is enabled
             EnergySystem.MaximumCharge += _maximumCharge;
         }
 
         private void OnDisable()
         {
+            // Subtract the energy amount from the total through the EnergySystem
             _energySystem.SubtractBatteryCharge(_maximumCharge);
         }
     }
