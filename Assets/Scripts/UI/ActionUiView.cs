@@ -54,19 +54,16 @@ namespace UI
             GameObject element = GetActionUiElement(key);
             element.name = "Button for " + model.Name;
 
-            const float distance = 70;
-
             RectTransform rectTransform = element.GetComponent<RectTransform>();
+            float distance = rectTransform.sizeDelta.x;
 
             element.transform.SetParent(this.gameObject.transform);
             element.transform.localScale = Vector3.one;
             element.transform.position = Vector3.zero;
-            rectTransform.anchoredPosition = new Vector2(distance * index + (distance * .5f), 0);
+            rectTransform.anchoredPosition = new Vector2(distance * 1.6f * index + distance, 0);
 
             Image image = element.GetComponent<Image>();
             image.sprite = sprite;
-
-            Debug.Log("test!");
 
             if (model.OnClick != null)
             {
@@ -80,7 +77,6 @@ namespace UI
                            model.OnClick();
                            Debug.Log("Called onClick");
                        });
-                //button.onClick.Invoke();
             }
         }
     }

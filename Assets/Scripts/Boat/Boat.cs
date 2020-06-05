@@ -25,7 +25,6 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     private BoatAutomaton _goalProcessor;
     private GoalCommand<Boat> _goaldata;
     private GameActionButtonModel[] _buttonModels;
-    private Action<GoalCommand<Boat>> _handler;
 
     private void Start()
     {
@@ -99,13 +98,13 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         yield return new GameActionButtonModel()
         {
             Name = "BoatDropOff",
-            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/George"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Boxes"),
             OnClick = () => owner.PrioritiseSubgoal(new DropOff(owner))
         };
         yield return new GameActionButtonModel()
         {
             Name = "BoatExpedition",
-            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/Janica"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
             OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 100))
         };
     }
