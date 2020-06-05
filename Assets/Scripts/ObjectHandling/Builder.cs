@@ -109,7 +109,7 @@ public class Builder : MonoBehaviour
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
         {
-            if (TryGetBuildingResources())
+            if (EnoughBuildingResources())
             {
                 BuildEntity();
             }
@@ -213,16 +213,16 @@ public class Builder : MonoBehaviour
     /// Compares the currently owned values and the costs of the current entity. Return true, if owned enough resources for building.
     /// </summary>
     /// <returns>bool</returns>
-    public bool TryGetBuildingResources()
+    public bool EnoughBuildingResources()
     {
         // Here to keep every needed and found resource to later decrease them from currently owned resources.
         Dictionary<string, int> resourcesTakenOut = new Dictionary<string, int>();
 
-        foreach (Building.BuildingCosts resource in _currentEntity.GetComponent<Building>().BuildingCostsList)
+        foreach (Building.Costs resource in _currentEntity.GetComponent<Building>().BuildingCostsList)
         {
-            if (ResourceManager.Instance.GetResourceAmount(resource.resourceName) >= (int)resource.resourceAmount)
+            if (ResourceManager.Instance.GetResourceAmount(resource.Name) >= (int)resource.Amount)
             {
-                resourcesTakenOut.Add(resource.resourceName, resource.resourceAmount);
+                resourcesTakenOut.Add(resource.Name, resource.Amount);
             }
             else
                 return false;

@@ -9,12 +9,12 @@ public class Building : MonoBehaviour
     /// Add resource costs in the Unity Inspector when creating a new prefab.
     /// </summary>
     [System.Serializable]
-    public class BuildingCosts
+    public class Costs
     {
-        public string resourceName;
-        public int resourceAmount;
+        public string Name;
+        public int Amount;
     }
 
-    public BuildingCosts[] BuildingCostsList;
+    public Costs[] BuildingCostsList;
 }
 
