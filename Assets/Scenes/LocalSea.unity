@@ -2085,7 +2085,7 @@ PrefabInstance:
     - target: {fileID: 261010524451624769, guid: 0161bc2bf370ef04b936dd8962dbde74,
         type: 3}
       propertyPath: m_Name
-      value: NotEnoughResoucres
+      value: NotEnoughResources
       objectReference: {fileID: 0}
     - target: {fileID: 261010524451624770, guid: 0161bc2bf370ef04b936dd8962dbde74,
         type: 3}
