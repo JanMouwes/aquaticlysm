@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Buildings;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -217,11 +218,11 @@ public class Builder : MonoBehaviour
         // Here to keep every needed and found resource to later decrease them from currently owned resources.
         Dictionary<string, int> resourcesTakenOut = new Dictionary<string, int>();
 
-        foreach (Building.Costs resource in _currentEntity.GetComponent<Building>().BuildingCostsList)
+        foreach (Building.Costs resource in _currentEntity.GetComponent<Building>().buildingCosts)
         {
-            if (ResourceManager.Instance.GetResourceAmount(resource.Name) >= (int)resource.Amount)
+            if (ResourceManager.Instance.GetResourceAmount(resource.name) >= (int)resource.amount)
             {
-                resourcesTakenOut.Add(resource.Name, resource.Amount);
+                resourcesTakenOut.Add(resource.name, resource.amount);
             }
             else
                 return false;

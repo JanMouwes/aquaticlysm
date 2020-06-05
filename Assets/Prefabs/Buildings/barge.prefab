@@ -105,9 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47793a0ebc897354d931d3944f715cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingCostsList:
-  - Name: wood
-    Amount: 10
+  buildingCosts:
+  - name: wood
+    amount: 10
 --- !u!1 &5105373171231059650
 GameObject:
   m_ObjectHideFlags: 0
