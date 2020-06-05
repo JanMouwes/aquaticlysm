@@ -34,6 +34,21 @@ namespace Resources
             }
         }
 
+        public static void SubtractBatteryCharge(int amount)
+        {
+            ResourceManager instance = ResourceManager.Instance;
+            int currentAmount = instance.GetResourceAmount("energy");
+            int newAmount = MaximumCharge - amount;
+            
+            if (currentAmount > newAmount)
+            {
+                bool result = instance.SetResourceAmount("energy", newAmount);
+                
+            }
+
+            MaximumCharge = newAmount;
+        }
+        
         private void UpdateEnergyAmount()
         {
             int stepUpdateAmount = ChargeStepAmount;
@@ -46,7 +61,8 @@ namespace Resources
             }
             
             _resourceManager.IncreaseResource("energy", stepUpdateAmount);
-            Debug.Log("Step Update: " + stepUpdateAmount + "/" + MaximumCharge);
+            Debug.Log("Step: " + stepUpdateAmount);
+            Debug.Log("Maximum: " + MaximumCharge);
         }
         
     }

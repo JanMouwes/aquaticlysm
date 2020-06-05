@@ -6,22 +6,16 @@ namespace Buildings.Energy
 {
     public class Battery : MonoBehaviour
     {
-        public int MaximumCharge { get; private set; }
-        public int CurrentCharge { get; set; }
+        private int _maximumCharge = 500;
 
-        private EnergySystem _energySystem;
-        private void Start()
+        private void OnEnable()
         {
-            MaximumCharge = 1000;
-            _energySystem = GameObject.Find("EnergySystem").GetComponent<EnergySystem>();
-            
-            EnergySystem.MaximumCharge += MaximumCharge;
-            Debug.Log(_energySystem);
+            EnergySystem.MaximumCharge += _maximumCharge;
         }
 
         private void OnDisable()
         {
-            EnergySystem.MaximumCharge -= MaximumCharge;
+            EnergySystem.SubtractBatteryCharge(_maximumCharge);
         }
     }
 }
