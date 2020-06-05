@@ -115,7 +115,7 @@ public class Builder : MonoBehaviour
             }
             else
             {
-                CoroutineManager.Instance.InvokeCoroutine("NotEnoughResoucres", 3);
+                CoroutineManager.Instance.InvokeCoroutine("NotEnoughResources", 3);
                 CancelBuilding();
             }
         }
