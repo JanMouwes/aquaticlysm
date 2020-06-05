@@ -33,7 +33,11 @@ namespace Resources
             }
         }
 
-        public static void SubtractBatteryCharge(int amount)
+        /// <summary>
+        /// Decrease the MaximumCharge and change the amount of charge inside the ResourceManager
+        /// </summary>
+        /// <param name="amount"></param>
+        public void SubtractBatteryCharge(int amount)
         {
             ResourceManager instance = ResourceManager.Instance;
             int currentAmount = instance.GetResourceAmount("energy");
@@ -48,6 +52,9 @@ namespace Resources
             MaximumCharge = newAmount;
         }
         
+        /// <summary>
+        /// Update the energy amount per timestep based on the amount of energy sources linked
+        /// </summary>
         private void UpdateEnergyAmount()
         {
             int stepUpdateAmount = ChargeStepAmount;
