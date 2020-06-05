@@ -101,6 +101,7 @@ public class Builder : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             CancelBuilding();
+
             return;
         }
 
@@ -110,13 +111,10 @@ public class Builder : MonoBehaviour
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
         {
-            if (EnoughBuildingResources())
-            {
-                BuildEntity();
-            }
+            if (TryDecreaseBuildResources()) { BuildEntity(); }
             else
             {
-                CoroutineManager.Instance.InvokeCoroutine("NotEnoughResources", 3);
+                NotificationSystem.Instance.ShowNotification("NotEnoughResources", 3);
                 CancelBuilding();
             }
         }
@@ -156,7 +154,7 @@ public class Builder : MonoBehaviour
             this._outline.OutlineColor = this._originalOutlineColour;
             _outline.enabled = false;
             _currentEntity = null;
-            
+
             BuildNavMeshes();
 
             // Create next entity
@@ -179,7 +177,7 @@ public class Builder : MonoBehaviour
             // If ignore button is not pressed, override the current ray casted target position with a possible snapping position.
             if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .1f, _currentEntity, _buildingBoxColliders, out Vector3 newTarget))
                 target = newTarget;
-        
+
             _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
 
             // Building legality feedback for player
@@ -197,41 +195,38 @@ public class Builder : MonoBehaviour
         return _buildingBoxColliders.Any(building => building.GetComponent<BoxCollider>().bounds.Intersects(bounds));
     }
 
-    
+
     /// <summary>
     /// rebuild all navmeshes in the scene
     /// </summary>
     private void BuildNavMeshes()
     {
-        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)
-        {
-            navMeshSurface.BuildNavMesh();
-        }
+        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces) { navMeshSurface.BuildNavMesh(); }
     }
 
     /// <summary>
-    /// Compares the currently owned values and the costs of the current entity. Return true, if owned enough resources for building.
+    /// Compares the currently owned values and the costs of the current entity.
+    /// Returns true if there are enough resources to build.
     /// </summary>
-    /// <returns>bool</returns>
-    public bool EnoughBuildingResources()
+    /// <returns>Whether there were enough resources to decrease</returns>
+    public bool TryDecreaseBuildResources()
     {
         // Here to keep every needed and found resource to later decrease them from currently owned resources.
         Dictionary<string, int> resourcesTakenOut = new Dictionary<string, int>();
 
         foreach (Building.Costs resource in _currentEntity.GetComponent<Building>().buildingCosts)
         {
-            if (ResourceManager.Instance.GetResourceAmount(resource.name) >= (int)resource.amount)
-            {
-                resourcesTakenOut.Add(resource.name, resource.amount);
-            }
-            else
-                return false;
+            // Not enough resources 
+            if (ResourceManager.Instance.GetResourceAmount(resource.name) < resource.amount) { return false; }
+
+            resourcesTakenOut.Add(resource.name, resource.amount);
         }
 
         foreach (KeyValuePair<string, int> resource in resourcesTakenOut)
-        { 
+        {
             ResourceManager.Instance.DecreaseResource(resource.Key, resource.Value);
         }
+
         return true;
     }
 
