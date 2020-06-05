@@ -57,11 +57,8 @@ namespace GoalBehaviour.Atomic
         private void Harvest()
         {
             // Change status of Farm to first growing phase.
+            ResourceManager.Instance.IncreaseResource("food", this._farm.harvestAmount);
             _farm.ChangeState(Empty.Instance);
-
-            WheatItem wheatItem = new WheatItem();
-
-            if (!this._owner.inventory.TryAddItem(wheatItem)) { Debug.Log("Dropped WheatItem!"); }
 
             Terminate();
         }
