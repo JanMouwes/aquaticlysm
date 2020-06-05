@@ -268,8 +268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingCostsList:
-  - resourceName: wood
-    resourceAmount: 5
+  - Name: wood
+    Amount: 5
 --- !u!1 &4828725022169192941
 GameObject:
   m_ObjectHideFlags: 0

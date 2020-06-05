@@ -115,8 +115,7 @@ public class Builder : MonoBehaviour
             }
             else
             {
-                // Show a warning by calling the ShowText component
-                StartCoroutine(GameObject.Find("NotEnoughRecoures").GetComponent<ShowText>().ShowTextFor5Seconds());
+                CoroutineManager.Instance.InvokeCoroutine("NotEnoughResoucres", 3);
                 CancelBuilding();
             }
         }

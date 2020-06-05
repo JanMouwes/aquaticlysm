@@ -16,11 +16,11 @@ public class ShowText : MonoBehaviour
     /// Show the text for 3 seconds.
     /// </summary>
     /// <returns></returns>
-    public IEnumerator ShowTextFor5Seconds()
+    public IEnumerator ShowTextForSeconds(int seconds)
     {
         gameObject.GetComponent<Text>().enabled = true;
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(seconds);
 
         gameObject.GetComponent<Text>().enabled = false;
     }
