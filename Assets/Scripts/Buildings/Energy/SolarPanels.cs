@@ -7,7 +7,6 @@ namespace Buildings.Energy
     public class SolarPanels : MonoBehaviour
     {
         private int _chargeAmount = 10;
-        
 
         private void OnEnable()
         {
