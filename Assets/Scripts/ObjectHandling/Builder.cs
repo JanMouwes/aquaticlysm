@@ -177,9 +177,9 @@ public class Builder : MonoBehaviour
             Vector3 target = hit.point;
 
             // If ignore button is not pressed, override the current ray casted target position with a possible snapping position.
-            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .2f, _currentEntity, _buildingBoxColliders, out Vector3 newTarget))
+            if (!Input.GetButton("IgnoreSnapping") && SnappingUtil.TryGetSnappingPoint(target, 3, .1f, _currentEntity, _buildingBoxColliders, out Vector3 newTarget))
                 target = newTarget;
-
+        
             _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
 
             // Building legality feedback for player
