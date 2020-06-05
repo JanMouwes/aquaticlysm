@@ -8,13 +8,13 @@
     </resource>
     <resource>
         <name>metal</name>
-        <icon-path>Sprites/Metal</icon-path>
+        <icon-path>Sprites/metal</icon-path>
         <description>this resource is made of metal</description>
         <scarcity>1</scarcity>
     </resource>
     <resource>
         <name>plastic</name>
-        <icon-path>Sprites/Plastic</icon-path>
+        <icon-path>Sprites/plastic</icon-path>
         <description>this resource is made of oil</description>
         <scarcity>4</scarcity>
     </resource>
@@ -25,7 +25,8 @@
         <scarcity>2</scarcity>
     </resource>
     <resource>
-      <name>fish</name>
-      <description>this resource is made of fish</description>
+      <name>food</name>
+      <icon-path>Sprites/food</icon-path>
+      <description>this resource is made of food</description>
     </resource>
 </resources>
