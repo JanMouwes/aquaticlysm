@@ -84,7 +84,7 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         yield return new GameActionButtonModel()
         {
             Name = "CharacterRest",
-            Icon = UnityEngine.Resources.Load<Sprite>("Sprites/George"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Bed"),
             OnClick = () => owner.PrioritiseSubgoal(new Rest(owner))
         };
     }
