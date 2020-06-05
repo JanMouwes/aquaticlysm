@@ -20,8 +20,10 @@ namespace Resources
 
         private void Update()
         {
+            // Only update the energy amount once every predefined timestep
             if (_timeStep > 1)
             {
+                // Currently only call function while it's day
                 if(DateTime.IsDay())
                     UpdateEnergyAmount();
                 
