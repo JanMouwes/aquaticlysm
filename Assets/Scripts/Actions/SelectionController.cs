@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Util;
 
 public class SelectionController : MonoBehaviour
@@ -49,14 +50,16 @@ public class SelectionController : MonoBehaviour
         RaycastHit raycastHit;
         
         // Return true when the left mouse button is pressed and the raycast (range 300) hits the floor.
-        if (Input.GetButtonDown("LeftMouseButton") && 
+        if (!EventSystem.current.IsPointerOverGameObject() &&
+            Input.GetButtonDown("LeftMouseButton") && 
             MouseUtil.TryRaycastAtMousePosition(300, out raycastHit))
         {
             SelectSingleUnit(raycastHit);
         }
 
         // Return true when the left mouse button is held down and the raycast (range 1000) hits the floor.
-        if (Input.GetButton("LeftMouseButton") && 
+        if (!EventSystem.current.IsPointerOverGameObject() &&
+            Input.GetButton("LeftMouseButton") && 
             MouseUtil.TryRaycastAtMousePosition(1000, out raycastHit))
         {
             // Update the selection box with the new mousecoordinates.
