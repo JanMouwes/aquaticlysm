@@ -253,7 +253,7 @@ public class Builder : MonoBehaviour, IActionComponent
         };
     }
 
-    public void Build(int index, bool walkable) 
+    private void Build(int index, bool walkable) 
     {
         GlobalStateMachine.instance.ChangeState(new BuildState());
         ChangePrefab(index, walkable);

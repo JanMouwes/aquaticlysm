@@ -82,7 +82,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7002327989125427703}
-  - component: {fileID: 4174658256003629999}
   m_Layer: 0
   m_Name: UIOverlay
   m_TagString: Untagged
@@ -106,20 +105,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4174658256003629999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7002327989125427702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cccc2262f454b4a864aa1d21fb0d731, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionButtonPrefab: {fileID: 5279565129414868649, guid: ea972b4d0fdff1247a12e41b582f52eb,
-    type: 3}
 --- !u!1 &7002327989697505210
 GameObject:
   m_ObjectHideFlags: 0
