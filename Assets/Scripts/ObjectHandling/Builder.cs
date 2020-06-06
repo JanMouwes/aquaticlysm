@@ -1,13 +1,11 @@
 using Actions;
+using Buildings;
 using Resources;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 using Util;
 
 public class Builder : MonoBehaviour, IActionComponent
@@ -28,12 +26,12 @@ public class Builder : MonoBehaviour, IActionComponent
     private void Awake()
     {
         _navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
+        _buttonModels = GetGameActionButtonModels(this).ToArray();
     }
 
     private void Start()
     {
         BuildNavMeshes();
-        _buttonModels = GetGameActionButtonModels(this).ToArray();
     }
 
     private void Update()
@@ -48,6 +46,7 @@ public class Builder : MonoBehaviour, IActionComponent
 
         // After checking, if the position is available for building, build a dock pressing U.
         if (Input.GetButtonDown("RightMouseButton"))
+        {
             if (TryDecreaseBuildResources())
                 BuildEntity();
             else
@@ -55,6 +54,7 @@ public class Builder : MonoBehaviour, IActionComponent
                 NotificationSystem.Instance.ShowNotification("NotEnoughResources", 3);
                 CancelBuilding();
             }
+        }
 
         // Pressing escape destroy dock not yet placed.
         if (Input.GetButtonDown("Cancel"))
@@ -87,7 +87,7 @@ public class Builder : MonoBehaviour, IActionComponent
 
             _outline = _currentEntity.GetComponent<Outline>();
             _outline.enabled = true;
-            this._originalOutlineColour = this._outline.OutlineColor;
+            _originalOutlineColour = _outline.OutlineColor;
         }
 
         _currentEntity.transform.parent = _walkable ? transform.GetChild(0) : transform.GetChild(1);
@@ -98,15 +98,18 @@ public class Builder : MonoBehaviour, IActionComponent
     /// </summary>
     private void CancelBuilding()
     {
+        ClearCurrent();
+        _prefab = null;
+        GlobalStateMachine.instance.ChangeState(new PlayState());
+    }
+
+    private void ClearCurrent()
+    {
         if (_currentEntity != null)
         {
             PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
             _currentEntity = null;
         }
-
-        _prefab = null;
-
-        GlobalStateMachine.instance.ChangeState(new PlayState());
     }
 
     /// <summary>
@@ -126,7 +129,7 @@ public class Builder : MonoBehaviour, IActionComponent
     {
         if (!DoesEntityCollide())
         {
-            this._outline.OutlineColor = this._originalOutlineColour;
+            _outline.OutlineColor = _originalOutlineColour;
             _outline.enabled = false;
             _currentEntity = null;
 
@@ -156,7 +159,7 @@ public class Builder : MonoBehaviour, IActionComponent
             _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
 
             // Building legality feedback for player
-            this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.green;
+            _outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.green;
         }
     }
 
@@ -176,7 +179,8 @@ public class Builder : MonoBehaviour, IActionComponent
     /// </summary>
     private void BuildNavMeshes()
     {
-        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces) { navMeshSurface.BuildNavMesh(); }
+        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)
+            navMeshSurface.BuildNavMesh();
     }
 
     /// <summary>
@@ -226,35 +230,42 @@ public class Builder : MonoBehaviour, IActionComponent
             Name = "BuildWalkway",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Road"),
             OnClick = () => builder.Build(0, true)
-        };        
+        };
         yield return new GameActionButtonModel()
         {
             Name = "BuildBarge",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Barge"),
             OnClick = () => builder.Build(1, false)
-        };      
-        yield return new GameActionButtonModel()
-        {
-            Name = "BuildSolarPanel",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/SolarPanel"),
-            //OnClick = () => builder.Build(0, false)
-        };      
-        yield return new GameActionButtonModel()
-        {
-            Name = "BuildBattery",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Battery"),
-            //OnClick = () => builder.Build(0, false)
-        };      
+        };
         yield return new GameActionButtonModel()
         {
             Name = "BuildHouse",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/House"),
             //OnClick = () => builder.Build(0, false)
         };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildFarm",
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Farm"),
+            //OnClick = () => builder.Build(0, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildSolarPanel",
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/SolarPanel"),
+            //OnClick = () => builder.Build(0, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildBattery",
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Battery"),
+            //OnClick = () => builder.Build(0, false)
+        };
     }
 
-    private void Build(int index, bool walkable) 
+    private void Build(int index, bool walkable)
     {
+        ClearCurrent();
         GlobalStateMachine.instance.ChangeState(new BuildState());
         ChangePrefab(index, walkable);
         CreateEntity();

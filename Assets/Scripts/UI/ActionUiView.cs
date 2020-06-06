@@ -1,5 +1,4 @@
 using Actions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,16 +8,14 @@ namespace UI
 {
     public class ActionUiView : MonoBehaviour
     {
-        private IEnumerable<Selectable> CurrentSelection => SelectionController.SelectedEntities;
-
-        private Dictionary<string, GameObject> _actionUiElements;
-
         public GameObject actionButtonPrefab;
         public Builder builder;
 
-        IEnumerable<GameActionButtonModel> _actions;
+        private Dictionary<string, GameObject> _actionUiElements;
+        private IEnumerable<GameActionButtonModel> _actions;
         private Selectable[] _oldSelection;
-        private LinkedList<int> buttons;
+
+        private IEnumerable<Selectable> CurrentSelection => SelectionController.SelectedEntities;
 
         private void Start()
         {
@@ -26,7 +23,7 @@ namespace UI
             _oldSelection = new Selectable[0];
 
             if (builder != null)
-                _actions = builder.ButtonModels;
+                UpdateButtons();
         }
 
         private void Update()
@@ -34,23 +31,24 @@ namespace UI
             if (!_oldSelection.SequenceEqual(CurrentSelection))
             {
                 _oldSelection = CurrentSelection.ToArray();
+                UpdateButtons();
+            }
+        }
 
-                ClearButtons();
+        private void UpdateButtons()
+        {
+            ClearButtons();
 
-                if (_oldSelection.Length == 0)
-                {
-                    if(builder != null)
-                        _actions = builder.ButtonModels;
-                }
-                else
-                {
-                    _actions = _oldSelection
-                                    .SelectMany(entity => entity.GetComponents<MonoBehaviour>())
-                                    .OfType<IActionComponent>()
-                                    .ToArray()
-                                    .SelectMany(component => component.ButtonModels);
-                }
+            _actions = (_oldSelection.Length == 0) ?
+                _actions = builder.ButtonModels :
+                _oldSelection
+                    .SelectMany(entity => entity.GetComponents<MonoBehaviour>())
+                    .OfType<IActionComponent>()
+                    .ToArray()
+                    .SelectMany(component => component.ButtonModels);
 
+            if (_actions != null)
+            {
                 foreach (GameActionButtonModel buttonModel in _actions.Where(action => !_actionUiElements.ContainsKey(action.Name)))
                 {
                     int index = _actionUiElements.Count;
@@ -59,9 +57,9 @@ namespace UI
             }
         }
 
-        private void ClearButtons() 
+        private void ClearButtons()
         {
-            foreach (var item in _actionUiElements)
+            foreach (KeyValuePair<string, GameObject> item in _actionUiElements)
                 PrefabInstanceManager.Instance.DestroyEntity(item.Value.GetInstanceID());
 
             _actionUiElements.Clear();
@@ -101,15 +99,7 @@ namespace UI
             if (model.OnClick != null)
             {
                 Button button = element.GetComponent<Button>();
-
-                Debug.Log(button.name);
-
-                button.onClick
-                      .AddListener(() =>
-                       {
-                           model.OnClick();
-                           Debug.Log("Called onClick");
-                       });
+                button.onClick.AddListener(() => model.OnClick());
             }
         }
     }
