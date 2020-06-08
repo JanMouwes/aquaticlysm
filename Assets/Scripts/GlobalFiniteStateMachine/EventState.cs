@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 
-public class EventState : MonoBehaviour, IState
+public class EventState : IState
 {
-    private SelectionController _selectionContoller;
+    readonly EventStateHandeler _handeler = ScriptableObject.CreateInstance<EventStateHandeler>();
     
     public void Start()
     {
-        _selectionContoller= FindObjectOfType<SelectionController>();
-        _selectionContoller.enabled = false;
-        Time.timeScale = 0f;
+        _handeler.EnterState();
     }
 
     public void Execute()
@@ -20,7 +19,6 @@ public class EventState : MonoBehaviour, IState
 
     public void Stop()
     {
-        Time.timeScale = 1f;
-        _selectionContoller.enabled = true;
+        _handeler.ExitState();
     }
 }

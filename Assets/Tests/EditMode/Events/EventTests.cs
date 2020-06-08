@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Event = Events.Event;
 
 namespace Tests
 {
@@ -23,7 +25,7 @@ namespace Tests
                 ButtonStyle = ButtonStyle.OneOption
             };
             //Act
-            storage.CreateEvent("test", "test", ButtonStyle.OneOption, new List<Action> {() => Debug.Log("test")});
+            storage.CreateEvent("test", "test", ButtonStyle.OneOption, new List<string>(){"test"}, new List<Action> {() => Debug.Log("test")});
             //Assert
             Event temp = storage.GetEvent(3);
             Assert.AreEqual(test.Text, temp.Text);

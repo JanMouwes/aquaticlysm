@@ -1,6 +1,8 @@
 ﻿using System;
+using Events;
 using UnityEngine;
 using UnityEngine.UI;
+using Event = Events.Event;
 
 public class EventUIView : MonoBehaviour
 {
@@ -24,7 +26,6 @@ public class EventUIView : MonoBehaviour
     {
         // save input
         _event = input;
-        Debug.Log(_event.ButtonStyle);
         switch (_event.ButtonStyle)
         {
             // Check the button style of the event.
@@ -32,12 +33,15 @@ public class EventUIView : MonoBehaviour
                 // Create the TwoOptionsUI and link the buttons to the actions.
                 UI = Instantiate(TwoOptionsUI, TwoOptionsUI.transform.position, TwoOptionsUI.transform.rotation);
                 UI.transform.Find("YesButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
+                UI.transform.Find("YesButton").transform.Find("YesButtonText").GetComponent<Text>().text = _event.ButtonText[0];
                 UI.transform.Find("NoButton").GetComponent<Button>().onClick.AddListener(RedPressed);
+                UI.transform.Find("NoButton").transform.Find("NoButtonText").GetComponent<Text>().text = _event.ButtonText[1];
                 break;
             case ButtonStyle.OneOption:
                 // Create the OneOptionsUI and link the button to the action.
                 UI = Instantiate(OneOptionUI, OneOptionUI.transform.position, OneOptionUI.transform.rotation);
                 UI.transform.Find("OkayButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
+                UI.transform.Find("OkayButton").transform.Find("ButtonText").GetComponent<Text>().text = _event.ButtonText[0];
                 break;
             default:
                 throw new Exception("Unknown UI created");

@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Events;
 using UnityEngine;
 
 public class RandomEvents : MonoBehaviour
 {
+    [Tooltip("Min Value for time between events")]
+    public int minTime = 30;
+    [Tooltip("Max Value for time between events")]
+    public int maxTime = 300;
     // Start is called before the first frame update
     private void Start()
     {
@@ -15,7 +20,7 @@ public class RandomEvents : MonoBehaviour
     private IEnumerator EventTimer()
     {
         //Wait for between 60 and 300 seconds
-        yield return new WaitForSeconds(Random.Range(60,300));
+        yield return new WaitForSeconds(Random.Range(minTime,maxTime));
         // 50%
         if (Random.value < 0.5f)
         {
