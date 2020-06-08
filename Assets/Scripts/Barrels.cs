@@ -29,15 +29,22 @@ public class Barrels : MonoBehaviour
         else
             this._timer -= Time.deltaTime;
 
-        foreach (GameObject barrel in this._barrels)
+        foreach (GameObject barrel in this._barrels.Where(barrel => barrel == null))
         {
-            if (barrel == null)
-            {
-                this._barrels.Remove(barrel);
+            Debug.Log(barrel);
+            this._barrels.Remove(barrel);
 
-                break;
-            }
+            break;
         }
+    }
+
+    /// <summary>
+    /// Removes barrel from the list
+    /// </summary>
+    /// <param name="barrel">Barrel to be removed</param>
+    public void RemoveBarrel(GameObject barrel)
+    {
+        if (this._barrels.Contains(barrel)) { this._barrels.Remove(barrel); }
     }
 
     /// <summary>
