@@ -6,12 +6,14 @@ using UnityEngine;
 public class OpenBarrel : IGoal
 {
     private Boat _owner;
+    private GameObject _barrel;
+    private float _time;
+    private int _accumulateAmount;
+
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
 
-    private float _time;
-    private int _accumulateAmount;
-    private GameObject _barrel;
+
     public OpenBarrel(Boat owner, GameObject gameObject, float duration)
     {
         Name = "AccumulateResources";
@@ -23,7 +25,7 @@ public class OpenBarrel : IGoal
     public void Activate()
     {
         // The random amount of stuff it wil accumulate.
-        _accumulateAmount = (int)Random.Range(0, _owner.maxCarrierAmount);
+        _accumulateAmount = (int) Random.Range(0, _owner.maxCarrierAmount);
 
         Status = GoalStatus.Active;
     }
@@ -45,7 +47,7 @@ public class OpenBarrel : IGoal
     {
         AccumulateRandomResource(_owner, _accumulateAmount);
         ScrapBarrel(_owner);
-        GameObject.Destroy(_barrel);
+        Object.Destroy(_barrel);
 
         Status = GoalStatus.Completed;
     }
