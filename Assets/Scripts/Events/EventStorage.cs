@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Resources;
+using UnityEngine;
 
 namespace Events
 {
@@ -41,10 +42,14 @@ namespace Events
             // 0 : Welcome Event
             {
                 const string title = "Welcome";
-                const string text = "Ask Meri";
+                const string text = "The world is not as it was. Global warming ran its course and now the mainland is uninhabitable." +
+                                    " Those who survived ﬂed to sea and band together to stand a chance in this new world. But the sea is" +
+                                    " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
+                                    " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
+                                    " ﬂoating settlement. Experience the story that unfolds through the choices you make";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> {"Ok"};
+                List<string> buttontext = new List<string> {"Im ready!"};
                 CreateEvent(title, text, buttonStyle,buttontext, actions);
             }
             // 1 : Overboard Event
@@ -66,13 +71,26 @@ namespace Events
             // 2 : Storm Event 
             {
                 const string title = "Storm";
-                const string text = "There has been a storm you lost some resources.";
+                const string text = "The strom is coming. Prepare your settlement, what will you salvage?";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
                 Action action = () => _resourceManager.DecreaseResource("wood", 5);
-                buttontext.Add("-5 wood");
+                buttontext.Add("Retie the water pilars.");
                 actions.Add(action);
+                action = () => _resourceManager.DecreaseResource("water", 5);
+                buttontext.Add("Cover the wood stock");
+                actions.Add(action);
+                CreateEvent(title, text, buttonStyle, buttontext, actions);
+            }
+            // 3 : Villagers get hungry
+            {
+                const string title = "Hunger strike";
+                const string text = "Your villagers are hungry! You need to start gathering food so your villagers wont starve to death.\n\n" +
+                                    "Click on the boat to select it. Then click on the fishing hook to start fishing.";
+                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                List<Action> actions = new List<Action>();
+                List<string> buttontext = new List<string> { "Understood!" };
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

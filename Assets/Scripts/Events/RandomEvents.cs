@@ -38,4 +38,9 @@ public class RandomEvents : MonoBehaviour
     {
         StartCoroutine(EventTimer());
     }
+
+    public void InvokeEvent(int eventIndex)
+    {
+        EventManager.Instance.CreateEvent(eventIndex);
+    }
 }

@@ -6,7 +6,7 @@ public class DateTime : MonoBehaviour
     public Text DateTimeText;
 
     private float _gameTime;
-    private int _dayCounter = 1;
+    public int DayCounter = 1;
     public Material Day;
     public Material Night;
 
@@ -24,12 +24,12 @@ public class DateTime : MonoBehaviour
         if (dayHasPassed(_gameTime))
         {
             _gameTime = 100.0f;
-            _dayCounter++;
+            DayCounter++;
         }
 
         _gameTime -= Time.deltaTime;
         
-        DateTimeText.text = "DAY " + _dayCounter;
+        DateTimeText.text = "DAY " + DayCounter;
     }
 
     public static bool IsDay(float passedGameTime) => passedGameTime >= 50f;
