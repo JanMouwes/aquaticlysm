@@ -1,19 +1,23 @@
-﻿﻿using UnityEngine;
+﻿using Events;
+using Resources;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DateTime : MonoBehaviour
 {
     public Text DateTimeText;
-
-    private float _gameTime;
-    public static int DayCounter = 1;
     public Material Day;
     public Material Night;
+    public static int DayCounter = 1;
+
+    private float _gameTime;
+    private float _hungerTime;
 
     // Start is called before the first frame update
     void Start()
     {
         _gameTime = 100.0f;
+        _hungerTime = 0f;
     }
 
     // Update is called once per frame
@@ -30,6 +34,14 @@ public class DateTime : MonoBehaviour
         _gameTime -= Time.deltaTime;
         
         DateTimeText.text = "DAY " + DayCounter;
+
+        _hungerTime += Time.deltaTime;
+
+        if (_hungerTime >= 5f)
+        { 
+            ResourceManager.Instance.DecreaseResource("food", 5);
+            _hungerTime = 0f;
+        }
     }
 
     public static bool IsDay(float passedGameTime) => passedGameTime >= 50f;

@@ -6,21 +6,24 @@ using UnityEngine;
 
 public class StoryEvents : MonoBehaviour
 {
-    private bool alreadyInvoked;
+    private List<string> _events;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        alreadyInvoked = false;
+        _events = new List<string>();
     }
 
-    public void VillagersGetHungry()
+    private void Update()
     {
-        if (!alreadyInvoked && ResourceManager.Instance.GetResourceAmount("food") < 10f)
+        if (!_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 10f)
         {
-            new WaitForSeconds(20);
-            EventManager.Instance.CreateEvent(3);
-            alreadyInvoked = true;
+            HungerStrikeEvent();
         }
+    }
+
+    private void HungerStrikeEvent()
+    { 
+        EventManager.Instance.CreateEvent(3);
+        _events.Add("hungerStrike");
     }
 }

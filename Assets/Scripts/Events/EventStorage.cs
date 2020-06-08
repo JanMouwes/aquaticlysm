@@ -72,7 +72,7 @@ namespace Events
             {
                 const string title = "Storm";
                 const string text = "The strom is coming. Prepare your settlement, what will you salvage?";
-                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
                 Action action = () => _resourceManager.DecreaseResource("wood", 5);
