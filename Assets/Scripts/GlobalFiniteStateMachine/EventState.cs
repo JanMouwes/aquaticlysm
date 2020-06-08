@@ -5,6 +5,7 @@ using UnityEngine;
 public class EventState : MonoBehaviour, IState
 {
     private SelectionController _selectionContoller;
+    
     public void Start()
     {
         _selectionContoller= FindObjectOfType<SelectionController>();
