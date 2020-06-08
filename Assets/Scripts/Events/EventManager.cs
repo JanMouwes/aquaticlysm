@@ -15,16 +15,15 @@ public class EventManager
         get { return instance; }
     }
 
-
     /// <summary>
-    /// event for when a event is created
+    /// Event for when a event is created.
     /// </summary>
     public event Action<Event> EventCreated;
 
     /// <summary>
-    /// creates an event for the events
+    /// Creates an event for the events.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="id">Event id.</param>
     public void CreateEvent(int id)
     {
         EventStorage storage = new EventStorage();
