@@ -53,29 +53,24 @@ public class Character : MonoBehaviour, IAction
         energyLevel -= 2 * Time.deltaTime;
 
         _brain.Process();
-
-        if (this.inventory.Items.Any()) { Debug.Log(GetInstanceID() + ": " + string.Join(",", this.inventory.Items)); }
     }
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
-        if (_actions.ContainsKey(hit.collider.gameObject.tag))
-        {
-            // Set the goal with the current data.
-            _goaldata.Position = hit.point;
-            _goaldata.Building = hit.collider.gameObject;
-            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
 
-            // Add the goal to the brain.
-            if (priority)
-                _brain.AddSubGoal(goal);
-            else
-                _brain.PrioritizeSubGoal(goal);
+        // Set the goal with the current data.
+        this._goaldata.Position = hit.point;
+        this._goaldata.Building = hit.collider.gameObject;
+        IGoal goal = action.Invoke(this._goaldata);
 
-            return true;
-        }
+        // Add the goal to the brain.
+        if (priority)
+            this._brain.AddSubGoal(goal);
+        else
+            this._brain.PrioritizeSubGoal(goal);
 
-        return false;
+        return true;
     }
 
     /// <summary>
