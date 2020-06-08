@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Resources;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Events
 {
@@ -91,6 +92,19 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string> { "Ahoi!" };
+                CreateEvent(title, text, buttonStyle, buttontext, actions);
+            }
+            // 4 : Village starved to death
+            {
+                const string title = "Game over";
+                string text = "Your villagers starved to death.\n" +
+                                    "You survived " + DateTime.DayCounter + " days.";
+                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                List<Action> actions = new List<Action>();
+                List<string> buttontext = new List<string>();
+                Action action = () => SceneManager.LoadScene("LocalSea");
+                buttontext.Add("Start over.");
+                actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

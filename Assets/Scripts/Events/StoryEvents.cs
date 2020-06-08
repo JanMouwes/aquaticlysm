@@ -19,11 +19,23 @@ public class StoryEvents : MonoBehaviour
         {
             HungerStrikeEvent();
         }
+
+        if (!_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
+        {
+            GameOver();
+        }
+
     }
 
     private void HungerStrikeEvent()
     { 
         EventManager.Instance.CreateEvent(3);
         _events.Add("hungerStrike");
+    }
+
+    private void GameOver()
+    {
+        EventManager.Instance.CreateEvent(4);
+        _events.Add("gameOver");
     }
 }
