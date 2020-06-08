@@ -19,12 +19,12 @@ public class EventStorage
     }
 
     /// <summary>
-    /// Create an Event
+    /// Create an Event.
     /// </summary>
-    /// <param name="title"></param>
-    /// <param name="text"></param>
-    /// <param name="buttonStyle"></param>
-    /// <param name="actions"></param>
+    /// <param name="title">Event title.</param>
+    /// <param name="text">Event text.</param>
+    /// <param name="buttonStyle">Button style.</param>
+    /// <param name="actions">The actions that are invoked.</param>
     public void CreateEvent(string title, string text, ButtonStyle buttonStyle, List<Action> actions)
     {
         Event createdEvent = new Event {Title = title, Text = text, ButtonStyle = buttonStyle, Actions = actions};
@@ -32,7 +32,7 @@ public class EventStorage
     }
 
     /// <summary>
-    /// Creates all the predefined Events
+    /// Creates all the predefined Events.
     /// </summary>
     private void CreateAllEvents()
     {
@@ -74,8 +74,8 @@ public class EventStorage
 }
 
 /// <summary>
-/// The Struct For the Event
-/// Holds the information for the event
+/// The Struct For the Event.
+/// Holds the information for the event.
 /// </summary>
 public struct Event
 {
@@ -86,7 +86,7 @@ public struct Event
 }
 
 /// <summary>
-///     buttonstyle for the event
+/// Buttonstyle for the event.
 /// </summary>
 public enum ButtonStyle
 {
