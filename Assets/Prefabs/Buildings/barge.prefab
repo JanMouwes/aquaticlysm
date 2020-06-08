@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 45761509260218469}
   - component: {fileID: 8313224449462912791}
   - component: {fileID: 198468174290548414}
+  - component: {fileID: 2594582998707037958}
   m_Layer: 0
   m_Name: barge
   m_TagString: Building

@@ -13,7 +13,7 @@ public class Fish : IGoal
         Name = "Fishing";
         _owner = boat;
         _maxCarrierAmount = boat.maxCarrierAmount;
-        _fishAmount = _owner.TryGetResourceValue("fish");
+        _fishAmount = _owner.TryGetResourceValue("food");
     }
 
     public void Activate()
@@ -37,7 +37,7 @@ public class Fish : IGoal
 
     public void Terminate()
     {
-        _owner.carriedResources["fish"] = _fishAmount;
+        _owner.carriedResources["food"] = _fishAmount;
         Status = GoalStatus.Completed;
     }
 

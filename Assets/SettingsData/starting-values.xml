@@ -4,7 +4,6 @@
     <resource name="metal">25</resource>
     <resource name="plastic">30</resource>
     <resource name="water">100</resource>
-    <resource name="fish">0</resource>
     <resource name="food">0</resource>
     <resource name="energy">0</resource>
 </resources>
