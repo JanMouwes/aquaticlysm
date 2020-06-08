@@ -17,9 +17,9 @@ public class EventUIView : MonoBehaviour
 
 
     /// <summary>
-    ///     Builds the Ui for the event Based on the information given with the Event that is given.
+    /// Builds the Ui for the event Based on the information given with the Event that is given.
     /// </summary>
-    /// <param name="input">Information For the Event</param>
+    /// <param name="input">Information For the Event.</param>
     private void BuildEventUiView(Event input)
     {
         // save input
@@ -27,15 +27,15 @@ public class EventUIView : MonoBehaviour
         Debug.Log(_event.ButtonStyle);
         switch (_event.ButtonStyle)
         {
-            // check the button style of the event 
+            // Check the button style of the event.
             case ButtonStyle.TwoOptions:
-                // create the TwoOptionsUI and link the buttons to the actions
+                // Create the TwoOptionsUI and link the buttons to the actions.
                 UI = Instantiate(TwoOptionsUI, TwoOptionsUI.transform.position, TwoOptionsUI.transform.rotation);
                 UI.transform.Find("YesButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
                 UI.transform.Find("NoButton").GetComponent<Button>().onClick.AddListener(RedPressed);
                 break;
             case ButtonStyle.OneOption:
-                // create the OneOptionsUI and link the button to the action
+                // Create the OneOptionsUI and link the button to the action.
                 UI = Instantiate(OneOptionUI, OneOptionUI.transform.position, OneOptionUI.transform.rotation);
                 UI.transform.Find("OkayButton").GetComponent<Button>().onClick.AddListener(GreenPressed);
                 break;
@@ -43,35 +43,35 @@ public class EventUIView : MonoBehaviour
                 throw new Exception("Unknown UI created");
         }
 
-        // set create ui to be the child of this gameobject
+        // Set create ui to be the child of this gameobject.
         UI.transform.SetParent(transform, false);
-        // change the title
+        // Change the title.
         UI.transform.Find("EventContainer/EventTitle").GetComponent<Text>().text = _event.Title;
-        // change the body text
+        // Change the body text.
         UI.transform.Find("EventContainer/Content/EventText").GetComponent<Text>().text = _event.Text;
-        //change the state to an event state
+        // Change the state to an event state.
         GlobalStateMachine.instance.ChangeState(new EventState());
-        //animate
+        // Animate.
         iTween.ScaleFrom(UI, iTween.Hash("scale", new Vector3(0, 0, 0), "ignoretimescale", true, "time", 0.5f));
     }
 
     /// <summary>
-    ///     when Event is dismissed animation is played and stated is changed to the play state
+    /// When Event is dismissed animation is played and stated is changed to the play state.
     /// </summary>
     private void DismissEventUi()
     {
-        // animate
+        // Animate
         iTween.ScaleTo(UI,
                        iTween.Hash("scale", new Vector3(0, 0, 0), "ignoretimescale", true, "time", 0.5f, "oncomplete",
                                    "DestroyUI", "oncompletetarget", gameObject));
-        // change state to play state
+        // Change state to play state
         GlobalStateMachine.instance.ChangeState(new PlayState());
     }
 
 
     /// <summary>
-    ///     Destroys the UI object,
-    ///     gets called when ITween animation is completed
+    /// Destroys the UI object,
+    /// Gets called when ITween animation is completed.
     /// </summary>
     private void DestroyUI()
     {
@@ -80,7 +80,7 @@ public class EventUIView : MonoBehaviour
 
 
     /// <summary>
-    ///     Runs when the green button on the UI is pressed
+    /// Runs when the green button on the UI is pressed.
     /// </summary>
     private void GreenPressed()
     {
@@ -90,7 +90,7 @@ public class EventUIView : MonoBehaviour
     }
 
     /// <summary>
-    ///     Runs when the red button on the UI is pressed
+    /// Runs when the red button on the UI is pressed.
     /// </summary>
     private void RedPressed()
     {
