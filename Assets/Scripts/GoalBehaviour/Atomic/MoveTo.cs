@@ -9,6 +9,7 @@ public class MoveTo : IGoal
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
     public float NearRange { get; set; }
+    private Animator _playerAnim;
 
     // Target position.
     private readonly Vector3 _target;
@@ -19,6 +20,8 @@ public class MoveTo : IGoal
         Name = "MoveTo";
         _target = position;
         NearRange = range;
+        // _playerAnim = _owner.GetComponent<Animator>();
+        // _playerAnim.SetFloat("Speed", 0.5f);
     }
 
     public void Activate()
@@ -42,10 +45,14 @@ public class MoveTo : IGoal
             Activate();
 
         // Checks if the Owner arrived at the target.
-        if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Status = GoalStatus.Completed; }
+        if (Vector3.Distance(_owner.transform.position, _target) < NearRange) { Terminate(); }
         
         return Status;
     }
 
-    public void Terminate() { }
+    public void Terminate()
+    {
+        // _playerAnim.SetFloat("Speed", 0);
+        Status = GoalStatus.Completed;
+    }
 }

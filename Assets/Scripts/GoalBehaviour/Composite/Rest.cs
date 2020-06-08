@@ -20,7 +20,7 @@ public class Rest : CompositeGoal
         _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
 
         // Add the subgoals.
-        AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
+        AddSubGoal(new MoveToAnim(_owner.gameObject, _target, 2f));
         AddSubGoal(new Sleep(_owner));
 
         Status = GoalStatus.Active;
