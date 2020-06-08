@@ -69,8 +69,6 @@ namespace Resources
             }
             
             _resourceManager.IncreaseResource("energy", stepUpdateAmount);
-            Debug.Log("Step: " + stepUpdateAmount);
-            Debug.Log("Maximum: " + MaximumCharge);
         }
         
     }
