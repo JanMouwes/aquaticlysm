@@ -6,7 +6,7 @@ public class DateTime : MonoBehaviour
     public Text DateTimeText;
 
     private float _gameTime;
-    public int DayCounter = 1;
+    public static int DayCounter = 1;
     public Material Day;
     public Material Night;
 

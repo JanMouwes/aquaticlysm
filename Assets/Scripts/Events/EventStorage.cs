@@ -90,7 +90,7 @@ namespace Events
                                     "Click on the boat to select it. Then click on the fishing hook to start fishing.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Understood!" };
+                List<string> buttontext = new List<string> { "Ahoi!" };
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

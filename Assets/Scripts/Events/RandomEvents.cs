@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class RandomEvents : MonoBehaviour
 {
+    public AudioSource StromEffect;
+    public AudioSource TradeEffect;
+
     [Tooltip("Min Value for time between events")]
     public int minTime = 30;
     [Tooltip("Max Value for time between events")]
@@ -30,6 +33,7 @@ public class RandomEvents : MonoBehaviour
         else
         {
             EventManager.Instance.CreateEvent(2);
+            StromEffect.Play();
         }
         ResetState();
     }
