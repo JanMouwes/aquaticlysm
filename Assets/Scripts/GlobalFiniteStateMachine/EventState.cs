@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class EventState : IState
 {
-    readonly EventStateHandeler _handeler = ScriptableObject.CreateInstance<EventStateHandeler>();
+    readonly EventStateHandeler _handler = ScriptableObject.CreateInstance<EventStateHandeler>();
     
     public void Start()
     {
-        _handeler.EnterState();
+        _handler.EnterState();
     }
 
     public void Execute()
@@ -19,6 +19,6 @@ public class EventState : IState
 
     public void Stop()
     {
-        _handeler.ExitState();
+        _handler.ExitState();
     }
 }
