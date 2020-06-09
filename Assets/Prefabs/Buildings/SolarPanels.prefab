@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 9092463562625780565}
   - component: {fileID: -3696380753796109780}
   - component: {fileID: 4497943688378723224}
+  - component: {fileID: -5803538678876735992}
   m_Layer: 0
   m_Name: SolarPanels
   m_TagString: Building
@@ -189,6 +190,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a7bf88307244328e6d8873b0f1d89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chargeAmount: 10
+--- !u!114 &-5803538678876735992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186904043401018932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47793a0ebc897354d931d3944f715cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingCosts:
+  - name: metal
+    amount: 10
+  - name: plastic
+    amount: 10
 --- !u!1 &2420907585679304875
 GameObject:
   m_ObjectHideFlags: 0

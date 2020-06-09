@@ -40,7 +40,12 @@ public class DissolveController : MonoBehaviour
             return true;
         }
 
-        if (isDone) { this.tag = completionTag; }
+        if (isDone) {
+            if (completionTag != "")
+            {
+                tag = completionTag;
+            } 
+        }
 
         return isDone;
     }

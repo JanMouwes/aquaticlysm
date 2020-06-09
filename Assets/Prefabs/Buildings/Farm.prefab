@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3249380457567640762}
   - component: {fileID: 2505625014714242770}
   - component: {fileID: 4304556790269156526}
+  - component: {fileID: -2198043612555518446}
   m_Layer: 0
   m_Name: Farm
   m_TagString: Building
@@ -113,6 +114,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   harvestAmount: 50
+--- !u!114 &-2198043612555518446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496553533810777755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47793a0ebc897354d931d3944f715cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingCosts:
+  - name: metal
+    amount: 5
 --- !u!1 &1782705852274422217
 GameObject:
   m_ObjectHideFlags: 0

@@ -179,7 +179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47793a0ebc897354d931d3944f715cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingCosts: []
+  buildingCosts:
+  - name: wood
+    amount: 10
 --- !u!65 &-8563379006741469586
 BoxCollider:
   m_ObjectHideFlags: 0
