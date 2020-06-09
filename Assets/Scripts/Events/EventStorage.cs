@@ -76,11 +76,11 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("wood", 5);
-                buttontext.Add("Retie the water pilars.");
+                Action action = () => _resourceManager.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
+                buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
-                action = () => _resourceManager.DecreaseResource("water", 5);
-                buttontext.Add("Cover the wood stock");
+                action = () => _resourceManager.DecreaseResource("wood", 5);
+                buttontext.Add("Take cover.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
@@ -91,14 +91,39 @@ namespace Events
                                     "Click on the boat to select it. Then click on the fishing hook to start fishing.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Ahoi!" };
+                List<string> buttontext = new List<string> {"Ahoi!"};
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
             // 4 : Village starved to death
             {
                 const string title = "Game over";
                 string text = "Your villagers starved to death.\n" +
-                                    "You survived " + DateTime.DayCounter + " days.";
+                              "You survived " + DateTime.DayCounter + " days.";
+                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                List<Action> actions = new List<Action>();
+                List<string> buttontext = new List<string> { "Start over" };
+                CreateEvent(title, text, buttonStyle, buttontext, actions);
+            }
+            // 5 : Initial storm
+            {
+                const string title = "Storm";
+                const string text = "The strom is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
+                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
+                List<Action> actions = new List<Action>();
+                List<string> buttontext = new List<string>();
+                Action action = () => _resourceManager.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
+                buttontext.Add("Cover the wood stock.");
+                actions.Add(action);
+                action = () => _resourceManager.DecreaseResource("wood", 20);
+                buttontext.Add("Take cover.");
+                actions.Add(action);
+                CreateEvent(title, text, buttonStyle, buttontext, actions);
+            }
+            // 6 : Everyone dead
+            {
+                const string title = "Game over";
+                string text = "All of your villagers died.\n" +
+                              "You survived " + DateTime.DayCounter + " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string> { "Start over" };

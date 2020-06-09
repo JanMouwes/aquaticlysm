@@ -10,9 +10,9 @@ public class RandomEvents : MonoBehaviour
     public AudioSource TradeEffect;
 
     [Tooltip("Min Value for time between events")]
-    public int minTime = 30;
+    public int minTime = 300;
     [Tooltip("Max Value for time between events")]
-    public int maxTime = 300;
+    public int maxTime = 600;
     // Start is called before the first frame update
     private void Start()
     {

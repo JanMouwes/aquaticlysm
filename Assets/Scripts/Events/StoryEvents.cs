@@ -18,21 +18,43 @@ public class StoryEvents : MonoBehaviour
 
     private void Update()
     {
-        if (!_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 10f)
+        if (!_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 20f)
         {
             HungerStrikeEvent();
         }
 
+        //if (!_events.Contains("firstStorm") && _events.Contains("hungerStrike"))
+        //{
+        //    DelayStoryEvent();
+        //    FirstStormEvent();
+        //}
+
+        //if (!_events.Contains("gameOverEveryoneDead") &&
+        //        GameObject.FindGameObjectsWithTag("Character").Length == 0)
+        //{ 
+        //    GameOverEveryoneDead();
+        //}
+
         if (!_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
         {
+
             NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
 
             timeToSalvage -= Time.deltaTime;
 
-            if (timeToSalvage <= 0f && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
-                GameOver();
+            if (timeToSalvage <= 0f)
+                GameOverStarved();
+        }
+        else
+        {
+            timeToSalvage = 15f;
         }
 
+    }
+
+    private IEnumerable DelayStoryEvent()
+    { 
+        yield return new WaitForSeconds(30);
     }
 
     private void HungerStrikeEvent()
@@ -41,16 +63,32 @@ public class StoryEvents : MonoBehaviour
         _events.Add("hungerStrike");
     }
 
-    private void GameOver()
+    //private void FirstStormEvent()
+    //{
+    //    EventManager.Instance.CreateEvent(5);
+    //    _events.Add("firstStorm");
+    //}
+
+    private void GameOverStarved()
     {
+        Debug.Log("Here.");
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
         timeToSalvage = 15f;
-        ReloadGame();
+        //ReloadGame();
     }
+
+    //private void GameOverEveryoneDead()
+    //{
+    //    EventManager.Instance.CreateEvent(6);
+    //    _events.Add("gameOver");
+    //    timeToSalvage = 15f;
+    //    ReloadGame();
+    //}
 
     public void ReloadGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+       // SceneManager.LoadScene("StartMenu");
+        GameObject.Find("ResourceSystem").GetComponent<ResourceSystem>().ReloadResourceSystem();
     }
 }
