@@ -16,7 +16,7 @@ class BoatAutomaton : CompositeGoal
         /// </summary>
         public void FindSubGoal()
         {
-           if (_owner.TryGetResourceValue("fish") <= 0f) 
+           if (_owner.TryGetResourceValue("food") <= 0f) 
             AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));
         }
 

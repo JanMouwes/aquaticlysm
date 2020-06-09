@@ -19,7 +19,7 @@ namespace Tests
 
             // Act
             mockBoat.Object.carriedResources = new Dictionary<string, float>();
-            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("food", 5f);
             mockBoat.Object.carriedResources.Add("wood", 10f);
             mockBoat.Object.carriedResources.Add("metal", 5f);
 
@@ -35,7 +35,7 @@ namespace Tests
 
             //Act
             mockBoat.Object.carriedResources = new Dictionary<string, float>();
-            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("food", 5f);
             mockBoat.Object.carriedResources.Add("wood", 10f);
             mockBoat.Object.carriedResources.Add("metal", 5f);
 
@@ -50,11 +50,11 @@ namespace Tests
 
             //Act
             mockBoat.Object.carriedResources = new Dictionary<string, float>();
-            mockBoat.Object.carriedResources.Add("fish", 5f);
+            mockBoat.Object.carriedResources.Add("food", 5f);
             mockBoat.Object.carriedResources.Add("wood", 10f);
             mockBoat.Object.carriedResources.Add("metal", 5f);
 
-            Assert.AreEqual(mockBoat.Object.TryGetResourceValue("fish"), 5f);
+            Assert.AreEqual(mockBoat.Object.TryGetResourceValue("food"), 5f);
         }
 
         [Test]
