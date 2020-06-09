@@ -7,16 +7,21 @@ public class Sleep : IGoal
     public Character Owner { get; private set; }
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
+    private Vector3 _restPlace;
 
-    public Sleep(Character owner) 
+    public Sleep(Character owner , Vector3 restplace) 
     {
         Owner = owner;
         Name = "Sleep";
+        _restPlace = restplace;
     }
 
     public void Activate()
     {
         Status = GoalStatus.Active;
+        Owner.gameObject.GetComponent<Selectable>().Selected = false;
+        Owner.agent.enabled = false;
+        Owner.transform.position = new Vector3(10000,10000,10000);
     }
 
     public GoalStatus Process()
@@ -36,6 +41,8 @@ public class Sleep : IGoal
 
     public void Terminate()
     {
+        Owner.transform.position = _restPlace;
+        Owner.agent.enabled = true;
         Status = GoalStatus.Completed;
     }
 

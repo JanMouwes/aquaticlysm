@@ -34,10 +34,16 @@ public class DissolveController : MonoBehaviour
 
         if (progress == 0)
         {
-            this.tag = completionTag;
+            if (completionTag != "")
+                this.tag = completionTag;
             return true;
         }
 
         return false;
+    }
+
+    public bool CheckifBuild()
+    {
+        return progress == 0;
     }
 }
