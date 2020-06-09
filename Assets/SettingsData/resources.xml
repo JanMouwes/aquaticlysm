@@ -29,4 +29,8 @@
       <icon-path>Sprites/Food</icon-path>
       <description>this resource is made of food</description>
     </resource>
+    <resource>
+        <name>energy</name>
+        <description>this resource is made of zap zap</description>
+    </resource>
 </resources>
