@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Entity;
 using UnityEngine;
 using UnityEngine.AI;
@@ -49,24 +50,22 @@ public class Boat : MonoBehaviour, IAction
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
-        if (_actions.ContainsKey(hit.collider.gameObject.tag))
-        {
-            // Set the goal with the current data.
-            _goaldata.Position = hit.point;
-            _goaldata.Building = hit.collider.gameObject;
+        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
 
-            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+        // Set the goal with the current data.
+        this._goaldata.Position = hit.point;
+        this._goaldata.Building = hit.collider.gameObject;
 
-            // Add the goal to the brain.
-            if (priority)
-                _goalProcessor.AddSubGoal(goal);
-            else
-                _goalProcessor.PrioritizeSubGoal(goal);
+        IGoal goal = action.Invoke(this._goaldata);
 
-            return true;
-        }
+        // Add the goal to the brain.
+        if (priority)
+            this._goalProcessor.AddSubGoal(goal);
+        else
+            this._goalProcessor.PrioritizeSubGoal(goal);
 
-        return false;
+        return true;
+
     }
 
     private static void InitGoals()
@@ -88,14 +87,9 @@ public class Boat : MonoBehaviour, IAction
 
     public float CountResourcesCarried()
     {
-        float resources = 0f;
+        if (this.carriedResources.Count <= 0) return 0;
 
-        if (carriedResources.Count > 0)
-        {
-            foreach (KeyValuePair<string, float> resource in carriedResources) { resources += resource.Value; }
-        }
-
-        return resources;
+        return this.carriedResources.Sum(resource => resource.Value);
     }
 
     public float TryGetResourceValue(string resource)

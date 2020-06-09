@@ -24,7 +24,7 @@ public class DissolveController : MonoBehaviour
     public bool Build(float addProgress)
     {
         progress -= addProgress;
-        progress = Mathf.Clamp(progress, 0, 1);
+        progress = Mathf.Min(progress, 1);
 
         foreach (Renderer renderer in _renderers)
         {
@@ -32,6 +32,7 @@ public class DissolveController : MonoBehaviour
             renderer.materials[1].SetFloat("Dissolve", progress);
         }
 
+        bool isDone = progress <= 0;
         if (progress == 0)
         {
             if (completionTag != "")
@@ -39,7 +40,9 @@ public class DissolveController : MonoBehaviour
             return true;
         }
 
-        return false;
+        if (isDone) { this.tag = completionTag; }
+
+        return isDone;
     }
 
     public bool CheckifBuild()

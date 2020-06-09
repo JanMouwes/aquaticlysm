@@ -32,6 +32,8 @@ namespace Resources
             }
         }
 
+        private ResourceManager() { }
+
         /// <summary>
         /// Adds a particular resource to the resources.
         /// </summary>
@@ -112,7 +114,7 @@ namespace Resources
 
             return 0;
         }
-        
+
         /// <summary>
         /// Directly set the value of a resource.
         /// </summary>
@@ -123,7 +125,7 @@ namespace Resources
         {
             if (!DoesResourceExist(resource))
                 return false;
-            
+
             this._resources[resource].Set(amount);
 
             return true;

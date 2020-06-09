@@ -1,6 +1,5 @@
 ﻿using Buildings.Farm;
 using Buildings.Farm.States;
-using Items;
 using Resources;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ namespace GoalBehaviour.Atomic
         private float _time;
 
         public GoalStatus Status { get; private set; }
-        public string Name { get; private set; }
+        public string Name { get; }
 
         public HarvestCrops(Character owner, Farm farm, float duration)
         {
