@@ -91,7 +91,7 @@ namespace Events
                                     "Click on the boat to select it. Then click on the fishing hook to start fishing.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> {"Ahoi!"};
+                List<string> buttontext = new List<string> { "Ahoi!" };
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
             // 4 : Village starved to death
@@ -101,7 +101,8 @@ namespace Events
                               "You survived " + DateTime.DayCounter + " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Start over" };
+                List<string> buttontext = new List<string>();
+                buttontext.Add("Start over.");
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
             // 5 : Initial storm

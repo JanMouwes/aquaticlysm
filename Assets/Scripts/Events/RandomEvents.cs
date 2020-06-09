@@ -10,9 +10,9 @@ public class RandomEvents : MonoBehaviour
     public AudioSource TradeEffect;
 
     [Tooltip("Min Value for time between events")]
-    public int minTime = 300;
+    public int minTime = 600;
     [Tooltip("Max Value for time between events")]
-    public int maxTime = 600;
+    public int maxTime = 2400;
     // Start is called before the first frame update
     private void Start()
     {
@@ -22,7 +22,7 @@ public class RandomEvents : MonoBehaviour
 
     private IEnumerator EventTimer()
     {
-        //Wait for between 60 and 300 seconds
+        
         yield return new WaitForSeconds(Random.Range(minTime,maxTime));
         // 50%
         if (Random.value < 0.5f)

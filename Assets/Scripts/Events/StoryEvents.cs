@@ -37,13 +37,15 @@ public class StoryEvents : MonoBehaviour
 
         if (!_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
         {
-
             NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
 
             timeToSalvage -= Time.deltaTime;
-
+            Debug.Log(timeToSalvage);
             if (timeToSalvage <= 0f)
+            { 
                 GameOverStarved();
+                ReloadGame();
+            }
         }
         else
         {
@@ -75,7 +77,6 @@ public class StoryEvents : MonoBehaviour
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
         timeToSalvage = 15f;
-        //ReloadGame();
     }
 
     //private void GameOverEveryoneDead()
@@ -88,7 +89,7 @@ public class StoryEvents : MonoBehaviour
 
     public void ReloadGame()
     {
-       // SceneManager.LoadScene("StartMenu");
         GameObject.Find("ResourceSystem").GetComponent<ResourceSystem>().ReloadResourceSystem();
+        SceneManager.LoadScene("StartGame");
     }
 }

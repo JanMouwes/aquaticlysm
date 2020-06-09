@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-class BoatAutomaton : CompositeGoal
+class BoatAutomation : CompositeGoal
     {
         private Boat _owner;
 
-        public BoatAutomaton(Boat owner)
+        public BoatAutomation(Boat owner)
         {
             Name = "Process boat commands";
             this._owner = owner;
@@ -16,8 +16,8 @@ class BoatAutomaton : CompositeGoal
         /// </summary>
         public void FindSubGoal()
         {
-           if (_owner.TryGetResourceValue("fish") <= 0f) 
-            AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));
+           //if (_owner.TryGetResourceValue("fish") <= 0f) 
+           // AddSubGoal(new GatherFish(_owner, new Vector3(-30f, 0.57f, 20f)));
         }
 
         public override void Activate()
