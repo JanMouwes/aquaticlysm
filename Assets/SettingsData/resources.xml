@@ -31,6 +31,7 @@
     </resource>
     <resource>
         <name>energy</name>
+        <icon-path>Sprites/Energy</icon-path>
         <description>this resource is made of zap zap</description>
     </resource>
 </resources>
