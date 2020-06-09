@@ -39,7 +39,7 @@ namespace Resources
         /// Decrease the MaximumCharge and change the amount of charge inside the ResourceManager
         /// </summary>
         /// <param name="amount"></param>
-        public void SubtractBatteryCharge(int amount)
+        public void DecreaseMaximumCharge(int amount)
         {
             ResourceManager instance = ResourceManager.Instance;
             int currentAmount = instance.GetResourceAmount("energy");
@@ -48,7 +48,6 @@ namespace Resources
             if (currentAmount > newAmount)
             {
                 bool result = instance.SetResourceAmount("energy", newAmount);
-                
             }
 
             MaximumCharge = newAmount;

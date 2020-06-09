@@ -25,7 +25,7 @@ namespace Buildings.Energy
         private void OnDisable()
         {
             // Subtract the energy amount from the total through the EnergySystem
-            _energySystem.SubtractBatteryCharge(this.maximumCharge);
+            _energySystem.DecreaseMaximumCharge(this.maximumCharge);
         }
     }
 }
