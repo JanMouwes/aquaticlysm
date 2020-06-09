@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Resources;
 using System.Collections.Generic;
 using System.Linq;
-using Resources;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityResources = UnityEngine.Resources;
@@ -16,38 +15,45 @@ public class ResourceUIView : MonoBehaviour
 
     public ResourceUIView()
     {
-        this._resourceManager = ResourceManager.Instance;
-        
+        _resourceManager = ResourceManager.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        IEnumerable<Resource> resources = this._resourceManager.Resources.OrderBy(res => res.type.ShortName);
+        IEnumerable<Resource> resources = _resourceManager.Resources.OrderBy(res => res.type.ShortName);
 
         foreach (Resource resource in resources) { SetResourceValue(resource.type, resource.Amount); }
     }
 
     private void SetResourceValue(ResourceType resourceType, int value)
     {
-        if (!this._resourceUiElements.TryGetValue(resourceType.ShortName, out GameObject element))
+        if (!_resourceUiElements.TryGetValue(resourceType.ShortName, out GameObject element))
         {
+            int resourceCount = _resourceUiElements.Count;
+
             // If resource not yet registered, add it
-            GameObject instance = PrefabInstanceManager.Instance.Spawn(this.resourceElementPrefab, Vector3.zero);
+            GameObject instance = PrefabInstanceManager.Instance.Spawn(resourceElementPrefab, Vector3.zero);
+            instance.transform.SetParent(gameObject.transform);
+            instance.transform.localScale = Vector3.one;
 
-            int resourceCount = this._resourceUiElements.Count;
-
+            // Get image
             RectTransform imageTransform = instance.GetComponent<RectTransform>();
-            imageTransform.SetParent(this.gameObject.transform);
-            imageTransform.anchoredPosition = new Vector2((resourceCount * 60) + 30, 0);
+            imageTransform.SetParent(gameObject.transform);
 
+            // Image position
+            float distance = imageTransform.sizeDelta.x;
+            imageTransform.anchoredPosition = new Vector2(distance * 4 * resourceCount + distance, 0);
+
+            // Set icon inside of the image
             Sprite icon = UnityResources.Load<Sprite>(resourceType.IconPath);
-
             instance.GetComponent<Image>().sprite = icon;
-            this._resourceUiElements.Add(resourceType.ShortName, instance);
+
+            _resourceUiElements.Add(resourceType.ShortName, instance);
             element = instance;
         }
 
+        // Set text
         GameObject child = element.transform.Find("Amount").gameObject;
         child.GetComponent<Text>().text = value.ToString();
     }
