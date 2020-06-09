@@ -11,6 +11,10 @@ TagManager:
   - Sea
   - Building
   - Storage
+  - Barrel
+  - Farm
+  - SolarPanel
+  - Battery
   layers:
   - Default
   - TransparentFX

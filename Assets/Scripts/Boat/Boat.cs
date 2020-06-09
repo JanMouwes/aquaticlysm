@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Entity;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Inventory))]
 public class Boat : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the boats.
@@ -16,6 +19,8 @@ public class Boat : MonoBehaviour, IAction
     public NavMeshAgent agent;
     public float fuel;
 
+    public Inventory inventory;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -23,6 +28,8 @@ public class Boat : MonoBehaviour, IAction
         _goalProcessor = new BoatAutomaton(this);
 
         _goaldata = new GoalCommand(this);
+
+        this.inventory = this.gameObject.GetComponent<Inventory>();
 
         if (_actions == null)
         {
@@ -43,23 +50,22 @@ public class Boat : MonoBehaviour, IAction
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
+        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
 
-        if (_actions.ContainsKey(hit.collider.gameObject.tag))
-        {
-            // Set the goal with the current data.
-            _goaldata.Position = hit.point;
-            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
+        // Set the goal with the current data.
+        this._goaldata.Position = hit.point;
+        this._goaldata.Building = hit.collider.gameObject;
 
-            // Add the goal to the brain.
-            if (priority)
-                _goalProcessor.AddSubGoal(goal);
-            else
-                _goalProcessor.PrioritizeSubGoal(goal);
+        IGoal goal = action.Invoke(this._goaldata);
 
-            return true;
-        }
+        // Add the goal to the brain.
+        if (priority)
+            this._goalProcessor.AddSubGoal(goal);
+        else
+            this._goalProcessor.PrioritizeSubGoal(goal);
 
-        return false;
+        return true;
+
     }
 
     private static void InitGoals()
@@ -74,21 +80,16 @@ public class Boat : MonoBehaviour, IAction
 
         goal = input => new Expedition(input.OwnerBoat, 100);
         _actions.Add("Expedition", goal);
+
+        goal = input => new FetchBarrel(input.OwnerBoat, input.Building);
+        _actions.Add("Barrel", goal);
     }
 
     public float CountResourcesCarried()
     {
-        float resources = 0f;
+        if (this.carriedResources.Count <= 0) return 0;
 
-        if (carriedResources.Count > 0)
-        {
-            foreach (KeyValuePair<string, float> resource in carriedResources)
-            {
-                resources += resource.Value;
-            }
-        }
-
-        return resources;
+        return this.carriedResources.Sum(resource => resource.Value);
     }
 
     public float TryGetResourceValue(string resource)
