@@ -10,29 +10,27 @@ namespace Resources
     ///
     /// Fetch the instance with 'ResourceManager.Instance'
     /// </summary>
-    public class ResourceManager
+    public class ResourceManager : MonoBehaviour
     {
-        private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
         private IResourceTypeManager _resourceTypeManager;
 
         public IEnumerable<Resource> Resources => this._resources.Values;
 
-        /// <summary>
-        /// Fetch the single instance
-        /// </summary>
-        public static ResourceManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new ResourceManager();
+        private static ResourceManager _instance;
 
-                return _instance;
+        public static ResourceManager Instance { get { return _instance; } }
+
+
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            } else {
+                _instance = this;
             }
         }
-
-        private ResourceManager() { }
 
         /// <summary>
         /// Adds a particular resource to the resources.

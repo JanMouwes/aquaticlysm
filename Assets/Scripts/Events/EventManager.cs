@@ -1,14 +1,23 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Events
 {
-    public class EventManager
+    public class EventManager : MonoBehaviour
     {
-        private static readonly EventManager instance = new EventManager();
+        private static EventManager _instance;
 
-        public static EventManager Instance
+        public static EventManager Instance { get { return _instance; } }
+
+
+        private void Awake()
         {
-            get { return instance; }
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+            } else {
+                _instance = this;
+            }
         }
 
         /// <summary>
@@ -23,7 +32,7 @@ namespace Events
         public void CreateEvent(int id)
         {
             EventStorage storage = new EventStorage();
-
+            Debug.Log(id);
             // Update every subscriber that an event has been made.
             EventCreated.Invoke(storage.GetEvent(id));
         }

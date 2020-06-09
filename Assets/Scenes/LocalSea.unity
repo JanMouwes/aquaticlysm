@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.36344054, g: 0.567706, b: 0.8464634, a: 1}
+  m_IndirectSpecularColor: {r: 0.3635535, g: 0.56774515, b: 0.84646064, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -338,8 +338,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StromEffect: {fileID: 501743992}
   TradeEffect: {fileID: 0}
-  minTime: 2
-  maxTime: 10
+  minTime: 900
+  maxTime: 900
 --- !u!4 &501743991
 Transform:
   m_ObjectHideFlags: 0

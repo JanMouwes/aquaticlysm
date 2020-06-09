@@ -101,6 +101,8 @@ namespace Events
                               "You survived " + DateTime.DayCounter + " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
+                Action action = () => GameObject.FindObjectOfType<StoryEvents>().ReloadGame();
+                actions.Add(action);
                 List<string> buttontext = new List<string>();
                 buttontext.Add("Start over.");
                 CreateEvent(title, text, buttonStyle, buttontext, actions);

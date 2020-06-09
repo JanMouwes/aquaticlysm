@@ -9,11 +9,11 @@ public class ResourceUIView : MonoBehaviour
 {
     private readonly Dictionary<string, GameObject> _resourceUiElements = new Dictionary<string, GameObject>();
 
-    private readonly ResourceManager _resourceManager;
+    private ResourceManager _resourceManager;
 
     public GameObject resourceElementPrefab;
 
-    public ResourceUIView()
+    private void Awake()
     {
         _resourceManager = ResourceManager.Instance;
     }
