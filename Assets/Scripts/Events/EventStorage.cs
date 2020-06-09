@@ -101,10 +101,7 @@ namespace Events
                                     "You survived " + DateTime.DayCounter + " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string>();
-                Action action = () => SceneManager.LoadScene("LocalSea");
-                buttontext.Add("Start over.");
-                actions.Add(action);
+                List<string> buttontext = new List<string> { "Start over" };
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

@@ -3,6 +3,7 @@ using Resources;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StoryEvents : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class StoryEvents : MonoBehaviour
     }
 
     private void HungerStrikeEvent()
-    { 
+    {
         EventManager.Instance.CreateEvent(3);
         _events.Add("hungerStrike");
     }
@@ -45,5 +46,11 @@ public class StoryEvents : MonoBehaviour
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
         timeToSalvage = 15f;
+        ReloadGame();
+    }
+
+    public void ReloadGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 }
