@@ -13,23 +13,23 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
     // A dictionary with all the possible actions for the boats.
     private static readonly Dictionary<string, Func<GoalCommand<Boat>, IGoal>> _actions = new Dictionary<string, Func<GoalCommand<Boat>, IGoal>>()
     {
-        { "Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f) },
-        { "Storage", input => new DropOff(input.Owner) },
-        { "Barrel", input => new FetchBarrel(input.Owner, input.Building) },
+        {"Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f)},
+        {"Storage", input => new DropOff(input.Owner)},
+        {"Barrel", input => new FetchBarrel(input.Owner, input.Building)},
     };
 
-    public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
+    private BoatAutomaton _goalProcessor;
+    private GoalCommand<Boat> _goaldata;
+    private GameActionButtonModel[] _buttonModels;
 
     public Dictionary<string, float> carriedResources;
     public float maxCarrierAmount;
     public NavMeshAgent agent;
     public float fuel;
 
-    private BoatAutomaton _goalProcessor;
-    private GoalCommand<Boat> _goaldata;
-    private GameActionButtonModel[] _buttonModels;
-
     public Inventory inventory;
+
+    public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
 
     // Start is called before the first frame update
     private void Start()

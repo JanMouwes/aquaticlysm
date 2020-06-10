@@ -1,4 +1,4 @@
-using Actions;
+﻿using Actions;
 using Buildings;
 using Resources;
 using System;
@@ -10,8 +10,6 @@ using Util;
 
 public class Builder : MonoBehaviour, IButtonActionComponent
 {
-    public GameObject[] prefabs;
-
     private GameActionButtonModel[] _buttonModels;
     private NavMeshSurface[] _navMeshSurfaces;
     private IEnumerable<BoxCollider> _buildingBoxColliders;
@@ -20,6 +18,8 @@ public class Builder : MonoBehaviour, IButtonActionComponent
     private Outline _outline;
     private Color _originalOutlineColour;
     private bool _walkable;
+
+    public GameObject[] prefabs;
 
     public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
 
