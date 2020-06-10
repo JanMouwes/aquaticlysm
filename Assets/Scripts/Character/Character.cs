@@ -1,12 +1,11 @@
 ﻿using Actions;
+using Entity;
 using GoalBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using Entity;
-using UnityEngine.Serialization;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
@@ -41,11 +40,11 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        inventory = gameObject.GetComponent<Inventory>();
+
         _brain = new Think(this);
         _goaldata = new GoalCommand<Character>(this);
         _buttonModels = GetGameActionButtonModels(this).ToArray();
-
-        this.inventory = this.gameObject.GetComponent<Inventory>();
     }
 
     private void Update()

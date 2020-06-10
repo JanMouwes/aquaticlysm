@@ -35,6 +35,9 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// Clear the current action buttons on the UI and set new buttons.
+        /// </summary>
         private void UpdateButtons()
         {
             ClearButtons();
@@ -57,6 +60,9 @@ namespace UI
             }
         }
 
+        /// <summary>
+        /// Clears all the buttons.
+        /// </summary>
         private void ClearButtons()
         {
             foreach (KeyValuePair<string, GameObject> item in _actionUiElements)
@@ -65,6 +71,11 @@ namespace UI
             _actionUiElements.Clear();
         }
 
+        /// <summary>
+        /// Gets the UI element.
+        /// </summary>
+        /// <param name="key">The model name</param>
+        /// <returns>The UI button.</returns>
         private GameObject GetActionUiElement(string key)
         {
             if (!_actionUiElements.TryGetValue(key, out GameObject element))
@@ -77,6 +88,11 @@ namespace UI
             return element;
         }
 
+        /// <summary>
+        /// Create and set the buttons in the UI.
+        /// </summary>
+        /// <param name="model">The game action button model.</param>
+        /// <param name="index">The index.</param>
         private void SetActionButtonModel(GameActionButtonModel model, int index)
         {
             string key = model.Name;

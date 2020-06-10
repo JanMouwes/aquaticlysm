@@ -8,7 +8,6 @@ using UnityResources = UnityEngine.Resources;
 public class ResourceUIView : MonoBehaviour
 {
     private readonly Dictionary<string, GameObject> _resourceUiElements = new Dictionary<string, GameObject>();
-
     private readonly ResourceManager _resourceManager;
 
     public GameObject resourceElementPrefab;
@@ -18,14 +17,17 @@ public class ResourceUIView : MonoBehaviour
         _resourceManager = ResourceManager.Instance;
     }
 
-    // Update is called once per frame
     void Update()
     {
         IEnumerable<Resource> resources = _resourceManager.Resources.OrderBy(res => res.type.ShortName);
-
         foreach (Resource resource in resources) { SetResourceValue(resource.type, resource.Amount); }
     }
 
+    /// <summary>
+    /// Updates the resource value on the UI, if the type doesn't excists on the UI create it.
+    /// </summary>
+    /// <param name="resourceType">The resource type.</param>
+    /// <param name="value">The resource value.</param>
     private void SetResourceValue(ResourceType resourceType, int value)
     {
         if (!_resourceUiElements.TryGetValue(resourceType.ShortName, out GameObject element))

@@ -9,7 +9,7 @@ public class FetchBarrel : CompositeGoal
 
     public FetchBarrel(Boat boat, GameObject gameObject)
     {
-        Name = "Gather fish";
+        Name = "Fetch Barrel";
         _owner = boat;
         _gameObject = gameObject;
         _target = gameObject.transform.position;

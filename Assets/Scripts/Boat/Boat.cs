@@ -1,9 +1,9 @@
 ﻿using Actions;
+using Entity;
 using GoalBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entity;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -39,7 +39,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         _goaldata = new GoalCommand<Boat>(this);
         _buttonModels = GetGameActionButtonModels(this).ToArray();
 
-        this.inventory = this.gameObject.GetComponent<Inventory>();
+        inventory = gameObject.GetComponent<Inventory>();
 
         carriedResources = new Dictionary<string, float>();
         maxCarrierAmount = 20f;
@@ -56,6 +56,8 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         {
             // Set the goal with the current data.
             _goaldata.Position = hit.point;
+            _goaldata.Building = hit.collider.gameObject;
+
             IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
 
             // Add the goal to the brain.
@@ -63,7 +65,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
                 AddSubgoal(goal);
             else
                 PrioritiseSubgoal(goal);
-        
+
             return true;
         }
 
@@ -72,9 +74,9 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 
     public float CountResourcesCarried()
     {
-        if (this.carriedResources.Count <= 0) return 0;
+        if (carriedResources.Count <= 0) return 0;
 
-        return this.carriedResources.Sum(resource => resource.Value);
+        return carriedResources.Sum(resource => resource.Value);
     }
 
     public float TryGetResourceValue(string resource)
@@ -107,7 +109,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         {
             Name = "BoatExpedition",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
-            OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 100))
+            OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 200))
         };
     }
 }
