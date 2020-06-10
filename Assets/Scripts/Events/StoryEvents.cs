@@ -29,18 +29,6 @@ public class StoryEvents : MonoBehaviour
             HungerStrikeEvent();
         }
 
-        //if (!_events.Contains("firstStorm") && _events.Contains("hungerStrike"))
-        //{
-        //    DelayStoryEvent();
-        //    FirstStormEvent();
-        //}
-
-        //if (!_events.Contains("gameOverEveryoneDead") &&
-        //        GameObject.FindGameObjectsWithTag("Character").Length == 0)
-        //{ 
-        //    GameOverEveryoneDead();
-        //}
-
         if (_events.Contains("begin") && !_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
         {
             NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
@@ -71,12 +59,6 @@ public class StoryEvents : MonoBehaviour
         _events.Add("hungerStrike");
     }
 
-    //private void FirstStormEvent()
-    //{
-    //    EventManager.Instance.CreateEvent(5);
-    //    _events.Add("firstStorm");
-    //}
-
     private void GameOverStarved()
     {
         Debug.Log("Here.");
@@ -84,14 +66,6 @@ public class StoryEvents : MonoBehaviour
         _events.Add("gameOver");
         timeToSalvage = 15f;
     }
-
-    //private void GameOverEveryoneDead()
-    //{
-    //    EventManager.Instance.CreateEvent(6);
-    //    _events.Add("gameOver");
-    //    timeToSalvage = 15f;
-    //    ReloadGame();
-    //}
 
     public void ReloadGame()
     {
