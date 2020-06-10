@@ -102,19 +102,19 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
         yield return new GameActionButtonModel()
         {
             Name = "BoatDropOff",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Boxes"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/DropOff"),
             OnClick = () => owner.PrioritiseSubgoal(new DropOff(owner))
         };
         yield return new GameActionButtonModel()
         {
             Name = "BoatExpedition",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Explore"),
             OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 200))
         };        
         yield return new GameActionButtonModel()
         {
             Name = "BoatFishing",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Fish"),
             OnClick = () => owner.PrioritiseSubgoal(new GatherFish(owner, new Vector3(-30f, 0.57f, 20f)))
         };
     }

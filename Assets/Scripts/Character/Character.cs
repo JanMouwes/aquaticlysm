@@ -89,7 +89,7 @@ public class Character : MonoBehaviour, IClickActionComponent, IButtonActionComp
         yield return new GameActionButtonModel()
         {
             Name = "CharacterRest",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Bed"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Sleep"),
             OnClick = () => owner.PrioritiseSubgoal(new Rest(owner))
         };
     }

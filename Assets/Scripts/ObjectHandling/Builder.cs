@@ -223,37 +223,37 @@ public class Builder : MonoBehaviour, IButtonActionComponent
         yield return new GameActionButtonModel()
         {
             Name = "BuildWalkway",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Road"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Road"),
             OnClick = () => builder.Build(0, true)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildBarge",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Barge"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Barge"),
             OnClick = () => builder.Build(1, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildHouse",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/House"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/House"),
             //OnClick = () => builder.Build(0, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildFarm",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Farm"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Farm"),
             OnClick = () => builder.Build(4, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildSolarPanel",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/SolarPanel"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/SolarPanel"),
             OnClick = () => builder.Build(2, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildBattery",
-            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Battery"),
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Battery"),
             OnClick = () => builder.Build(3, false)
         };
     }
