@@ -38,5 +38,13 @@ namespace Resources
 
             this.Amount -= amount;
         }
+
+        public void Set(int amount)
+        {
+            if (amount < 0)
+                throw new ArgumentOutOfRangeException(nameof(amount), "Parameter has negative value.");
+
+            this.Amount = amount;
+        }
     }
 }

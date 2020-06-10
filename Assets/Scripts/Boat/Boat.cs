@@ -3,9 +3,11 @@ using GoalBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entity;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(Inventory))]
 public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the boats.
@@ -13,6 +15,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     {
         { "Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f) },
         { "Storage", input => new DropOff(input.Owner) },
+        { "Barrel", input => new FetchBarrel(input.Owner, input.Building) },
     };
 
     public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
@@ -26,13 +29,17 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     private GoalCommand<Boat> _goaldata;
     private GameActionButtonModel[] _buttonModels;
 
+    public Inventory inventory;
+
+    // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         _goalProcessor = new BoatAutomaton(this);
         _goaldata = new GoalCommand<Boat>(this);
-
         _buttonModels = GetGameActionButtonModels(this).ToArray();
+
+        this.inventory = this.gameObject.GetComponent<Inventory>();
 
         carriedResources = new Dictionary<string, float>();
         maxCarrierAmount = 20f;
@@ -56,7 +63,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
                 AddSubgoal(goal);
             else
                 PrioritiseSubgoal(goal);
-
+        
             return true;
         }
 
@@ -65,14 +72,9 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 
     public float CountResourcesCarried()
     {
-        float resources = 0f;
+        if (this.carriedResources.Count <= 0) return 0;
 
-        if (carriedResources.Count > 0)
-        {
-            foreach (KeyValuePair<string, float> resource in carriedResources) { resources += resource.Value; }
-        }
-
-        return resources;
+        return this.carriedResources.Sum(resource => resource.Value);
     }
 
     public float TryGetResourceValue(string resource)

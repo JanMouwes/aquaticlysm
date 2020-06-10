@@ -1,4 +1,9 @@
-﻿/// <summary>
+﻿using System.Linq;
+using Buildings.Farm;
+using Buildings.Farm.States;
+using GoalBehaviour.Composite;
+
+/// <summary>
 ///     Highest level of goal managing, makes decisions between strategies to
 ///     fulfill agents pressing needs.
 /// </summary>
@@ -20,10 +25,35 @@ public class Think : CompositeGoal
     /// <summary>
     ///     Checks if there is a need for a new goal.
     /// </summary>
-    public void FindSubGoal()
+    public IGoal DetermineNewGoal()
     {
+        Farm[] emptyFarms = Farm.FarmsWithState<Empty>()
+                                .Where(farm => !farm.IsClaimed)
+                                .ToArray();
+
+        if (emptyFarms.Length > 0)
+        {
+            Farm farm = emptyFarms.First();
+
+            return new SowSeedsAtFarm(this._owner, farm);
+        }
+
+        Farm[] fullFarms = Farm.FarmsWithState<FullGrown>()
+                               .Where(farm => !farm.IsClaimed)
+                               .ToArray();
+
+        if (fullFarms.Length > 0)
+        {
+            Farm farm = fullFarms.First();
+
+            return new HarvestCropsAtFarm(this._owner, farm);
+        }
+
+
         // Check if there is need for resting and also that the agent is not currently taking care of it.
-        if (needsRest(_owner.energyLevel)) { AddSubGoal(new Rest(_owner)); }
+        if (needsRest(_owner.energyLevel)) { return new Rest(_owner); }
+
+        return null;
     }
 
     public override GoalStatus Process()
@@ -31,7 +61,12 @@ public class Think : CompositeGoal
         if (Status == GoalStatus.Inactive)
             Activate();
 
-        if (SubGoals.Count == 0) { FindSubGoal(); }
+        if (SubGoals.Count == 0)
+        {
+            IGoal newGoal = DetermineNewGoal();
+
+            if (newGoal != null) { AddSubGoal(newGoal); }
+        }
 
         return base.Process();
     }

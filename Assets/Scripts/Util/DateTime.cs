@@ -1,37 +1,43 @@
-﻿﻿using UnityEngine;
+﻿using System.Runtime.Serialization;
+using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DateTime : MonoBehaviour
 {
     public Text DateTimeText;
 
-    private float _gameTime;
+    public static float gameTime;
+
+    private string _uiText;
     private int _dayCounter = 1;
-    public Material Day;
-    public Material Night;
+    public Material day;
+    public Material night;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gameTime = 100.0f;
+        gameTime = 100.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RenderSettings.skybox = IsDay(_gameTime) ? Day : Night;
-        
-        if (dayHasPassed(_gameTime))
+        RenderSettings.skybox = IsDay(gameTime) ? this.day : this.night;
+        this._uiText = IsDay(gameTime) ? "DAY" : "NIGHT";
+
+        if (DayHasPassed(gameTime))
         {
-            _gameTime = 100.0f;
+            gameTime = 100.0f;
             _dayCounter++;
         }
 
-        _gameTime -= Time.deltaTime;
-        
-        DateTimeText.text = "DAY " + _dayCounter;
+        gameTime -= Time.deltaTime;
+
+        DateTimeText.text = this._uiText + " " + _dayCounter;
     }
 
+    public static bool IsDay() => IsDay(gameTime);
     public static bool IsDay(float passedGameTime) => passedGameTime >= 50f;
-    private static bool dayHasPassed(float passedGameTime) => passedGameTime <= 0f;
+    private static bool DayHasPassed(float passedGameTime) => passedGameTime <= 0f;
 }

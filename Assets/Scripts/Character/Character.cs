@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using Entity;
+using UnityEngine.Serialization;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
+[RequireComponent(typeof(Inventory))]
 public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the characters.
@@ -33,6 +36,7 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     private Think _brain;
     private GoalCommand<Character> _goaldata;
     private GameActionButtonModel[] _buttonModels;
+    public Inventory inventory;
 
     public void Start()
     {
@@ -40,6 +44,8 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
         _brain = new Think(this);
         _goaldata = new GoalCommand<Character>(this);
         _buttonModels = GetGameActionButtonModels(this).ToArray();
+
+        this.inventory = this.gameObject.GetComponent<Inventory>();
     }
 
     private void Update()
