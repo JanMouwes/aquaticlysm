@@ -247,19 +247,19 @@ public class Builder : MonoBehaviour, IActionComponent
         {
             Name = "BuildFarm",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Farm"),
-            //OnClick = () => builder.Build(0, false)
+            OnClick = () => builder.Build(4, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildSolarPanel",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/SolarPanel"),
-            //OnClick = () => builder.Build(0, false)
+            OnClick = () => builder.Build(2, false)
         };
         yield return new GameActionButtonModel()
         {
             Name = "BuildBattery",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Battery"),
-            //OnClick = () => builder.Build(0, false)
+            OnClick = () => builder.Build(3, false)
         };
     }
 

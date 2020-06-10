@@ -25,12 +25,13 @@
         <scarcity>2</scarcity>
     </resource>
     <resource>
-      <name>food</name>
-      <icon-path>Sprites/Food</icon-path>
-      <description>this resource is made of food</description>
+        <name>food</name>
+        <icon-path>Sprites/Food</icon-path>
+        <description>this resource is made of food</description>
     </resource>
-    <resource>
-        <name>energy</name>
-        <description>this resource is made of zap zap</description>
-    </resource>
+  <resource>
+    <name>energy</name>
+    <icon-path>Sprites/Energy</icon-path>
+    <description>this resource is made of electricity</description>
+  </resource>
 </resources>
