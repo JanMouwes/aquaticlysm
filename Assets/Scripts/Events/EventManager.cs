@@ -6,6 +6,8 @@ namespace Events
     public class EventManager : MonoBehaviour
     {
         private static EventManager _instance;
+        private EventStorage storage;
+        private EventUIView eventUi;
 
         public static EventManager Instance { get { return _instance; } }
 
@@ -14,16 +16,14 @@ namespace Events
         {
             if (_instance != null && _instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(_instance.gameObject);
             } else {
                 _instance = this;
             }
+            storage = new EventStorage();
+            eventUi = FindObjectOfType<EventUIView>();
         }
-
-        /// <summary>
-        /// Event for when a event is created.
-        /// </summary>
-        public event Action<Event> EventCreated;
+        
 
         /// <summary>
         /// Creates an event for the events.
@@ -31,10 +31,8 @@ namespace Events
         /// <param name="id">Event id.</param>
         public void CreateEvent(int id)
         {
-            EventStorage storage = new EventStorage();
-            Debug.Log(id);
             // Update every subscriber that an event has been made.
-            EventCreated.Invoke(storage.GetEvent(id));
+            eventUi.BuildEventUiView(storage.GetEvent(id));
         }
     }
 }

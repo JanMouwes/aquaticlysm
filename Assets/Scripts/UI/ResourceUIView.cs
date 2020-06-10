@@ -13,7 +13,7 @@ public class ResourceUIView : MonoBehaviour
 
     public GameObject resourceElementPrefab;
 
-    private void Awake()
+    private void Start()
     {
         _resourceManager = ResourceManager.Instance;
     }
@@ -23,7 +23,10 @@ public class ResourceUIView : MonoBehaviour
     {
         IEnumerable<Resource> resources = _resourceManager.Resources.OrderBy(res => res.type.ShortName);
 
-        foreach (Resource resource in resources) { SetResourceValue(resource.type, resource.Amount); }
+        foreach (Resource resource in resources)
+        {
+            SetResourceValue(resource.type, resource.Amount);  
+        }
     }
 
     private void SetResourceValue(ResourceType resourceType, int value)

@@ -24,9 +24,10 @@ namespace Resources
 
         private void Awake()
         {
+            Debug.Log(this.GetInstanceID());
             if (_instance != null && _instance != this)
             {
-                Destroy(this.gameObject);
+                Destroy(_instance.gameObject);
             } else {
                 _instance = this;
             }

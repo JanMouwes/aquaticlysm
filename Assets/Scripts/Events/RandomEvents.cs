@@ -16,7 +16,6 @@ public class RandomEvents : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        EventManager.Instance.CreateEvent(0);
         StartCoroutine(EventTimer());
     }
 
