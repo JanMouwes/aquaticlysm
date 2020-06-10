@@ -110,6 +110,12 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
             Name = "BoatExpedition",
             Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
             OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 200))
+        };        
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatFishing",
+            Icon = UnityEngine.Resources.Load<Sprite>("Icons/Compass"),
+            OnClick = () => owner.PrioritiseSubgoal(new GatherFish(owner, new Vector3(-30f, 0.57f, 20f)))
         };
     }
 }
