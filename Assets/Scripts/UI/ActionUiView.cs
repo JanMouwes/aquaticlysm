@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
+    [RequireComponent(typeof(Builder))]
     public class ActionUiView : MonoBehaviour
     {
         public GameObject actionButtonPrefab;
@@ -46,7 +47,7 @@ namespace UI
                 _actions = builder.ButtonModels :
                 _oldSelection
                     .SelectMany(entity => entity.GetComponents<MonoBehaviour>())
-                    .OfType<IActionComponent>()
+                    .OfType<IButtonActionComponent>()
                     .ToArray()
                     .SelectMany(component => component.ButtonModels);
 

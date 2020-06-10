@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Inventory))]
-public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
+public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the boats.
     private static readonly Dictionary<string, Func<GoalCommand<Boat>, IGoal>> _actions = new Dictionary<string, Func<GoalCommand<Boat>, IGoal>>()
@@ -96,7 +96,7 @@ public class Boat : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     /// <summary>
     /// All button actions.
     /// </summary>
-    /// <param name="owner">The boat.</param>
+    /// <param name="owner">The current boat.</param>
     private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Boat owner)
     {
         yield return new GameActionButtonModel()

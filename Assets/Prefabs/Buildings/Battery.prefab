@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: -1044388364982287656}
   m_Layer: 0
   m_Name: Battery
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

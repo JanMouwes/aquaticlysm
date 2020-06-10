@@ -4,10 +4,8 @@ using UnityEngine;
 
 namespace Actions
 {
-    public interface IActionComponent
+    public interface IClickActionComponent
     {
-        IEnumerable<GameActionButtonModel> ButtonModels { get; }
-
         bool HandleAction(RaycastHit hit, bool priority);
     }
 }

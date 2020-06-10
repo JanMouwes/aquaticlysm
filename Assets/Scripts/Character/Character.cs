@@ -11,7 +11,7 @@ using UnityEngine.AI;
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
 [RequireComponent(typeof(Inventory))]
-public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
+public class Character : MonoBehaviour, IClickActionComponent, IButtonActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the characters.
     private static Dictionary<string, Func<GoalCommand<Character>, IGoal>> _actions = new Dictionary<string, Func<GoalCommand<Character>, IGoal>>()
@@ -83,7 +83,7 @@ public class Character : MonoBehaviour, IActionComponent, IGoalDrivenAgent
     /// <summary>
     /// All button actions.
     /// </summary>
-    /// <param name="owner">The boat.</param>
+    /// <param name="owner">The current character.</param>
     private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Character owner)
     {
         yield return new GameActionButtonModel()

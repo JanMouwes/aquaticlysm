@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Util;
 
-public class Builder : MonoBehaviour, IActionComponent
+public class Builder : MonoBehaviour, IButtonActionComponent
 {
     public GameObject[] prefabs;
 
@@ -214,15 +214,10 @@ public class Builder : MonoBehaviour, IActionComponent
     /// </summary>
     private IEnumerable<BoxCollider> GetBoxColliders() => FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
 
-    public bool HandleAction(RaycastHit hit, bool priority)
-    {
-        throw new NotImplementedException();
-    }
-
     /// <summary>
     /// All button actions.
     /// </summary>
-    /// <param name="owner">The boat.</param>
+    /// <param name="owner">The builder.</param>
     private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Builder builder)
     {
         yield return new GameActionButtonModel()
