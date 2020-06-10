@@ -15,6 +15,7 @@ TagManager:
   - Farm
   - SolarPanel
   - Battery
+  - Desalinator
   layers:
   - Default
   - TransparentFX
