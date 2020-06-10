@@ -8,18 +8,20 @@ namespace Resources
 
         public string resourceTypesFilePath;
         public string resourceStartingValuesFilePath;
+        private ResourceManager _resourceManager;
 
         private void Start()
         {
+            _resourceManager = FindObjectOfType<ResourceManager>();
             this._resourceTypeManager = new ResourceTypeManager();
             this._resourceTypeManager.Init(this.resourceTypesFilePath);
 
-            ResourceManager.Instance.SetResourceTypeManager(this._resourceTypeManager);
+            _resourceManager.SetResourceTypeManager(this._resourceTypeManager);
 
             foreach ((string resourceTypeName, int amount) in ResourceTypeManager.ParseResourceStartingValues(this.resourceStartingValuesFilePath))
             {
                 // Registers resource to resource manager with starting amount - quick fix code
-                ResourceManager.Instance.AddResourceType(resourceTypeName, amount);
+                _resourceManager.AddResourceType(resourceTypeName, amount);
             }
         }
 

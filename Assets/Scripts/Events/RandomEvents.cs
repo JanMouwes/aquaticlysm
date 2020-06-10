@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Events;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class RandomEvents : MonoBehaviour
 {

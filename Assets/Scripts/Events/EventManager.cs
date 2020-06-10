@@ -5,10 +5,10 @@ namespace Events
 {
     public class EventManager : MonoBehaviour
     {
+        public EventStorage storage;
         private static EventManager _instance;
 
         public static EventManager Instance { get { return _instance; } }
-
 
         private void Awake()
         {
@@ -20,10 +20,7 @@ namespace Events
             }
         }
 
-        /// <summary>
-        /// Event for when a event is created.
-        /// </summary>
-        public event Action<Event> EventCreated;
+       
 
         /// <summary>
         /// Creates an event for the events.
@@ -31,10 +28,13 @@ namespace Events
         /// <param name="id">Event id.</param>
         public void CreateEvent(int id)
         {
-            EventStorage storage = new EventStorage();
-            Debug.Log(id);
             // Update every subscriber that an event has been made.
-            EventCreated.Invoke(storage.GetEvent(id));
+            GameObject.FindObjectOfType<EventUIView>().BuildEventUiView(storage.GetEvent(id));
+        }
+
+        private void OnDestroy()
+        {
+            Destroy(_instance.gameObject);
         }
     }
 }

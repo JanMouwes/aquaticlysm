@@ -11,18 +11,12 @@ public class EventUIView : MonoBehaviour
     public GameObject TwoOptionsUI;
     private GameObject UI;
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-        EventManager.Instance.EventCreated += BuildEventUiView;
-    }
-
 
     /// <summary>
     /// Builds the Ui for the event Based on the information given with the Event that is given.
     /// </summary>
     /// <param name="input">Information For the Event.</param>
-    private void BuildEventUiView(Event input)
+    public void BuildEventUiView(Event input)
     {
         // save input
         _event = input;

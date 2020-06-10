@@ -55,8 +55,9 @@ namespace GoalBehaviour.Atomic
 
         private void Harvest()
         {
+            ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
             // Change status of Farm to first growing phase.
-            ResourceManager.Instance.IncreaseResource("food", this._farm.harvestAmount);
+            resourceManager.IncreaseResource("food", this._farm.harvestAmount);
             _farm.ChangeState(Empty.Instance);
 
             Terminate();

@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Resources;
+using UnityEngine;
 
 namespace Tests.EditMode
 {
@@ -12,6 +13,7 @@ namespace Tests.EditMode
         [SetUp]
         public void SetUp()
         {
+            _resourceManager = Object.FindObjectOfType<ResourceManager>();
             Mock<IResourceTypeManager> managerMock = new Mock<IResourceTypeManager>();
             ResourceType type = default;
             managerMock.Setup(manager => manager.TryGetResourceType(It.IsAny<string>(), out type))
@@ -21,8 +23,6 @@ namespace Tests.EditMode
             this._resourceTypeManager = managerMock.Object;
 
             // Reset resource manager
-            ResourceManager.Instance.Clear();
-            this._resourceManager = ResourceManager.Instance;
             this._resourceManager.SetResourceTypeManager(this._resourceTypeManager);
         }
 

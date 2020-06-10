@@ -41,7 +41,8 @@ public class DateTime : MonoBehaviour
 
         if (increaseAmount <= 0)
         { 
-            ResourceManager.Instance.DecreaseResource("food", 5);
+            ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+            resourceManager.DecreaseResource("food", 5);
             increaseAmount = 5f;
         }
     }

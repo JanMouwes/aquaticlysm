@@ -54,8 +54,9 @@ namespace GoalBehaviour.Atomic
 
         private void Plant()
         {
+            ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
             // Change status of Farm to first growing phase.
-            if (ResourceManager.Instance.DecreaseResource("water", 15))
+            if (resourceManager.DecreaseResource("water", 15))
             {
                 _farm.ChangeState(new Growing());
                 Terminate();

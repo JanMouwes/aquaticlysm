@@ -59,7 +59,8 @@ public class OpenBarrel : IGoal
     /// <param name="amount">The total amount of resources.</param>
     public static void AccumulateRandomResource(Boat boat, int amount)
     {
-        string type = ResourceManager.Instance.GetRandomType();
+        ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
+        string type = resourceManager.GetRandomType();
         float resourceAmount = boat.TryGetResourceValue(type);
         boat.carriedResources[type] = resourceAmount + amount;
     }

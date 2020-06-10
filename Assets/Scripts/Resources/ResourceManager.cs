@@ -14,23 +14,7 @@ namespace Resources
     {
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
         private IResourceTypeManager _resourceTypeManager;
-
         public IEnumerable<Resource> Resources => this._resources.Values;
-
-        private static ResourceManager _instance;
-
-        public static ResourceManager Instance { get { return _instance; } }
-
-
-        private void Awake()
-        {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(this.gameObject);
-            } else {
-                _instance = this;
-            }
-        }
 
         /// <summary>
         /// Adds a particular resource to the resources.

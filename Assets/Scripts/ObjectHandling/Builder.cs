@@ -213,18 +213,18 @@ public class Builder : MonoBehaviour
     {
         // Here to keep every needed and found resource to later decrease them from currently owned resources.
         Dictionary<string, int> resourcesTakenOut = new Dictionary<string, int>();
-
+        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         foreach (Building.Costs resource in _currentEntity.GetComponent<Building>().buildingCosts)
         {
             // Not enough resources 
-            if (ResourceManager.Instance.GetResourceAmount(resource.name) < resource.amount) { return false; }
+            if (resourceManager.GetResourceAmount(resource.name) < resource.amount) { return false; }
 
             resourcesTakenOut.Add(resource.name, resource.amount);
         }
 
         foreach (KeyValuePair<string, int> resource in resourcesTakenOut)
         {
-            ResourceManager.Instance.DecreaseResource(resource.Key, resource.Value);
+            resourceManager.DecreaseResource(resource.Key, resource.Value);
         }
 
         return true;

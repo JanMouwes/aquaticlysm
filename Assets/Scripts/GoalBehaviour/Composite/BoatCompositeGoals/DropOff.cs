@@ -32,9 +32,10 @@ class DropOff : CompositeGoal
 
     public override void Terminate()
     {
+        ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
         // Add the fetched resources to the resource manager
         foreach (KeyValuePair<string, float> resource in _owner.carriedResources)
-            ResourceManager.Instance.IncreaseResource(resource.Key, (int)resource.Value);
+            resourceManager.IncreaseResource(resource.Key, (int)resource.Value);
         
         // Clear the carried resources
         _owner.ClearCarriedResources();

@@ -15,7 +15,7 @@ namespace Resources
 
         private void Start()
         {
-            _resourceManager = ResourceManager.Instance;
+            _resourceManager = FindObjectOfType<ResourceManager>();;
         }
 
         private void Update()
@@ -41,13 +41,12 @@ namespace Resources
         /// <param name="amount"></param>
         public void DecreaseMaximumCharge(int amount)
         {
-            ResourceManager instance = ResourceManager.Instance;
-            int currentAmount = instance.GetResourceAmount("energy");
+            int currentAmount = _resourceManager.GetResourceAmount("energy");
             int newAmount = MaximumCharge - amount;
             
             if (currentAmount > newAmount)
             {
-                bool result = instance.SetResourceAmount("energy", newAmount);
+                bool result = _resourceManager.SetResourceAmount("energy", newAmount);
             }
 
             MaximumCharge = newAmount;

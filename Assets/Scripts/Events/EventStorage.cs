@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 
 namespace Events
 {
-    public class EventStorage
+    public class EventStorage : MonoBehaviour
     {
-        private readonly List<Event> _events = new List<Event>();
-        private readonly ResourceManager _resourceManager;
-
-        public EventStorage()
+        private List<Event> _events = new List<Event>();
+        private  ResourceManager _resourceManager;
+        
+        private void Awake()
         {
-            _resourceManager = ResourceManager.Instance;
+            _resourceManager = FindObjectOfType<ResourceManager>();
             CreateAllEvents();
         }
-
+        
         public Event GetEvent(int id)
         {
             return _events[id];

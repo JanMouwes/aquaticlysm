@@ -15,7 +15,7 @@ public class ResourceUIView : MonoBehaviour
 
     private void Awake()
     {
-        _resourceManager = ResourceManager.Instance;
+        _resourceManager = FindObjectOfType<ResourceManager>();
     }
 
     // Update is called once per frame

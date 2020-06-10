@@ -10,15 +10,18 @@ public class StoryEvents : MonoBehaviour
     private List<string> _events;
     private float timeToSalvage;
 
+    private ResourceManager _resourceManager;
+
     private void Start()
     {
+        _resourceManager = FindObjectOfType<ResourceManager>();
         _events = new List<string>();
         timeToSalvage = 15f;
     }
 
     private void Update()
     {
-        if (!_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 20f)
+        if (!_events.Contains("hungerStrike") && _resourceManager.GetResourceAmount("food") < 20f)
         {
             HungerStrikeEvent();
         }
@@ -35,16 +38,14 @@ public class StoryEvents : MonoBehaviour
         //    GameOverEveryoneDead();
         //}
 
-        if (!_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
+        if (!_events.Contains("gameOver") && _resourceManager.GetResourceAmount("food") <= 0f)
         {
             NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
 
             timeToSalvage -= Time.deltaTime;
-            Debug.Log(timeToSalvage);
             if (timeToSalvage <= 0f)
             { 
                 GameOverStarved();
-                ReloadGame();
             }
         }
         else
@@ -73,7 +74,6 @@ public class StoryEvents : MonoBehaviour
 
     private void GameOverStarved()
     {
-        Debug.Log("Here.");
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
         timeToSalvage = 15f;

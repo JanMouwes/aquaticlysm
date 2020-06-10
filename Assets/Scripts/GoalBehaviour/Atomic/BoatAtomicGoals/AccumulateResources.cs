@@ -64,7 +64,8 @@ public class AccumulateResources : IGoal
     {
         while (amount > 0) 
         {
-            string type = ResourceManager.Instance.GetRandomType();
+            ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
+            string type = resourceManager.GetRandomType();
             int accumulationAmount = Random.Range(1, amount);
 
             float resourceAmount = boat.TryGetResourceValue(type);
