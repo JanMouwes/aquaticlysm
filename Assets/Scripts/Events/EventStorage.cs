@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using Resources;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Events
 {
     public class EventStorage : MonoBehaviour
     {
-        private List<Event> _events = new List<Event>();
-        private  ResourceManager _resourceManager;
-        
+        private readonly List<Event> _events = new List<Event>();
+        private ResourceManager _resourceManager;
+
         private void Awake()
         {
             _resourceManager = FindObjectOfType<ResourceManager>();
             CreateAllEvents();
         }
-        
+
         public Event GetEvent(int id)
         {
             return _events[id];
@@ -28,10 +27,11 @@ namespace Events
         /// <param name="title">Event title.</param>
         /// <param name="text">Event text.</param>
         /// <param name="buttonStyle">Button style.</param>
+        /// <param name="buttonText">Button's text</param>
         /// <param name="actions">The actions that are invoked.</param>
-        public void CreateEvent(string title, string text, ButtonStyle buttonStyle,List<string> buttontext, List<Action> actions)
+        public void CreateEvent(string title, string text, ButtonStyle buttonStyle, List<string> buttonText, List<Action> actions)
         {
-            Event createdEvent = new Event {Title = title, Text = text, ButtonStyle = buttonStyle, ButtonText = buttontext, Actions = actions};
+            Event createdEvent = new Event {Title = title, Text = text, ButtonStyle = buttonStyle, ButtonText = buttonText, Actions = actions};
             _events.Add(createdEvent);
         }
 
@@ -51,7 +51,7 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string> {"Im ready!"};
-                CreateEvent(title, text, buttonStyle,buttontext, actions);
+                CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
             // 1 : Overboard Event
             {
@@ -76,7 +76,7 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
+                Action action = () => _resourceManager.DecreaseResource("water", 10);
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
                 action = () => _resourceManager.DecreaseResource("wood", 5);
@@ -91,17 +91,19 @@ namespace Events
                                     "Click on the boat to select it. Then click on the fishing hook to start fishing.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Ahoi!" };
+                List<string> buttontext = new List<string> {"Ahoi!"};
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
             // 4 : Village starved to death
             {
                 const string title = "Game over";
                 string text = "Your villagers starved to death.\n" +
-                              "You survived " + DateTime.DayCounter + " days.";
+                              "You survived " +
+                              DateTime.DayCounter +
+                              " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                Action action = () => GameObject.FindObjectOfType<StoryEvents>().ReloadGame();
+                Action action = () => FindObjectOfType<StoryEvents>().ReloadGame();
                 actions.Add(action);
                 List<string> buttontext = new List<string>();
                 buttontext.Add("Start over.");
@@ -110,11 +112,11 @@ namespace Events
             // 5 : Initial storm
             {
                 const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
+                const string text = "The storm is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
+                Action action = () => _resourceManager.DecreaseResource("water", 10);
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
                 action = () => _resourceManager.DecreaseResource("wood", 20);
@@ -126,10 +128,12 @@ namespace Events
             {
                 const string title = "Game over";
                 string text = "All of your villagers died.\n" +
-                              "You survived " + DateTime.DayCounter + " days.";
+                              "You survived " +
+                              DateTime.DayCounter +
+                              " days.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Start over" };
+                List<string> buttontext = new List<string> {"Start over"};
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

@@ -1,7 +1,7 @@
-﻿using Events;
-using Resources;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Events;
+using Resources;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,18 +25,6 @@ public class StoryEvents : MonoBehaviour
         {
             HungerStrikeEvent();
         }
-
-        //if (!_events.Contains("firstStorm") && _events.Contains("hungerStrike"))
-        //{
-        //    DelayStoryEvent();
-        //    FirstStormEvent();
-        //}
-
-        //if (!_events.Contains("gameOverEveryoneDead") &&
-        //        GameObject.FindGameObjectsWithTag("Character").Length == 0)
-        //{ 
-        //    GameOverEveryoneDead();
-        //}
 
         if (!_events.Contains("gameOver") && _resourceManager.GetResourceAmount("food") <= 0f)
         {

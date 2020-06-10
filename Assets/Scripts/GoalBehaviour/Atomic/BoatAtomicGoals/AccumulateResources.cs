@@ -22,11 +22,11 @@ public class AccumulateResources : IGoal
     public void Activate()
     {
         // The random amount of stuff it wil accumulate.
-        _accumulateAmount = (int)Random.Range(0, _owner.maxCarrierAmount);
+        _accumulateAmount = (int) Random.Range(0, _owner.maxCarrierAmount);
 
         // Make the boat invisible.
-        for (int i = 0; i < _renderers.Length; i++)
-            _renderers[i].enabled = false;
+        foreach (Renderer renderer in this._renderers)
+            renderer.enabled = false;
 
         Status = GoalStatus.Active;
     }
@@ -49,9 +49,9 @@ public class AccumulateResources : IGoal
         AccumulateRandomResources(_owner, _accumulateAmount);
 
         // Make the boat visiable again.
-        for (int i = 0; i < _renderers.Length; i++)
-            _renderers[i].enabled = true;
-        
+        foreach (Renderer renderer in this._renderers)
+            renderer.enabled = true;
+
         Status = GoalStatus.Completed;
     }
 
@@ -60,15 +60,15 @@ public class AccumulateResources : IGoal
     /// </summary>
     /// <param name="boat">The boat where it will save the resources.</param>
     /// <param name="amount">The total amount of resources.</param>
-    public static void AccumulateRandomResources(Boat boat, int amount) 
+    public static void AccumulateRandomResources(Boat boat, int amount)
     {
-        while (amount > 0) 
+        ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
+
+        while (amount > 0)
         {
-            ResourceManager resourceManager = Object.FindObjectOfType<ResourceManager>();
             string type = resourceManager.GetRandomType();
             int accumulationAmount = Random.Range(1, amount);
 
-            float resourceAmount = boat.TryGetResourceValue(type);
             boat.carriedResources[type] = accumulationAmount;
 
             amount -= accumulationAmount;
