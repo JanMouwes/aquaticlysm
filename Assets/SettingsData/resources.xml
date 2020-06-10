@@ -2,35 +2,36 @@
 <resources>
     <resource>
         <name>wood</name>
-        <icon-path>Sprites/Wood</icon-path>
+        <icon-path>Icons/Wood</icon-path>
         <description>this resource is made of trees</description>
         <scarcity>3</scarcity>
     </resource>
     <resource>
         <name>metal</name>
-        <icon-path>Sprites/Metal</icon-path>
+        <icon-path>Icons/Metal</icon-path>
         <description>this resource is made of metal</description>
         <scarcity>1</scarcity>
     </resource>
     <resource>
         <name>plastic</name>
-        <icon-path>Sprites/Plastic</icon-path>
+        <icon-path>Icons/Plastic</icon-path>
         <description>this resource is made of oil</description>
         <scarcity>4</scarcity>
     </resource>
     <resource>
         <name>water</name>
-        <icon-path>Sprites/Water</icon-path>
+        <icon-path>Icons/Water</icon-path>
         <description>this resource is made of water</description>
         <scarcity>2</scarcity>
     </resource>
     <resource>
-      <name>food</name>
-      <icon-path>Sprites/Food</icon-path>
-      <description>this resource is made of food</description>
+        <name>food</name>
+        <icon-path>Icons/Food</icon-path>
+        <description>this resource is made of food</description>
     </resource>
-    <resource>
-        <name>energy</name>
-        <description>this resource is made of zap zap</description>
-    </resource>
+  <resource>
+    <name>energy</name>
+    <icon-path>Icons/Energy</icon-path>
+    <description>this resource is made of electricity</description>
+  </resource>
 </resources>
