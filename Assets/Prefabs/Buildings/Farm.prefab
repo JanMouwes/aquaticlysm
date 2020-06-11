@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCosts:
+  - name: wood
+    amount: 30
   - name: metal
     amount: 5
 --- !u!1 &1782705852274422217
