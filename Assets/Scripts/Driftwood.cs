@@ -7,6 +7,8 @@ public class Driftwood : MonoBehaviour
 {
     public GameObject driftwoodPrefab;
     public GameObject water;
+    public float minTime;
+    public float maxTime;
 
     private readonly LinkedList<GameObject> _driftwood = new LinkedList<GameObject>();
     private int _gridSize;
@@ -24,7 +26,7 @@ public class Driftwood : MonoBehaviour
     void Update()
     {
         if (_timer <= 0)
-            SpawnAlgorithm(100f, 300f);
+            SpawnAlgorithm(minTime, maxTime);
         else
             _timer -= Time.deltaTime;
 
@@ -36,9 +38,9 @@ public class Driftwood : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes barrel from the list
+    /// Removes driftwood from the list
     /// </summary>
-    /// <param name="barrel">Barrel to be removed</param>
+    /// <param name="driftwood">Driftwood to be removed</param>
     public void RemoveBarrel(GameObject driftwood)
     {
         if (_driftwood.Contains(driftwood))
@@ -46,7 +48,7 @@ public class Driftwood : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawning algorithm that decides the new time and spawns the barrels at a random location.
+    /// Spawning algorithm that decides the new time and spawns the driftwood at a random location.
     /// </summary>
     /// <param name="minTime">Minimum spawn time.</param>
     /// <param name="maxTime">Maximum spawn time.</param>
@@ -61,10 +63,10 @@ public class Driftwood : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns the barrels at the centerpoint location.
+    /// Spawns the driftwood at the centerpoint location.
     /// </summary>
-    /// <param name="amount">Amount of barrels.</param>
-    /// <param name="centrePoint">The position where the barrels spawn.</param>
+    /// <param name="amount">Amount of driftwood.</param>
+    /// <param name="centrePoint">The position where the driftwood should spawn.</param>
     private void SpawnDriftwood(int amount, Vector3 centrePoint)
     {
         bool DoesCollide(Collider colliderA, Collider colliderB) => colliderA.bounds.Intersects(colliderB.bounds);
