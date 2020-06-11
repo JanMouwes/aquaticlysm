@@ -10,11 +10,9 @@ namespace Events
     public class EventStorage
     {
         private readonly List<Event> _events = new List<Event>();
-        private readonly ResourceManager _resourceManager;
 
         public EventStorage()
         {
-            _resourceManager = ResourceManager.Instance;
             CreateAllEvents();
         }
 
@@ -63,10 +61,10 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("wood", 5);
+                Action action = () => ResourceManager.Instance.DecreaseResource("wood", 5);
                 buttontext.Add("Save the fresh water.");
                 actions.Add(action);
-                action = () => _resourceManager.DecreaseResource("water", 5);
+                action = () => ResourceManager.Instance.DecreaseResource("water", 5);
                 buttontext.Add("Save the building wood.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
@@ -78,10 +76,10 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
+                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
-                action = () => _resourceManager.DecreaseResource("wood", 5);
+                action = () => ResourceManager.Instance.DecreaseResource("wood", 5);
                 buttontext.Add("Take cover.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
@@ -116,10 +114,10 @@ namespace Events
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => _resourceManager.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
+                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
-                action = () => _resourceManager.DecreaseResource("wood", 20);
+                action = () => ResourceManager.Instance.DecreaseResource("wood", 20);
                 buttontext.Add("Take cover.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);

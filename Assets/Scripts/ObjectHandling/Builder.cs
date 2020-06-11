@@ -228,15 +228,9 @@ public class Builder : MonoBehaviour, IButtonActionComponent
         };
         yield return new GameActionButtonModel()
         {
-            Name = "BuildBarge",
-            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Barge"),
-            OnClick = () => builder.Build(1, false)
-        };
-        yield return new GameActionButtonModel()
-        {
             Name = "BuildHouse",
             Icon = UnityEngine.Resources.Load<Sprite>("Buttons/House"),
-            //OnClick = () => builder.Build(0, false)
+            OnClick = () => builder.Build(5, false)
         };
         yield return new GameActionButtonModel()
         {
@@ -256,6 +250,13 @@ public class Builder : MonoBehaviour, IButtonActionComponent
             Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Battery"),
             OnClick = () => builder.Build(3, false)
         };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildDesalinator",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Desalination"),
+            OnClick = () => builder.Build(1, false)
+        };
+        
     }
 
     private void Build(int index, bool walkable)

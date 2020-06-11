@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pole
+  m_Name: Roof
   m_Shader: {fileID: -6465566751694194690, guid: 0d2fdc966babae34883076b1a5a8ca63,
     type: 3}
   m_ShaderKeywords: 
@@ -50,7 +50,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Dissolve: 1
-    - Vector1_13C2F8A2: 1
+    - Vector1_13C2F8A2: 0
     - Vector1_1C587E1B: 0
     - Vector1_3D4B9AF9: 0
     - Vector1_419C398B: 30
@@ -77,13 +77,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_7F6B2A6E: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
-    - Color_8E63E8C3: {r: 0, g: 0, b: 16, a: 0}
+    - Color_7F6B2A6E: {r: 0.46226418, g: 0.18098077, b: 0.18098077, a: 0}
+    - Color_8E63E8C3: {r: 0.007843138, g: 0, b: 2, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
---- !u!114 &1691297009219841852
+--- !u!114 &3046396112762846487
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

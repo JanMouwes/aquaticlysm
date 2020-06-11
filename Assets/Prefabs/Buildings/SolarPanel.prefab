@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 9092463562625780565}
   - component: {fileID: -3696380753796109780}
   - component: {fileID: 4497943688378723224}
-  - component: {fileID: 7814254394297952680}
+  - component: {fileID: -5803538678876735992}
   m_Layer: 0
-  m_Name: SolarPanel
+  m_Name: SolarPanels
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6871499a96b88194ab2f4fbf0ec5a21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: 1
+  progress: 0
   completionTag: SolarPanel
 --- !u!114 &4497943688378723224
 MonoBehaviour:
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chargeAmount: 10
---- !u!114 &7814254394297952680
+--- !u!114 &-5803538678876735992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,12 +204,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCosts:
-  - name: wood
-    amount: 25
   - name: metal
-    amount: 30
+    amount: 35
   - name: plastic
-    amount: 5
+    amount: 50
+  - name: wood
+    amount: 100
 --- !u!1 &2420907585679304875
 GameObject:
   m_ObjectHideFlags: 0

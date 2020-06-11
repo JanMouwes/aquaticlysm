@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -6,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Rest : CompositeGoal
 {
-    private Vector3 _target;
+    private GameObject _target;
     private Character _owner;
 
     public Rest(Character owner)
@@ -17,13 +18,29 @@ public class Rest : CompositeGoal
 
     public override void Activate()
     {
-        _target = GameObject.FindGameObjectWithTag("Rest").transform.position;
-
-        // Add the subgoals.
-        AddSubGoal(new MoveToAnim(_owner.gameObject, _target, 2f));
-        AddSubGoal(new Sleep(_owner));
-
-        Status = GoalStatus.Active;
+        try
+        {
+            GameObject[] restPlaces = GameObject.FindGameObjectsWithTag("Rest");
+            if (_target == null)
+            {
+                _target = restPlaces[0];
+            }
+            foreach (GameObject restPlace in restPlaces)
+            {
+                float currentDist = Vector3.Distance(_owner.transform.position, restPlace.transform.position);
+                if (currentDist < Vector3.Distance(_owner.transform.position, _target.transform.position))
+                    _target = restPlace;
+            }
+            // Add the subgoals.
+            AddSubGoal(new MoveToAnim(_owner.gameObject, _target.transform.position, 2f));
+            AddSubGoal(new Sleep(_owner, _target.transform.position));
+            Status = GoalStatus.Active;
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine("{0} Exception caught.", e);
+            Status = GoalStatus.Failed;
+        }
     }
 
     public override GoalStatus Process()
