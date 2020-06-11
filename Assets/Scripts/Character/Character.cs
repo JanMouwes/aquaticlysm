@@ -13,10 +13,10 @@ using UnityEngine.Serialization;
 public class Character : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the characters.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+    private static Dictionary<string, Func<GoalCommand<Character>, IGoal>> _actions;
 
     private Think _brain;
-    private GoalCommand _goaldata;
+    private GoalCommand<Character> _goaldata;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -34,14 +34,14 @@ public class Character : MonoBehaviour, IAction
     {
         agent = GetComponent<NavMeshAgent>();
         _brain = new Think(this);
-        _goaldata = new GoalCommand(this);
+        _goaldata = new GoalCommand<Character>(this);
 
         this.inventory = this.gameObject.GetComponent<Inventory>();
 
         if (_actions == null)
         {
             // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
+            _actions = new Dictionary<string, Func<GoalCommand<Character>, IGoal>>();
             InitGoals();
         }
     }
@@ -57,7 +57,7 @@ public class Character : MonoBehaviour, IAction
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
-        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
+        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand<Character>, IGoal> action)) return false;
 
         // Set the goal with the current data.
         this._goaldata.Position = hit.point;
@@ -78,7 +78,7 @@ public class Character : MonoBehaviour, IAction
     /// </summary>
     private static void InitGoals()
     {
-        Func<GoalCommand, IGoal> goal;
+        Func<GoalCommand<Character>, IGoal> goal;
 
         goal = input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Walkway", goal);

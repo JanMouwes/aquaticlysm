@@ -10,9 +10,9 @@ using UnityEngine.Serialization;
 public class Boat : MonoBehaviour, IAction
 {
     // A dictionary with all the possible actions for the boats.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+    private static Dictionary<string, Func<GoalCommand<Boat>, IGoal>> _actions;
     private BoatAutomation _goalProcessor;
-    private GoalCommand _goaldata;
+    private GoalCommand<Boat> _goaldata;
 
     public Dictionary<string, float> carriedResources;
     public float maxCarrierAmount;
@@ -27,14 +27,14 @@ public class Boat : MonoBehaviour, IAction
         agent = GetComponent<NavMeshAgent>();
         _goalProcessor = new BoatAutomation(this);
 
-        _goaldata = new GoalCommand(this);
+        _goaldata = new GoalCommand<Boat>(this);
 
         this.inventory = this.gameObject.GetComponent<Inventory>();
 
         if (_actions == null)
         {
             // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
+            _actions = new Dictionary<string, Func<GoalCommand<Boat>, IGoal>>();
             InitGoals();
         }
 
@@ -50,7 +50,7 @@ public class Boat : MonoBehaviour, IAction
 
     public bool ActionHandler(RaycastHit hit, bool priority)
     {
-        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
+        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand<Boat>, IGoal> action)) return false;
 
         // Set the goal with the current data.
         this._goaldata.Position = hit.point;
@@ -70,18 +70,18 @@ public class Boat : MonoBehaviour, IAction
 
     private static void InitGoals()
     {
-        Func<GoalCommand, IGoal> goal;
+        Func<GoalCommand<Boat>, IGoal> goal;
 
-        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position, 2f);
+        goal = input => new MoveTo(input.Owner.gameObject, input.Position, 2f);
         _actions.Add("Sea", goal);
 
-        goal = input => new DropOff(input.OwnerBoat);
+        goal = input => new DropOff(input.Owner);
         _actions.Add("Storage", goal);
 
-        goal = input => new Expedition(input.OwnerBoat, 100);
+        goal = input => new Expedition(input.Owner, 100);
         _actions.Add("Expedition", goal);
 
-        goal = input => new FetchBarrel(input.OwnerBoat, input.Building);
+        goal = input => new FetchBarrel(input.Owner, input.Building);
         _actions.Add("Barrel", goal);
     }
 
