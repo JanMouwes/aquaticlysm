@@ -16,6 +16,7 @@ TagManager:
   - SolarPanel
   - Battery
   - Desalinator
+  - House
   layers:
   - Default
   - TransparentFX
