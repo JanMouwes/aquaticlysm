@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.36351293, g: 0.5677382, b: 0.8464597, a: 1}
+  m_IndirectSpecularColor: {r: 0.3634918, g: 0.5677314, b: 0.8464602, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1449,9 +1449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98fa43b58072f2644aafa9faf2c357ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DateTimeText: {fileID: 1593810746}
-  day: {fileID: 0}
-  night: {fileID: 0}
+  dateTimeText: {fileID: 1593810746}
+  day: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
+  night: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
 --- !u!1 &1594141482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2063,7 @@ PrefabInstance:
     - target: {fileID: 261010524451624770, guid: 0161bc2bf370ef04b936dd8962dbde74,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 261010524451624770, guid: 0161bc2bf370ef04b936dd8962dbde74,
         type: 3}
@@ -2465,7 +2465,7 @@ PrefabInstance:
     - target: {fileID: 3833683268070524102, guid: 57fe43f4bbd76b24da6ff0b0736a0c1f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3833683268070524102, guid: 57fe43f4bbd76b24da6ff0b0736a0c1f,
         type: 3}
