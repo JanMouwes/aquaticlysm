@@ -443,5 +443,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCosts:
+  - name: wood
+    amount: 50
   - name: metal
+    amount: 30
+  - name: plastic
     amount: 10

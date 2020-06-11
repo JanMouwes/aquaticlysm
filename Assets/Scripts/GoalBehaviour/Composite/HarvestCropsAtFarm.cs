@@ -30,7 +30,7 @@ namespace GoalBehaviour.Composite
             }
             
             Status = GoalStatus.Active;
-            AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
+            AddSubGoal(new MoveToAnim(_owner.gameObject, _target, 2f));
             AddSubGoal(new HarvestCrops(_owner, _farm, 4f));
         }
 
