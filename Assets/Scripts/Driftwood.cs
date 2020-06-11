@@ -80,7 +80,7 @@ public class Driftwood : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             Vector3 randomPosition = Vector3Util.RandomVector3InRange(centrePoint, 10, 0, 10);
-            Quaternion rotation = Quaternion.Euler(Vector3Util.RandomVector3(90, 0, 0));
+            Quaternion rotation = Quaternion.Euler(new Vector3(90, Random.Range(0, 90), 0));
 
             GameObject driftwood = PrefabInstanceManager.Instance.Spawn(driftwoodPrefab, randomPosition, rotation);
             BoxCollider barrelCollider = driftwood.GetComponent<BoxCollider>();
