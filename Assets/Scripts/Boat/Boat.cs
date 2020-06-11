@@ -16,6 +16,7 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
         {"Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f)},
         {"Storage", input => new DropOff(input.Owner)},
         {"Barrel", input => new FetchBarrel(input.Owner, input.Building)},
+        {"Driftwood", input => new FetchDriftwood(input.Owner, input.Building)},
     };
 
     private BoatAutomation _goalProcessor;
