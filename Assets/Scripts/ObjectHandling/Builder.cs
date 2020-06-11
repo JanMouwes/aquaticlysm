@@ -179,8 +179,13 @@ public class Builder : MonoBehaviour, IButtonActionComponent
     /// </summary>
     private void BuildNavMeshes()
     {
+        GameObject[] barrels = GameObject.FindGameObjectsWithTag("Barrel");
+        foreach (GameObject barrel in barrels)
+            barrel.GetComponent<BoxCollider>().enabled = false;
         foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)
             navMeshSurface.BuildNavMesh();
+        foreach (GameObject barrel in barrels)
+            barrel.GetComponent<BoxCollider>().enabled = true;
     }
 
     /// <summary>
