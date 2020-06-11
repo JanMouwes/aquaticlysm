@@ -38,26 +38,16 @@ public class Driftwood : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes driftwood from the list
-    /// </summary>
-    /// <param name="driftwood">Driftwood to be removed</param>
-    public void RemoveBarrel(GameObject driftwood)
-    {
-        if (_driftwood.Contains(driftwood))
-            _driftwood.Remove(driftwood);
-    }
-
-    /// <summary>
     /// Spawning algorithm that decides the new time and spawns the driftwood at a random location.
     /// </summary>
-    /// <param name="minTime">Minimum spawn time.</param>
-    /// <param name="maxTime">Maximum spawn time.</param>
-    private void SpawnAlgorithm(float minTime, float maxTime)
+    /// <param name="minDelay">Minimum spawn time.</param>
+    /// <param name="maxDelay">Maximum spawn time.</param>
+    private void SpawnAlgorithm(float minDelay, float maxDelay)
     {
-        _timer = Random.Range(minTime, maxTime);
+        _timer = Random.Range(minDelay, maxDelay);
 
-        int xPos = Random.Range(-_gridSize / 2, _gridSize / 2);
-        int zPos = Random.Range(-_gridSize / 2, _gridSize / 2);
+        float xPos = Random.Range(-_gridSize / 2.5f, _gridSize / 2.5f);
+        float zPos = Random.Range(-_gridSize / 2.5f, _gridSize / 2.5f);
 
         SpawnDriftwood(5, new Vector3(xPos, 0, zPos));
     }
