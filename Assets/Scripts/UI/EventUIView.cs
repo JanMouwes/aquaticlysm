@@ -50,6 +50,7 @@ public class EventUIView : MonoBehaviour
         GlobalStateMachine.instance.ChangeState(new EventState());
         // Animate.
         iTween.ScaleFrom(UI, iTween.Hash("scale", new Vector3(0, 0, 0), "ignoretimescale", true, "time", 0.5f));
+        GameObject.Find("HelpButton").GetComponent<Button>().enabled = false; ;
     }
 
     /// <summary>
@@ -63,6 +64,7 @@ public class EventUIView : MonoBehaviour
                                    "DestroyUI", "oncompletetarget", gameObject));
         // Change state to play state
         GlobalStateMachine.instance.ChangeState(new PlayState());
+        GameObject.Find("HelpButton").GetComponent<Button>().enabled = true;
     }
 
 
