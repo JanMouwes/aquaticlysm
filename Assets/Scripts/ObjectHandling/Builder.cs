@@ -1,17 +1,16 @@
-﻿using Resources;
+﻿using Actions;
+using Buildings;
+using Resources;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Buildings;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 using Util;
 
-public class Builder : MonoBehaviour
+public class Builder : MonoBehaviour, IButtonActionComponent
 {
-    public GameObject[] prefabs;
+    private GameActionButtonModel[] _buttonModels;
     private NavMeshSurface[] _navMeshSurfaces;
     private IEnumerable<BoxCollider> _buildingBoxColliders;
     private GameObject _currentEntity;
@@ -20,10 +19,14 @@ public class Builder : MonoBehaviour
     private Color _originalOutlineColour;
     private bool _walkable;
 
+    public GameObject[] prefabs;
+
+    public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
+
     private void Awake()
     {
         _navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
-        GlobalStateMachine.instance.StateChanged += ToggleEnable;
+        _buttonModels = GetGameActionButtonModels(this).ToArray();
     }
 
     private void Start()
@@ -31,26 +34,31 @@ public class Builder : MonoBehaviour
         BuildNavMeshes();
     }
 
-    private void OnDisable()
-    {
-        CancelBuilding();
-    }
-
-    private void ToggleEnable(IState state) => enabled = state is BuildState;
-
-    // Update is called once per frame
     private void Update()
     {
-        // CURRENTLY TEST CODE, KEEP IN MIND.
-        if (Input.GetKeyDown(KeyCode.L))
-            ChangePrefab(0, true);
-        else if (Input.GetKeyDown(KeyCode.K))
-            ChangePrefab(1, false);
+        if (_currentEntity == null)
+            return;
 
-        if (Input.GetButtonDown("LeftMouseButton"))
-            CreateEntity();
+        UpdatePosition();
 
-        UpdateEntity();
+        if (Input.GetButtonDown("KeyRotate"))
+            Rotate();
+
+        // After checking, if the position is available for building, build a dock pressing U.
+        if (Input.GetButtonDown("RightMouseButton"))
+        {
+            if (TryDecreaseBuildResources())
+                BuildEntity();
+            else
+            {
+                NotificationSystem.Instance.ShowNotification("NotEnoughResources", 3);
+                CancelBuilding();
+            }
+        }
+
+        // Pressing escape destroy dock not yet placed.
+        if (Input.GetButtonDown("Cancel"))
+            CancelBuilding();
     }
 
     void ChangePrefab(int index, bool isWalkable)
@@ -70,8 +78,7 @@ public class Builder : MonoBehaviour
         _buildingBoxColliders = GetBoxColliders();
 
         // Check, if clicking on UI or on the game world
-        if (!EventSystem.current.IsPointerOverGameObject() &&
-            MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
+        if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
         {
             _currentEntity = PrefabInstanceManager.Instance.Spawn(
                 _prefab,
@@ -80,44 +87,10 @@ public class Builder : MonoBehaviour
 
             _outline = _currentEntity.GetComponent<Outline>();
             _outline.enabled = true;
-            this._originalOutlineColour = this._outline.OutlineColor;
+            _originalOutlineColour = _outline.OutlineColor;
         }
 
         _currentEntity.transform.parent = _walkable ? transform.GetChild(0) : transform.GetChild(1);
-    }
-
-    /// <summary>
-    /// Handle selected entity: cancel selection, rotate, set on place.
-    /// </summary>
-    private void UpdateEntity()
-    {
-        if (_currentEntity == null)
-            return;
-
-        // Keep dock following the mouse.
-        UpdateEntityPosition();
-
-        // Pressing escape destroy dock not yet placed.
-        if (Input.GetButtonDown("Cancel"))
-        {
-            CancelBuilding();
-
-            return;
-        }
-
-        if (Input.GetButtonDown("KeyRotate"))
-            RotateEntity();
-
-        // After checking, if the position is available for building, build a dock pressing U.
-        if (Input.GetButtonDown("RightMouseButton"))
-        {
-            if (TryDecreaseBuildResources()) { BuildEntity(); }
-            else
-            {
-                NotificationSystem.Instance.ShowNotification("NotEnoughResources", 3);
-                CancelBuilding();
-            }
-        }
     }
 
     /// <summary>
@@ -125,19 +98,24 @@ public class Builder : MonoBehaviour
     /// </summary>
     private void CancelBuilding()
     {
+        ClearCurrent();
+        _prefab = null;
+        GlobalStateMachine.instance.ChangeState(new PlayState());
+    }
+
+    private void ClearCurrent()
+    {
         if (_currentEntity != null)
         {
             PrefabInstanceManager.Instance.DestroyEntity(_currentEntity.GetInstanceID());
             _currentEntity = null;
         }
-
-        _prefab = null;
     }
 
     /// <summary>
     /// Rotates the current building.
     /// </summary>
-    private void RotateEntity()
+    private void Rotate()
     {
         // Rotate dock when Z or X are pressed.
         float rotation = Input.GetAxisRaw("KeyRotate") * 90;
@@ -151,7 +129,7 @@ public class Builder : MonoBehaviour
     {
         if (!DoesEntityCollide())
         {
-            this._outline.OutlineColor = this._originalOutlineColour;
+            _outline.OutlineColor = _originalOutlineColour;
             _outline.enabled = false;
             _currentEntity = null;
 
@@ -167,7 +145,7 @@ public class Builder : MonoBehaviour
     /// <summary>
     /// Keep created gameObject following the mouse position to select a position for it.
     /// </summary>
-    private void UpdateEntityPosition()
+    private void UpdatePosition()
     {
         // Use a raycast to register the position of the mouse
         if (MouseUtil.TryRaycastAtMousePosition(out RaycastHit hit))
@@ -181,7 +159,7 @@ public class Builder : MonoBehaviour
             _currentEntity.transform.position = new Vector3(target.x, 0, target.z);
 
             // Building legality feedback for player
-            this._outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.green;
+            _outline.OutlineColor = DoesEntityCollide() ? Color.red : Color.green;
         }
     }
 
@@ -201,7 +179,8 @@ public class Builder : MonoBehaviour
     /// </summary>
     private void BuildNavMeshes()
     {
-        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces) { navMeshSurface.BuildNavMesh(); }
+        foreach (NavMeshSurface navMeshSurface in _navMeshSurfaces)
+            navMeshSurface.BuildNavMesh();
     }
 
     /// <summary>
@@ -234,4 +213,56 @@ public class Builder : MonoBehaviour
     /// Gets the box colliders from all buildings.
     /// </summary>
     private IEnumerable<BoxCollider> GetBoxColliders() => FindObjectsOfType<BoxCollider>().Where(o => o != _currentEntity.GetComponent<BoxCollider>() && o.tag != "Character");
+
+    /// <summary>
+    /// All button actions.
+    /// </summary>
+    /// <param name="owner">The builder.</param>
+    private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Builder builder)
+    {
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildWalkway",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Road"),
+            OnClick = () => builder.Build(0, true)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildBarge",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Barge"),
+            OnClick = () => builder.Build(1, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildHouse",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/House"),
+            //OnClick = () => builder.Build(0, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildFarm",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Farm"),
+            OnClick = () => builder.Build(4, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildSolarPanel",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/SolarPanel"),
+            OnClick = () => builder.Build(2, false)
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BuildBattery",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Battery"),
+            OnClick = () => builder.Build(3, false)
+        };
+    }
+
+    private void Build(int index, bool walkable)
+    {
+        ClearCurrent();
+        GlobalStateMachine.instance.ChangeState(new BuildState());
+        ChangePrefab(index, walkable);
+        CreateEntity();
+    }
 }
