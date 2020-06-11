@@ -205,9 +205,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingCosts:
   - name: metal
-    amount: 10
+    amount: 35
   - name: plastic
-    amount: 10
+    amount: 50
+  - name: wood
+    amount: 100
 --- !u!1 &2420907585679304875
 GameObject:
   m_ObjectHideFlags: 0

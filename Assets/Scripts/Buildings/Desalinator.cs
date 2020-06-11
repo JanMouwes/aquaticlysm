@@ -36,6 +36,9 @@ namespace Buildings
             }
         }
 
+        /// <summary>
+        /// Decrease energy every defined 'stage'. After all stages are finished, Increase the water resource.
+        /// </summary>
         private void Work()
         {
             if (ResourceManager.Instance.DecreaseResource("energy", energyCost))
