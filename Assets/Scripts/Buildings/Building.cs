@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Buildings
 {
@@ -7,6 +8,8 @@ namespace Buildings
     /// </summary>
     public class Building : MonoBehaviour
     {
+        
+
         /// <summary>
         /// Add resource costs in the Unity Inspector when creating a new prefab.
         /// </summary>

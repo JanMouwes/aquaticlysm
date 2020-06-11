@@ -1,60 +1,70 @@
-﻿using System;
+﻿using Actions;
+using Entity;
+using GoalBehaviour;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
-public class Boat : MonoBehaviour, IAction
+[RequireComponent(typeof(Inventory))]
+public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the boats.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
-    private BoatAutomaton _goalProcessor;
-    private GoalCommand _goaldata;
+    private static readonly Dictionary<string, Func<GoalCommand<Boat>, IGoal>> _actions = new Dictionary<string, Func<GoalCommand<Boat>, IGoal>>()
+    {
+        {"Sea", input => new MoveTo(input.Owner.gameObject, input.Position, 2f)},
+        {"Storage", input => new DropOff(input.Owner)},
+        {"Barrel", input => new FetchBarrel(input.Owner, input.Building)},
+    };
+
+    private BoatAutomation _goalProcessor;
+    private GoalCommand<Boat> _goaldata;
+    private GameActionButtonModel[] _buttonModels;
 
     public Dictionary<string, float> carriedResources;
     public float maxCarrierAmount;
     public NavMeshAgent agent;
     public float fuel;
 
+    public Inventory inventory;
+
+    public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
+
     // Start is called before the first frame update
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _goalProcessor = new BoatAutomaton(this);
+        _goalProcessor = new BoatAutomation(this);
+        _goaldata = new GoalCommand<Boat>(this);
+        _buttonModels = GetGameActionButtonModels(this).ToArray();
 
-        _goaldata = new GoalCommand(this);
-
-        if (_actions == null)
-        {
-            // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
-            InitGoals();
-        }
+        inventory = gameObject.GetComponent<Inventory>();
 
         carriedResources = new Dictionary<string, float>();
         maxCarrierAmount = 20f;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         _goalProcessor.Process();
     }
 
-    public bool ActionHandler(RaycastHit hit, bool priority)
+    public bool HandleAction(RaycastHit hit, bool priority)
     {
-
         if (_actions.ContainsKey(hit.collider.gameObject.tag))
         {
             // Set the goal with the current data.
             _goaldata.Position = hit.point;
+            _goaldata.Building = hit.collider.gameObject;
+
             IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
 
             // Add the goal to the brain.
             if (priority)
-                _goalProcessor.AddSubGoal(goal);
+                AddSubgoal(goal);
             else
-                _goalProcessor.PrioritizeSubGoal(goal);
+                PrioritiseSubgoal(goal);
 
             return true;
         }
@@ -62,33 +72,11 @@ public class Boat : MonoBehaviour, IAction
         return false;
     }
 
-    private static void InitGoals()
-    {
-        Func<GoalCommand, IGoal> goal;
-
-        goal = input => new MoveTo(input.OwnerBoat.gameObject, input.Position, 2f);
-        _actions.Add("Sea", goal);
-
-        goal = input => new DropOff(input.OwnerBoat);
-        _actions.Add("Storage", goal);
-
-        goal = input => new Expedition(input.OwnerBoat, 100);
-        _actions.Add("Expedition", goal);
-    }
-
     public float CountResourcesCarried()
     {
-        float resources = 0f;
+        if (carriedResources.Count <= 0) return 0;
 
-        if (carriedResources.Count > 0)
-        {
-            foreach (KeyValuePair<string, float> resource in carriedResources)
-            {
-                resources += resource.Value;
-            }
-        }
-
-        return resources;
+        return carriedResources.Sum(resource => resource.Value);
     }
 
     public float TryGetResourceValue(string resource)
@@ -100,4 +88,34 @@ public class Boat : MonoBehaviour, IAction
     }
 
     public void ClearCarriedResources() => carriedResources.Clear();
+
+    public void AddSubgoal(IGoal goal) => _goalProcessor.AddSubGoal(goal);
+
+    public void PrioritiseSubgoal(IGoal goal) => _goalProcessor.PrioritizeSubGoal(goal);
+
+    /// <summary>
+    /// All button actions.
+    /// </summary>
+    /// <param name="owner">The current boat.</param>
+    private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Boat owner)
+    {
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatDropOff",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/DropOff"),
+            OnClick = () => owner.PrioritiseSubgoal(new DropOff(owner))
+        };
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatExpedition",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Explore"),
+            OnClick = () => owner.PrioritiseSubgoal(new Expedition(owner, 200))
+        };        
+        yield return new GameActionButtonModel()
+        {
+            Name = "BoatFishing",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Fish"),
+            OnClick = () => owner.PrioritiseSubgoal(new GatherFish(owner, GameObject.Find("Fish").transform.position))
+        };
+    }
 }

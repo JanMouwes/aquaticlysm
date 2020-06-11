@@ -1,37 +1,55 @@
-﻿﻿using UnityEngine;
+﻿using Resources;
+using System.Runtime.Serialization;
+using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class DateTime : MonoBehaviour
 {
-    public Text DateTimeText;
+    public const float DAY_LENGTH = 120;
 
-    private float _gameTime;
-    private int _dayCounter = 1;
-    public Material Day;
-    public Material Night;
+    public static float GameTime;
+    public static int DayCounter = 1;
+
+    private string _uiText;
+    private float _increaseAmount;
+
+    public Text dateTimeText;
+    public Material day;
+    public Material night;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gameTime = 100.0f;
+        GameTime = DAY_LENGTH;
+        this._increaseAmount = 5f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        RenderSettings.skybox = IsDay(_gameTime) ? Day : Night;
-        
-        if (dayHasPassed(_gameTime))
+        RenderSettings.skybox = IsDay(GameTime) ? this.day : this.night;
+        this._uiText = IsDay(GameTime) ? "DAY" : "NIGHT";
+
+        if (DayHasPassed(GameTime))
         {
-            _gameTime = 100.0f;
-            _dayCounter++;
+            GameTime = DAY_LENGTH;
+            DayCounter++;
         }
 
-        _gameTime -= Time.deltaTime;
-        
-        DateTimeText.text = "DAY " + _dayCounter;
+        GameTime -= Time.deltaTime;
+        this._increaseAmount -= Time.deltaTime;
+
+        this.dateTimeText.text = this._uiText + " " + DayCounter;
+
+        if (this._increaseAmount <= 0)
+        {
+            ResourceManager.Instance.DecreaseResource("food", 5);
+            this._increaseAmount = 5f;
+        }
     }
 
-    public static bool IsDay(float passedGameTime) => passedGameTime >= 50f;
-    private static bool dayHasPassed(float passedGameTime) => passedGameTime <= 0f;
+    public static bool IsDay() => IsDay(GameTime);
+    public static bool IsDay(float passedGameTime) => passedGameTime >= DAY_LENGTH / 2f;
+    private static bool DayHasPassed(float passedGameTime) => passedGameTime <= 0f;
 }

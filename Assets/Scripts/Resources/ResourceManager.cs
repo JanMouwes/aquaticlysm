@@ -10,25 +10,25 @@ namespace Resources
     ///
     /// Fetch the instance with 'ResourceManager.Instance'
     /// </summary>
-    public class ResourceManager
+    public class ResourceManager : MonoBehaviour
     {
-        private static ResourceManager _instance = null;
         private readonly Dictionary<string, Resource> _resources = new Dictionary<string, Resource>();
         private IResourceTypeManager _resourceTypeManager;
 
         public IEnumerable<Resource> Resources => this._resources.Values;
 
-        /// <summary>
-        /// Fetch the single instance
-        /// </summary>
-        public static ResourceManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new ResourceManager();
+        private static ResourceManager _instance;
 
-                return _instance;
+        public static ResourceManager Instance { get { return _instance; } }
+
+
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(_instance.gameObject);
+            } else {
+                _instance = this;
             }
         }
 
@@ -111,6 +111,22 @@ namespace Resources
             AddResourceType(resource, 0);
 
             return 0;
+        }
+
+        /// <summary>
+        /// Directly set the value of a resource.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="amount"></param>
+        /// <returns>true if key exists, false if key doesn't exist</returns>
+        public bool SetResourceAmount(string resource, int amount)
+        {
+            if (!DoesResourceExist(resource))
+                return false;
+
+            this._resources[resource].Set(amount);
+
+            return true;
         }
 
         /// <summary>

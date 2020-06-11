@@ -11,6 +11,12 @@ TagManager:
   - Sea
   - Building
   - Storage
+  - Barrel
+  - Farm
+  - SolarPanel
+  - Battery
+  - Desalinator
+  - House
   layers:
   - Default
   - TransparentFX
