@@ -68,7 +68,7 @@ namespace UI
                 btn.Select();
 
             RectTransform imageTransform = buttonGameObject.GetComponent<RectTransform>();
-            float distance = imageTransform.sizeDelta.y*2;
+            float distance = imageTransform.sizeDelta.y * 1.5f;
             float imageYPos = index * -distance;
 
             imageTransform.SetParent(this.gameObject.transform);
