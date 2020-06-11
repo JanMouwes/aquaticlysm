@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 699c2e3fefcb4c9b96cc4e02633f7151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyCost: 20
+  energyCost: 30
   resourceIncrease: 25
 --- !u!114 &481699461
 MonoBehaviour:
