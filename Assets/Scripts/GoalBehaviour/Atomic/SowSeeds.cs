@@ -57,7 +57,7 @@ namespace GoalBehaviour.Atomic
             // Change status of Farm to first growing phase.
             if (ResourceManager.Instance.DecreaseResource("water", 15))
             {
-                _farm.ChangeState(new Growing());
+                _farm.ChangeState(new Growing(DateTime.DAY_LENGTH));
                 Terminate();
             }
             else

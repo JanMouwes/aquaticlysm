@@ -33,10 +33,9 @@ public abstract class CompositeGoal : IGoal
         if (SubGoals.Count > 0)
         {
             foreach (IGoal subGoal in SubGoals) { subGoal.Terminate(); }
+
             SubGoals.Clear();
         }
-
-        Terminate();
     }
 
     public abstract void Activate();
