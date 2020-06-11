@@ -8,11 +8,12 @@ using UnityResources = UnityEngine.Resources;
 public class ResourceUIView : MonoBehaviour
 {
     private readonly Dictionary<string, GameObject> _resourceUiElements = new Dictionary<string, GameObject>();
-    private readonly ResourceManager _resourceManager;
+
+    private ResourceManager _resourceManager;
 
     public GameObject resourceElementPrefab;
 
-    public ResourceUIView()
+    private void Start()
     {
         _resourceManager = ResourceManager.Instance;
     }
@@ -20,7 +21,11 @@ public class ResourceUIView : MonoBehaviour
     void Update()
     {
         IEnumerable<Resource> resources = _resourceManager.Resources.OrderBy(res => res.type.ShortName);
-        foreach (Resource resource in resources) { SetResourceValue(resource.type, resource.Amount); }
+
+        foreach (Resource resource in resources)
+        {
+            SetResourceValue(resource.type, resource.Amount);  
+        }
     }
 
     /// <summary>

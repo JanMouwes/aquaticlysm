@@ -22,5 +22,10 @@ namespace Resources
                 ResourceManager.Instance.AddResourceType(resourceTypeName, amount);
             }
         }
+
+        public void ReloadResourceSystem()
+        {
+            Start();
+        }
     }
 }

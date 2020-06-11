@@ -18,7 +18,7 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
         {"Barrel", input => new FetchBarrel(input.Owner, input.Building)},
     };
 
-    private BoatAutomaton _goalProcessor;
+    private BoatAutomation _goalProcessor;
     private GoalCommand<Boat> _goaldata;
     private GameActionButtonModel[] _buttonModels;
 
@@ -35,7 +35,7 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _goalProcessor = new BoatAutomaton(this);
+        _goalProcessor = new BoatAutomation(this);
         _goaldata = new GoalCommand<Boat>(this);
         _buttonModels = GetGameActionButtonModels(this).ToArray();
 
@@ -115,7 +115,7 @@ public class Boat : MonoBehaviour, IClickActionComponent, IButtonActionComponent
         {
             Name = "BoatFishing",
             Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Fish"),
-            OnClick = () => owner.PrioritiseSubgoal(new GatherFish(owner, new Vector3(-30f, 0.57f, 20f)))
+            OnClick = () => owner.PrioritiseSubgoal(new GatherFish(owner, GameObject.Find("Fish").transform.position))
         };
     }
 }

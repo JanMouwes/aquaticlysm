@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using Resources;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -6,18 +7,19 @@ using UnityEngine.UI;
 public class DateTime : MonoBehaviour
 {
     public Text DateTimeText;
-
     public static float gameTime;
-
-    private string _uiText;
-    private int _dayCounter = 1;
+    public static int DayCounter = 1;
     public Material day;
     public Material night;
+
+    private string _uiText;
+    private float increaseAmount;
 
     // Start is called before the first frame update
     void Start()
     {
         gameTime = 100.0f;
+        increaseAmount = 5f;
     }
 
     // Update is called once per frame
@@ -29,12 +31,19 @@ public class DateTime : MonoBehaviour
         if (DayHasPassed(gameTime))
         {
             gameTime = 100.0f;
-            _dayCounter++;
+            DayCounter++;
         }
 
         gameTime -= Time.deltaTime;
+        increaseAmount -= Time.deltaTime;
 
-        DateTimeText.text = this._uiText + " " + _dayCounter;
+        DateTimeText.text = this._uiText + " " + DayCounter;
+
+        if (increaseAmount <= 0)
+        { 
+            ResourceManager.Instance.DecreaseResource("food", 5);
+            increaseAmount = 5f;
+        }
     }
 
     public static bool IsDay() => IsDay(gameTime);
