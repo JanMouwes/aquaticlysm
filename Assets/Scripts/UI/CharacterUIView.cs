@@ -45,7 +45,6 @@ namespace UI
         /// <param name="index">Index of this character within the list of characters. Determines element position</param>
         public void Draw(Character character, int index)
         {
-            const int size = 100;
             int characterId = character.GetInstanceID();
 
             // Add UI element when not present
@@ -58,13 +57,19 @@ namespace UI
             Image image = buttonGameObject.transform.GetChild(0).GetComponent<Image>();
             Button btn = buttonGameObject.GetComponent<Button>();
             CharacterButton charbtn = buttonGameObject.GetComponent<CharacterButton>();
+            charbtn.transform.SetParent(gameObject.transform);
+            charbtn.transform.localScale = Vector3.one;
+            charbtn.transform.position = Vector3.zero;
 
-            if (charbtn.Character == null) { charbtn.Character = character; }
+            if (charbtn.Character == null) 
+                charbtn.Character = character;
 
-            if (character.GetComponent<Selectable>().Selected) { btn.Select(); }
+            if (character.GetComponent<Selectable>().Selected)
+                btn.Select();
 
             RectTransform imageTransform = buttonGameObject.GetComponent<RectTransform>();
-            float imageYPos = index * -size;
+            float distance = imageTransform.sizeDelta.y*2;
+            float imageYPos = index * -distance;
 
             imageTransform.SetParent(this.gameObject.transform);
             imageTransform.anchoredPosition = new Vector2(100, imageYPos);

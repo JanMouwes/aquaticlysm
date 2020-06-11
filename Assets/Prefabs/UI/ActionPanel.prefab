@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 500, y: 80}
+  m_SizeDelta: {x: 484, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6696263958138019357
 CanvasRenderer:
@@ -88,3 +88,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionButtonPrefab: {fileID: 5279565129414868649, guid: ea972b4d0fdff1247a12e41b582f52eb,
     type: 3}
+  builder: {fileID: 0}
