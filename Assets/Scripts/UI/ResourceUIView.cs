@@ -1,4 +1,4 @@
-﻿using Resources;
+using Resources;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,7 +18,6 @@ public class ResourceUIView : MonoBehaviour
         _resourceManager = ResourceManager.Instance;
     }
 
-    // Update is called once per frame
     void Update()
     {
         IEnumerable<Resource> resources = _resourceManager.Resources.OrderBy(res => res.type.ShortName);
@@ -29,6 +28,11 @@ public class ResourceUIView : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the resource value on the UI, if the type doesn't excists on the UI create it.
+    /// </summary>
+    /// <param name="resourceType">The resource type.</param>
+    /// <param name="value">The resource value.</param>
     private void SetResourceValue(ResourceType resourceType, int value)
     {
         if (!_resourceUiElements.TryGetValue(resourceType.ShortName, out GameObject element))

@@ -9,7 +9,7 @@ public class FetchBarrel : CompositeGoal
 
     public FetchBarrel(Boat boat, GameObject gameObject)
     {
-        Name = "Gather fish";
+        Name = "Fetch Barrel";
         _owner = boat;
         _gameObject = gameObject;
         _target = gameObject.transform.position;
@@ -20,8 +20,8 @@ public class FetchBarrel : CompositeGoal
         Status = GoalStatus.Active;
 
         // Add subgoals
-        AddSubGoal(new MoveTo(_owner.gameObject, _target, 2f));
-        AddSubGoal(new OpenBarrel(_owner, _gameObject, 2f));
+        AddSubGoal(new MoveTo(_owner.gameObject, _target, 5f));
+        AddSubGoal(new OpenBarrel(_owner, _gameObject, 5f));
         AddSubGoal(new DropOff(_owner));
     }
 

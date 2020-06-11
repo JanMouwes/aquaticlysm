@@ -1,22 +1,27 @@
-﻿using UnityEngine;
-using UnityEngine.AI;
+﻿using Actions;
+using Entity;
+using GoalBehaviour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entity;
-using UnityEngine.Serialization;
+using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 ///     Basescript for agents to determine, initialize and update decisionmaking and needs.
 /// </summary>
 [RequireComponent(typeof(Inventory))]
-public class Character : MonoBehaviour, IAction
+public class Character : MonoBehaviour, IClickActionComponent, IButtonActionComponent, IGoalDrivenAgent
 {
     // A dictionary with all the possible actions for the characters.
-    private static Dictionary<string, Func<GoalCommand, IGoal>> _actions;
+    private static Dictionary<string, Func<GoalCommand<Character>, IGoal>> _actions = new Dictionary<string, Func<GoalCommand<Character>, IGoal>>()
+    {
+        { "Walkway", input => new MoveTo(input.Owner.gameObject, input.Position, 2f) },
+        { "Rest", input => new Rest(input.Owner) },
+        { "Building", input => new Construct(input.Owner, input.Building) },
+    };
 
-    private Think _brain;
-    private GoalCommand _goaldata;
+    public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -27,26 +32,21 @@ public class Character : MonoBehaviour, IAction
     public NavMeshAgent agent;
     public float energyLevel;
 
+    private Think _brain;
+    private GoalCommand<Character> _goaldata;
+    private GameActionButtonModel[] _buttonModels;
     public Inventory inventory;
 
-    // Start is called before the first frame update.
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        inventory = gameObject.GetComponent<Inventory>();
+
         _brain = new Think(this);
-        _goaldata = new GoalCommand(this);
-
-        this.inventory = this.gameObject.GetComponent<Inventory>();
-
-        if (_actions == null)
-        {
-            // Initialize the dictionary.
-            _actions = new Dictionary<string, Func<GoalCommand, IGoal>>();
-            InitGoals();
-        }
+        _goaldata = new GoalCommand<Character>(this);
+        _buttonModels = GetGameActionButtonModels(this).ToArray();
     }
 
-    // Update is called once per frame.
     private void Update()
     {
         // Check, that energylevel does not get lower during resting.
@@ -55,38 +55,42 @@ public class Character : MonoBehaviour, IAction
         _brain.Process();
     }
 
-    public bool ActionHandler(RaycastHit hit, bool priority)
+    public bool HandleAction(RaycastHit hit, bool priority)
     {
-        if (!_actions.TryGetValue(hit.collider.gameObject.tag, out Func<GoalCommand, IGoal> action)) return false;
+        if (_actions.ContainsKey(hit.collider.gameObject.tag))
+        {
+            // Set the goal with the current data.
+            _goaldata.Position = hit.point;
+            _goaldata.Building = hit.collider.gameObject;
+            IGoal goal = _actions[hit.collider.gameObject.tag].Invoke(_goaldata);
 
-        // Set the goal with the current data.
-        this._goaldata.Position = hit.point;
-        this._goaldata.Building = hit.collider.gameObject;
-        IGoal goal = action.Invoke(this._goaldata);
+            // Add the goal to the brain.
+            if (priority)
+                AddSubgoal(goal);
+            else
+                PrioritiseSubgoal(goal);
 
-        // Add the goal to the brain.
-        if (priority)
-            this._brain.AddSubGoal(goal);
-        else
-            this._brain.PrioritizeSubGoal(goal);
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
+    public void AddSubgoal(IGoal goal) => _brain.AddSubGoal(goal);
+
+    public void PrioritiseSubgoal(IGoal goal) => _brain.PrioritizeSubGoal(goal);
+
     /// <summary>
-    /// Fills the _actions dictionary with goals related to an action.
+    /// All button actions.
     /// </summary>
-    private static void InitGoals()
+    /// <param name="owner">The current character.</param>
+    private static IEnumerable<GameActionButtonModel> GetGameActionButtonModels(Character owner)
     {
-        Func<GoalCommand, IGoal> goal;
-
-        goal = input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f);
-        _actions.Add("Walkway", goal);
-
-        goal = input => new Rest(input.Owner);
-        _actions.Add("Rest", goal);
-
-        goal = input => new Construct(input.Owner, input.Building);
-        _actions.Add("Building", goal);
+        yield return new GameActionButtonModel()
+        {
+            Name = "CharacterRest",
+            Icon = UnityEngine.Resources.Load<Sprite>("Buttons/Sleep"),
+            OnClick = () => owner.PrioritiseSubgoal(new Rest(owner))
+        };
     }
 }
