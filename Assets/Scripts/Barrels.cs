@@ -31,7 +31,6 @@ public class Barrels : MonoBehaviour
 
         foreach (GameObject barrel in this._barrels.Where(barrel => barrel == null))
         {
-            Debug.Log(barrel);
             this._barrels.Remove(barrel);
 
             break;

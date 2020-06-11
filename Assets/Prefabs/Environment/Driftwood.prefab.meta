@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/Environment/Driftwood.prefab.meta
+guid: 31c855a3811bc1f48b2af63c9d7eda05
+PrefabImporter:
+=======
 guid: b3d37706460f074488fe29f92a3d9089
 folderAsset: yes
 DefaultImporter:
+>>>>>>> develop:Assets/Models/Materials.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

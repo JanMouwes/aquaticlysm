@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.3634918, g: 0.5677314, b: 0.8464602, a: 1}
+  m_IndirectSpecularColor: {r: 0.36351293, g: 0.5677382, b: 0.8464597, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -338,6 +338,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 940fff697a2f2b246b9d05b4f3f0949d, type: 3}
+--- !u!1 &212463425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212463426}
+  - component: {fileID: 212463427}
+  m_Layer: 0
+  m_Name: Driftwood
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &212463426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212463425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763730230}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &212463427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212463425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34048bf1fa5cc004dbc8123688a6920c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  driftwoodPrefab: {fileID: 4720651257290461223, guid: 31c855a3811bc1f48b2af63c9d7eda05,
+    type: 3}
+  water: {fileID: 1161426540}
+  minTime: 200
+  maxTime: 500
 --- !u!1 &291627370
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +833,7 @@ Transform:
   - {fileID: 1703614758}
   - {fileID: 650818052}
   - {fileID: 193042248}
+  - {fileID: 212463426}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
