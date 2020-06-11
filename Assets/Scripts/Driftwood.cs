@@ -19,14 +19,14 @@ public class Driftwood : MonoBehaviour
     {
         _gridSize = water.GetComponent<ProceduralGrid>().size;
 
-        SpawnAlgorithm(30f, 80f);
+        SpawnRandomly(30f, 80f);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (_timer <= 0)
-            SpawnAlgorithm(minTime, maxTime);
+            SpawnRandomly(minTime, maxTime);
         else
             _timer -= Time.deltaTime;
 
@@ -42,7 +42,7 @@ public class Driftwood : MonoBehaviour
     /// </summary>
     /// <param name="minDelay">Minimum spawn time.</param>
     /// <param name="maxDelay">Maximum spawn time.</param>
-    private void SpawnAlgorithm(float minDelay, float maxDelay)
+    private void SpawnRandomly(float minDelay, float maxDelay)
     {
         _timer = Random.Range(minDelay, maxDelay);
 
