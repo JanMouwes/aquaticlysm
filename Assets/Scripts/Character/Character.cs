@@ -19,6 +19,7 @@ public class Character : MonoBehaviour, IClickActionComponent, IButtonActionComp
         { "Walkway", input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f) },
         { "House", input => new Rest(input.Owner) },
         { "Building", input => new Construct(input.Owner, input.Building) },
+        { "Character", input => new MoveToAnim(input.Owner.gameObject, input.Position, 2f) },
     };
 
     public IEnumerable<GameActionButtonModel> ButtonModels => _buttonModels;
