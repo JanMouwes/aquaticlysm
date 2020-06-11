@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 0.53300416, b: 0, a: 1}
-  outlineWidth: 2
+  outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6871499a96b88194ab2f4fbf0ec5a21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: 0
-  completionTag: 
+  progress: 1
+  completionTag: House
 --- !u!114 &-7577693838363576287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,8 +193,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.0536046, y: 3.812708, z: 6.028779}
-  m_Center: {x: -0.0025689602, y: 1.406354, z: -0.03389311}
+  m_Size: {x: 6, y: 1, z: 6}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7202145505134949910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +505,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e1af4085444ec844d96e50e4d7142c36, type: 2}
+  - {fileID: 2100000, guid: 9815917234c3b9d47a0ac6586451b541, type: 2}
   - {fileID: 2100000, guid: e1af4085444ec844d96e50e4d7142c36, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

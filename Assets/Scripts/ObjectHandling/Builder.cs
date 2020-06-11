@@ -236,7 +236,7 @@ public class Builder : MonoBehaviour, IButtonActionComponent
         {
             Name = "BuildHouse",
             Icon = UnityEngine.Resources.Load<Sprite>("Buttons/House"),
-            //OnClick = () => builder.Build(0, false)
+            OnClick = () => builder.Build(5, false)
         };
         yield return new GameActionButtonModel()
         {
