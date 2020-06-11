@@ -24,7 +24,6 @@ namespace Resources
 
         private void Awake()
         {
-            Debug.Log(this.GetInstanceID());
             if (_instance != null && _instance != this)
             {
                 Destroy(_instance.gameObject);
