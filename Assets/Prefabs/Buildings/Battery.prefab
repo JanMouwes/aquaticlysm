@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: -5878919894249972697}
   - component: {fileID: 8165094443584763300}
   - component: {fileID: -3910748854441942560}
-  - component: {fileID: -1044388364982287656}
+  - component: {fileID: -5242736686675740633}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Building
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6871499a96b88194ab2f4fbf0ec5a21f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: 1
+  progress: 0
   completionTag: Battery
 --- !u!114 &-3910748854441942560
 MonoBehaviour:
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumCharge: 500
---- !u!114 &-1044388364982287656
+--- !u!114 &-5242736686675740633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -443,9 +443,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCosts:
-  - name: wood
-    amount: 25
-  - name: plastic
-    amount: 10
   - name: metal
-    amount: 30
+    amount: 10

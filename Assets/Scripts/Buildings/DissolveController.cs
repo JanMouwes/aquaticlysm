@@ -34,8 +34,18 @@ public class DissolveController : MonoBehaviour
 
         bool isDone = progress <= 0;
 
-        if (isDone) { this.tag = completionTag; }
+        if (isDone) {
+            if (completionTag != "")
+            {
+                tag = completionTag;
+            } 
+        }
 
         return isDone;
+    }
+
+    public bool CheckifBuild()
+    {
+        return progress <= 0;
     }
 }

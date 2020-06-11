@@ -73,7 +73,7 @@ namespace Tests
             // Arrange
             Mock<Character> character = new Mock<Character>(MockBehavior.Strict);
             Think think = new Think(character.Object);
-            IGoal goal = new Sleep(character.Object);
+            IGoal goal = new Sleep(character.Object, Vector3.zero);
             think.AddSubGoal(goal);
 
             // Act
@@ -90,7 +90,7 @@ namespace Tests
             // Arrange
             Mock<Character> character = new Mock<Character>(MockBehavior.Strict);
             Think think = new Think(character.Object);
-            IGoal goal = new Sleep(character.Object);
+            IGoal goal = new Sleep(character.Object, Vector3.zero);
             think.AddSubGoal(goal);
             think.AddSubGoal(goal);
             think.AddSubGoal(goal);

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3249380457567640762}
   - component: {fileID: 2505625014714242770}
   - component: {fileID: 4304556790269156526}
-  - component: {fileID: -2360534231927534658}
+  - component: {fileID: -2198043612555518446}
   m_Layer: 0
   m_Name: Farm
   m_TagString: Building
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 1, g: 0.74101996, b: 0, a: 0}
-  outlineWidth: 2.3
+  outlineWidth: 3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   harvestAmount: 50
---- !u!114 &-2360534231927534658
+--- !u!114 &-2198043612555518446
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,10 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCosts:
-  - name: wood
-    amount: 25
-  - name: food
-    amount: 10
+  - name: metal
+    amount: 5
 --- !u!1 &1782705852274422217
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +507,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 9815917234c3b9d47a0ac6586451b541, type: 2}
-  - {fileID: 2100000, guid: d38bb2bf39cfe994d9faf00bd214c149, type: 2}
+  - {fileID: 2100000, guid: f59c62616bcc0984ebf9122c08a655d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
