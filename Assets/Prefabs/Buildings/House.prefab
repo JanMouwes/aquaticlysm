@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingCosts:
   - name: wood
-    amount: 10
+    amount: 25
 --- !u!65 &-8563379006741469586
 BoxCollider:
   m_ObjectHideFlags: 0
