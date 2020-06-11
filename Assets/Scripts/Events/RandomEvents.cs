@@ -6,20 +6,22 @@ using UnityEngine;
 
 public class RandomEvents : MonoBehaviour
 {
+    public AudioSource StromEffect;
+    public AudioSource TradeEffect;
+
     [Tooltip("Min Value for time between events")]
-    public int minTime = 30;
+    public int minTime = 600;
     [Tooltip("Max Value for time between events")]
-    public int maxTime = 300;
+    public int maxTime = 2400;
     // Start is called before the first frame update
     private void Start()
     {
-        EventManager.Instance.CreateEvent(0);
         StartCoroutine(EventTimer());
     }
 
     private IEnumerator EventTimer()
     {
-        //Wait for between 60 and 300 seconds
+        
         yield return new WaitForSeconds(Random.Range(minTime,maxTime));
         // 50%
         if (Random.value < 0.5f)
@@ -30,6 +32,7 @@ public class RandomEvents : MonoBehaviour
         else
         {
             EventManager.Instance.CreateEvent(2);
+            StromEffect.Play();
         }
         ResetState();
     }
@@ -37,5 +40,10 @@ public class RandomEvents : MonoBehaviour
     private void ResetState()
     {
         StartCoroutine(EventTimer());
+    }
+
+    public void InvokeStoryEvent(int eventIndex)
+    {
+        EventManager.Instance.CreateEvent(eventIndex);
     }
 }

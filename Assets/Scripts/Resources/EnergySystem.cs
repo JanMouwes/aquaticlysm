@@ -60,7 +60,7 @@ namespace Resources
         {
             int stepUpdateAmount = ChargeStepAmount;
 
-            int currentAmount = _resourceManager.GetResourceAmount("energy");
+            int currentAmount = ResourceManager.Instance.GetResourceAmount("energy");
             
             if (stepUpdateAmount + currentAmount > MaximumCharge)
             {
