@@ -46,7 +46,7 @@ namespace Events
                                     " Those who survived ﬂed to sea and band together to stand a chance in this new world. But the sea is" +
                                     " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
                                     " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
-                                    " ﬂoating settlement. Experience the story that unfolds through the choices you make";
+                                    " ﬂoating settlement. ";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
@@ -72,15 +72,15 @@ namespace Events
             // 2 : Storm Event 
             {
                 const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, what will you salvage?";
+                const string text = "The strom is coming.  Your villagers can take cover or salvage your property! Prepare your settlement, what will you salvage?";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
+                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
-                action = () => ResourceManager.Instance.DecreaseResource("wood", 5);
-                buttontext.Add("Take cover.");
+                action = () => ResourceManager.Instance.DecreaseResource("wood", 10);
+                buttontext.Add("Retie the water pilars.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
@@ -107,22 +107,7 @@ namespace Events
                 buttontext.Add("Start over.");
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
-            // 5 : Initial storm
-            {
-                const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
-                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
-                List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string>();
-                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
-                buttontext.Add("Cover the wood stock.");
-                actions.Add(action);
-                action = () => ResourceManager.Instance.DecreaseResource("wood", 20);
-                buttontext.Add("Take cover.");
-                actions.Add(action);
-                CreateEvent(title, text, buttonStyle, buttontext, actions);
-            }
-            // 6 : Everyone dead
+            // 6 : Help screen
             {
                 const string title = "Help";
                 string text = "Move: WASD\n" +
