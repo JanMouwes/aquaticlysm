@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4497943688378723224}
   - component: {fileID: -5803538678876735992}
   m_Layer: 0
-  m_Name: SolarPanels
+  m_Name: SolarPanel
   m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,7 +209,7 @@ MonoBehaviour:
   - name: plastic
     amount: 50
   - name: wood
-    amount: 100
+    amount: 80
 --- !u!1 &2420907585679304875
 GameObject:
   m_ObjectHideFlags: 0

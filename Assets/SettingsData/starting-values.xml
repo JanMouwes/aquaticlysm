@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <resource name="wood">5000</resource>
-    <resource name="metal">2500</resource>
-    <resource name="plastic">3000</resource>
-    <resource name="water">10000</resource>
-    <resource name="food">10000</resource>
+    <resource name="wood">50</resource>
+    <resource name="metal">50</resource>
+    <resource name="plastic">50</resource>
+    <resource name="water">40</resource>
+    <resource name="food">25</resource>
     <resource name="energy">0</resource>
 </resources>
