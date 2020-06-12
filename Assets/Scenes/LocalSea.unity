@@ -995,28 +995,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 700102252}
     m_Modifications:
-    - target: {fileID: 925690680, guid: 1c6ceceb1be826643bab682671182430, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 925690681, guid: 1c6ceceb1be826643bab682671182430, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3469690719191508713, guid: 1c6ceceb1be826643bab682671182430,
         type: 3}
       propertyPath: m_Name
       value: Events
-      objectReference: {fileID: 0}
-    - target: {fileID: 3469690719191508714, guid: 1c6ceceb1be826643bab682671182430,
-        type: 3}
-      propertyPath: minTime
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3469690719191508714, guid: 1c6ceceb1be826643bab682671182430,
-        type: 3}
-      propertyPath: maxTime
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3469690719191508715, guid: 1c6ceceb1be826643bab682671182430,
         type: 3}
