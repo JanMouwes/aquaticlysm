@@ -56,7 +56,7 @@ namespace Events
             // 1 : Overboard Event
             {
                 const string title = "Overboard";
-                const string text = "Your Villager is about to throw a tantrum and throwing something in the water.\n" +
+                const string text = "Your Villager is about to throw a tantrum and is throwing something in the water.\n" +
                                     "What will you do?";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
@@ -72,7 +72,7 @@ namespace Events
             // 2 : Storm Event 
             {
                 const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, what will you salvage?";
+                const string text = "The storm is coming. Prepare your settlement, what will you salvage?";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
@@ -110,7 +110,7 @@ namespace Events
             // 5 : Initial storm
             {
                 const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
+                const string text = "The storm is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
