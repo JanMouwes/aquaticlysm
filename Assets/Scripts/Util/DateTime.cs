@@ -22,7 +22,7 @@ public class DateTime : MonoBehaviour
     void Start()
     {
         GameTime = DAY_LENGTH;
-        this._increaseAmount = 5f;
+        this._increaseAmount = 3f;
     }
 
     // Update is called once per frame
@@ -44,8 +44,8 @@ public class DateTime : MonoBehaviour
 
         if (this._increaseAmount <= 0)
         {
-            ResourceManager.Instance.DecreaseResource("food", 5);
-            this._increaseAmount = 5f;
+            ResourceManager.Instance.DecreaseResource("food", 3);
+            this._increaseAmount = 3f;
         }
     }
 

@@ -18,7 +18,7 @@ public class StoryEvents : MonoBehaviour
     private void Start()
     {
         _events = new List<string>();
-        timeToSalvage = 15f;
+        timeToSalvage = 25f;
         eventOn = false;
     }
     
@@ -37,7 +37,7 @@ public class StoryEvents : MonoBehaviour
 
         if (_events.Contains("begin") && !_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
         {
-            NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
+            NotificationSystem.Instance.ShowNotification("AboutToStarve", 30);
 
             timeToSalvage -= Time.deltaTime;
             if (timeToSalvage <= 0f)
@@ -47,7 +47,7 @@ public class StoryEvents : MonoBehaviour
         }
         else
         {
-            timeToSalvage = 15f;
+            timeToSalvage = 25f;
         }
 
         eventOn = false;
