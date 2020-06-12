@@ -47,11 +47,12 @@ namespace Events
                                     " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
                                     " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
                                     " ﬂoating settlement.\n\n" +
-                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need" +
-                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by" +
-                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place." +
-                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then." +
-                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into" +
+                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need " +
+                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by " +
+                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place. " +
+                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then and wont " +
+                                    "be able to work tired. Make sure you build them a house they can go to rest! " +
+                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into " +
                                     "fresh water. Desalinator works on energy, so you'll need to build solar panels to use energy.\n" +
                                     "If you need help, press ? on the right bottom corner of the screen.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
