@@ -33,7 +33,6 @@ public class ActionController : MonoBehaviour
                 if (MouseUtil.TryRaycastAtMousePosition(100, out RaycastHit hit))
                     foreach (Selectable selectable in SelectionController.SelectedEntities)
                     {
-                        Debug.Log("it works kinda");
                         IClickActionComponent actionComponent = selectable.gameObject.GetComponent<IClickActionComponent>();
 
                         actionComponent?.HandleAction(hit, this._priority);
