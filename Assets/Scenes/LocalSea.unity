@@ -1015,6 +1015,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Events
       objectReference: {fileID: 0}
+    - target: {fileID: 3469690719191508714, guid: 1c6ceceb1be826643bab682671182430,
+        type: 3}
+      propertyPath: minTime
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469690719191508714, guid: 1c6ceceb1be826643bab682671182430,
+        type: 3}
+      propertyPath: maxTime
+      value: 2400
+      objectReference: {fileID: 0}
     - target: {fileID: 3469690719191508715, guid: 1c6ceceb1be826643bab682671182430,
         type: 3}
       propertyPath: m_LocalPosition.x
