@@ -51,7 +51,7 @@ public class Character : MonoBehaviour, IClickActionComponent, IButtonActionComp
     private void Update()
     {
         // Check, that energylevel does not get lower during resting.
-        energyLevel -= 2 * Time.deltaTime;
+        energyLevel -= 0.5f * Time.deltaTime;
 
         _brain.Process();
     }
