@@ -22,7 +22,7 @@ public class AccumulateResources : IGoal
     public void Activate()
     {
         // The random amount of stuff it wil accumulate.
-        _accumulateAmount = (int)Random.Range(0, _owner.maxCarrierAmount);
+        _accumulateAmount = (int)Random.Range(0, 100);
 
         // Make the boat invisible.
         for (int i = 0; i < _renderers.Length; i++)
@@ -68,7 +68,7 @@ public class AccumulateResources : IGoal
             int accumulationAmount = Random.Range(1, amount);
 
             float resourceAmount = boat.TryGetResourceValue(type);
-            boat.carriedResources[type] = accumulationAmount;
+            boat.carriedResources[type] = resourceAmount + accumulationAmount;
 
             amount -= accumulationAmount;
         }
