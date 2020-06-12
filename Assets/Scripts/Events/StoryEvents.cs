@@ -91,7 +91,6 @@ public class StoryEvents : MonoBehaviour
         EventManager.Instance.CreateEvent(5);
     }
 
-
     /// <summary>
     /// Resets resources to initial starting-values and loads the starting menu.
     /// </summary>
