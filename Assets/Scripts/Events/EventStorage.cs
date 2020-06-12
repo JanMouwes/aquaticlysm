@@ -144,9 +144,15 @@ namespace Events
                               "Farm: wood - 30, metal - 5\n" +
                               "Desalinator: wood - 200, metal - 70, plastic - 35\n" +
                               "Battery: wood - 50, metal - 30, plastic - 10\n";
-                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Got it!" };
+                List<string> buttontext = new List<string>();
+                Action action = () => Debug.Log("");
+                buttontext.Add("Continue");
+                actions.Add(action);
+                action = () => Application.Quit();
+                buttontext.Add("Quit");
+                actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }
