@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a7bf88307244328e6d8873b0f1d89a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargeAmount: 10
+  chargeAmount: 20
 --- !u!114 &-5803538678876735992
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace Buildings.Energy
     public class PassiveEnergyGenerator : MonoBehaviour
     {
         private EnergySystem _energySystem;
-        private readonly int _maximumCharge = 10;
+        private readonly int _maximumCharge = 20;
         private bool completed;
         public int chargeAmount = 10;
         

@@ -1,4 +1,5 @@
-﻿using Resources;
+﻿using System;
+using Resources;
 using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,6 +18,11 @@ public class DateTime : MonoBehaviour
     public Text dateTimeText;
     public Material day;
     public Material night;
+
+    private void Start()
+    {
+        DayCounter = 1;
+    }
 
     // Update is called once per frame
     void Update()
