@@ -209,7 +209,7 @@ MonoBehaviour:
   - name: plastic
     amount: 50
   - name: wood
-    amount: 80
+    amount: 50
 --- !u!1 &2420907585679304875
 GameObject:
   m_ObjectHideFlags: 0
