@@ -128,7 +128,7 @@ namespace Events
                 string text = "Move: WASD\n" +
                               "Rotate: QE\n" +
                               "Zoom: Scroll Up / Scroll Down\n" +
-                              "Esq: Cancel building\n\n" +
+                              "Esc: Cancel building\n\n" +
                               "Holding Shift down: \tDisable building snapping, Queue actions.\n\n" +
                               "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat.\n\n" +
                               "Metal: Metal is used to build buildings. Metal can be found in some of the barrels drifting in the sea and exploring.\n\n" +
