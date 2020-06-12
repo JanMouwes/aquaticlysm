@@ -46,7 +46,14 @@ namespace Events
                                     " Those who survived ﬂed to sea and band together to stand a chance in this new world. But the sea is" +
                                     " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
                                     " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
-                                    " ﬂoating settlement. ";
+                                    " ﬂoating settlement.\n\n" +
+                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need" +
+                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by" +
+                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place." +
+                                    "Your villagers eat on regular bases, so keeping the food supply is important. Your villagers do also get tired and need some rest every now and then." +
+                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into" +
+                                    "fresh water. Desalinator works on energy, so you'll need to build solar panels to store energy.\n" +
+                                    "If you need help, press ? on the right bottom corner of the screen.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
