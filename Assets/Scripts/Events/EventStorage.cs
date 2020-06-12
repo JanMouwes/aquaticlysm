@@ -47,11 +47,12 @@ namespace Events
                                     " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
                                     " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
                                     " ﬂoating settlement.\n\n" +
-                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need" +
-                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by" +
-                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place." +
-                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then." +
-                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into" +
+                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need " +
+                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by " +
+                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place. " +
+                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then and wont " +
+                                    "be able to work tired. Make sure you build them a house they can go to rest! " +
+                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into " +
                                     "fresh water. Desalinator works on energy, so you'll need to build solar panels to use energy.\n" +
                                     "If you need help, press ? on the right bottom corner of the screen.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
@@ -117,12 +118,13 @@ namespace Events
             // 5 : Help screen
             {
                 const string title = "Help";
-                string text = "Move: WASD\n" +
+                string text = "Move: WASD / Arrow Keys\n" +
                               "Rotate: QE\n" +
                               "Zoom: Scroll Up / Scroll Down\n" +
-                              "Esq: Cancel building\n\n" +
+                              "Esc: Cancel building before it is put down.\n\n" +
                               "Holding Shift down: \tDisable building snapping, Queue actions.\n\n" +
-                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat.\n\n" +
+                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat. Wood can also" +
+                              "be found randomly drifting on the sea and you can pick it up with the boat.\n\n" +
                               "Metal: Metal is used to build buildings. Metal can be found in some of the barrels drifting in the sea and exploring.\n\n" +
                               "Energy: Energy is used generating clean water. Generating energy can be done by building solar panels, that generate a set amount of energy during the day." +
                               "Energy can be used as is or it can be stored by building batteries.\n\n" +
@@ -135,9 +137,15 @@ namespace Events
                               "Farm: wood - 30, metal - 5\n" +
                               "Desalinator: wood - 200, metal - 70, plastic - 35\n" +
                               "Battery: wood - 50, metal - 30, plastic - 10\n";
-                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Got it!" };
+                List<string> buttontext = new List<string>();
+                Action action = () => Debug.Log("");
+                buttontext.Add("Continue");
+                actions.Add(action);
+                action = () => Application.Quit();
+                buttontext.Add("Quit");
+                actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

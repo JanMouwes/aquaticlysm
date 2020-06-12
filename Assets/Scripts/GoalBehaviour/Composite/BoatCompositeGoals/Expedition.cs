@@ -45,6 +45,7 @@ public class Expedition : CompositeGoal
     public static Vector3 GetRandomOutermostEdgeVector3(int size) 
     {
         size /= 2;
+        size -= 10;
 
         if (0.5 < Random.value)
             return new Vector3

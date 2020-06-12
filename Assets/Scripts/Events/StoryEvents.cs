@@ -10,49 +10,28 @@ using UnityEngine.SceneManagement;
 public class StoryEvents : MonoBehaviour
 {
     // List to hold all invoked events to prevent looping.
-    private List<string> _events;
-    private float timeToSalvage;
+    private readonly List<string> _events = new List<string>();
+    private float _timeToSalvage = 25f;
 
-    public bool eventOn;
-
-    private void Start()
-    {
-        _events = new List<string>();
-        timeToSalvage = 15f;
-        eventOn = false;
-    }
-    
+    public bool eventOn = false;
 
     private void Update()
     {
+        if (!_events.Contains("begin")) { BeginEvent(); }
 
-        if (!_events.Contains("begin"))
-        {
-            BeginEvent();
-        }
-        
-        if (_events.Contains("begin") && !_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 20f)
-        {
-            HungerStrikeEvent();
-        }
+        if (_events.Contains("begin") && !_events.Contains("hungerStrike") && ResourceManager.Instance.GetResourceAmount("food") < 20f) { HungerStrikeEvent(); }
 
         if (_events.Contains("begin") && !_events.Contains("gameOver") && ResourceManager.Instance.GetResourceAmount("food") <= 0f)
         {
-            NotificationSystem.Instance.ShowNotification("AboutToStarve", 20);
+            NotificationSystem.Instance.ShowNotification("AboutToStarve", 30);
 
-            timeToSalvage -= Time.deltaTime;
-            if (timeToSalvage <= 0f)
-            { 
-                GameOverStarved();
-            }
+            this._timeToSalvage -= Time.deltaTime;
+
+            if (this._timeToSalvage <= 0f) { GameOverStarved(); }
         }
-        else
-        {
-            timeToSalvage = 15f;
-        }
+        else { this._timeToSalvage = 25f; }
 
         eventOn = false;
-
     }
 
     /// <summary>
@@ -80,7 +59,7 @@ public class StoryEvents : MonoBehaviour
     {
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
-        timeToSalvage = 25f;
+        this._timeToSalvage = 25f;
     }
 
     /// <summary>

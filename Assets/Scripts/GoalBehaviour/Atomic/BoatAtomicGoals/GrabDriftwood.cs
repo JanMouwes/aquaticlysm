@@ -1,14 +1,10 @@
-﻿using Resources;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GrabDriftwood : IGoal
 {
     private Boat _owner;
     private GameObject _driftwood;
     private float _time;
-    private int _accumulateAmount;
 
     public GoalStatus Status { get; private set; }
     public string Name { get; private set; }
@@ -24,7 +20,6 @@ public class GrabDriftwood : IGoal
 
     public void Activate()
     {
-        _accumulateAmount = 5;
         Status = GoalStatus.Active;
     }
 

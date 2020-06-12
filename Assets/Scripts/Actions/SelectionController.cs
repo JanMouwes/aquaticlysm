@@ -27,7 +27,8 @@ public class SelectionController : MonoBehaviour
 
     private void Awake()
     {
-        GlobalStateMachine.instance.StateChanged += ToggleEnable;
+        if(GlobalStateMachine.instance != null)
+            GlobalStateMachine.instance.StateChanged += ToggleEnable;
     }
 
     private void OnDestroy()
