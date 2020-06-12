@@ -105,8 +105,7 @@ namespace Events
             // 4 : Village starved to death
             {
                 const string title = "Game over";
-                string text = "Your villagers starved to death.\n" +
-                              "You survived " + DateTime.DayCounter + " days.";
+                string text = "Your villagers starved to death.\n";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 Action action = () => GameObject.FindObjectOfType<StoryEvents>().ReloadGame();
