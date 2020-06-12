@@ -24,9 +24,9 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 03389866351d19a47adc95c57d054097, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.36351293, g: 0.5677382, b: 0.8464597, a: 1}
+  m_IndirectSpecularColor: {r: 0.41518888, g: 0.20504811, b: 0.19856757, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -680,7 +680,8 @@ PrefabInstance:
       propertyPath: characterSystem
       value: 
       objectReference: {fileID: 975590118}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7002327989697505211, guid: 0c1e2e66cc199844080ef65bdaf5b5ea, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0c1e2e66cc199844080ef65bdaf5b5ea, type: 3}
 --- !u!1001 &571243234
 PrefabInstance:
@@ -1614,8 +1615,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dateTimeText: {fileID: 1593810746}
-  day: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
-  night: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
+  day: {fileID: 2100000, guid: 03389866351d19a47adc95c57d054097, type: 2}
+  night: {fileID: 2100000, guid: 47b7a45414f3b564e9e8349bfa18b29f, type: 2}
 --- !u!1 &1594141482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,6 +2178,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e20bcdd470625d145b91ee287a6ca2e9, type: 3}
+--- !u!1 &2113871956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7002327989697505210, guid: 0c1e2e66cc199844080ef65bdaf5b5ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 570519273}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2113871957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113871956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!1001 &261010523805030020
 PrefabInstance:
   m_ObjectHideFlags: 0
