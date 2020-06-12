@@ -7,7 +7,7 @@ public class ActionController : MonoBehaviour
 {
     private bool _priority;
 
-    private void Awake()
+    private void Start()
     {
         GlobalStateMachine.instance.StateChanged += ToggleEnable;
     }

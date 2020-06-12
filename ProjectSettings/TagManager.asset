@@ -17,6 +17,7 @@ TagManager:
   - Battery
   - Desalinator
   - House
+  - Driftwood
   layers:
   - Default
   - TransparentFX

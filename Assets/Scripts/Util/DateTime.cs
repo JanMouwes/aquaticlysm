@@ -8,22 +8,15 @@ public class DateTime : MonoBehaviour
 {
     public const float DAY_LENGTH = 120;
 
-    public static float GameTime;
+    public static float GameTime = DAY_LENGTH;
     public static int DayCounter = 1;
 
     private string _uiText;
-    private float _increaseAmount;
+    private float _increaseAmount = 2f;
 
     public Text dateTimeText;
     public Material day;
     public Material night;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        GameTime = DAY_LENGTH;
-        this._increaseAmount = 5f;
-    }
 
     // Update is called once per frame
     void Update()
@@ -44,8 +37,8 @@ public class DateTime : MonoBehaviour
 
         if (this._increaseAmount <= 0)
         {
-            ResourceManager.Instance.DecreaseResource("food", 5);
-            this._increaseAmount = 5f;
+            ResourceManager.Instance.DecreaseResource("food", 1);
+            this._increaseAmount = 2f;
         }
     }
 

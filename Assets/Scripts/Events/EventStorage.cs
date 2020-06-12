@@ -46,7 +46,15 @@ namespace Events
                                     " Those who survived ﬂed to sea and band together to stand a chance in this new world. But the sea is" +
                                     " not your only enemy…\n\nIn this Real-Time Strategy-game you will play as a group of survivors and try to" +
                                     " make sure your members don’t die. Manage resources such as wood and food, lead expeditions, and build up your" +
-                                    " ﬂoating settlement. Experience the story that unfolds through the choices you make";
+                                    " ﬂoating settlement.\n\n" +
+                                    "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need " +
+                                    "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by " +
+                                    "selecting a villager you want to use, and then right clicking on the building you've put on it's place. " +
+                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then and wont " +
+                                    "be able to work tired. Make sure you build them a house they can go to rest! " +
+                                    "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into " +
+                                    "fresh water. Desalinator works on energy, so you'll need to build solar panels to use energy.\n" +
+                                    "If you need help, press ? on the right bottom corner of the screen.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
@@ -56,7 +64,7 @@ namespace Events
             // 1 : Overboard Event
             {
                 const string title = "Overboard";
-                const string text = "Your Villager is about to throw a tantrum and throwing something in the water.\n " +
+                const string text = "Your Villager is about to throw a tantrum and throwing something in the water.\n" +
                                     "What will you do?";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
@@ -72,15 +80,15 @@ namespace Events
             // 2 : Storm Event 
             {
                 const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, what will you salvage?";
+                const string text = "The strom is coming.  Your villagers can take cover or salvage your property! Prepare your settlement, what will you salvage?";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
                 List<string> buttontext = new List<string>();
-                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);//GameObject.Destroy(GameObject.FindGameObjectWithTag("Character"));
+                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);
                 buttontext.Add("Cover the wood stock.");
                 actions.Add(action);
-                action = () => ResourceManager.Instance.DecreaseResource("wood", 5);
-                buttontext.Add("Take cover.");
+                action = () => ResourceManager.Instance.DecreaseResource("wood", 10);
+                buttontext.Add("Retie the water pilars.");
                 actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
@@ -107,39 +115,37 @@ namespace Events
                 buttontext.Add("Start over.");
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
-            // 5 : Initial storm
-            {
-                const string title = "Storm";
-                const string text = "The strom is coming. Prepare your settlement, your villagers can take cover or salvage your property!";
-                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
-                List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string>();
-                Action action = () => ResourceManager.Instance.DecreaseResource("water", 10);// GameObject.Destroy(GameObject.FindGameObjectWithTag("Charater"));
-                buttontext.Add("Cover the wood stock.");
-                actions.Add(action);
-                action = () => ResourceManager.Instance.DecreaseResource("wood", 20);
-                buttontext.Add("Take cover.");
-                actions.Add(action);
-                CreateEvent(title, text, buttonStyle, buttontext, actions);
-            }
-            // 6 : Everyone dead
+            // 5 : Help screen
             {
                 const string title = "Help";
-                string text = "Move: WASD\n" +
+                string text = "Move: WASD / Arrow Keys\n" +
                               "Rotate: QE\n" +
-                              "Zoom: Scroll Up / Scroll Down\n\n" +
+                              "Zoom: Scroll Up / Scroll Down\n" +
+                              "Esc: Cancel building before it is put down.\n\n" +
                               "Holding Shift down: \tDisable building snapping, Queue actions.\n\n" +
-                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat.\n\n" +
+                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat. Wood can also" +
+                              "be found randomly drifting on the sea and you can pick it up with the boat.\n\n" +
                               "Metal: Metal is used to build buildings. Metal can be found in some of the barrels drifting in the sea and exploring.\n\n" +
                               "Energy: Energy is used generating clean water. Generating energy can be done by building solar panels, that generate a set amount of energy during the day." +
-                                "Energy can be used as is or it can be stored by building batteries.\n\n" +
+                              "Energy can be used as is or it can be stored by building batteries.\n\n" +
                               "Water: Water is used for farming and can be generated by building a desalinator. Cleaning water requires energy.\n\n" +
                               "Plastic: Plastic is used as a building material and can be found by looting barrels found drifting in the sea and exploring.\n\n" +
                               "Food: Food can be gathered by fishing with the boat, or by building a farm and farming with a character. In order to store food you need to build a storage. Farming costs clean water!\n\n" +
-                              "\n";
-                const ButtonStyle buttonStyle = ButtonStyle.OneOption;
+                              "House: wood - 25\n" +
+                              "Solar Panel: metal - 35, plastic - 50, wood - 100\n" +
+                              "Dock: wood - 10\n" +
+                              "Farm: wood - 30, metal - 5\n" +
+                              "Desalinator: wood - 200, metal - 70, plastic - 35\n" +
+                              "Battery: wood - 50, metal - 30, plastic - 10\n";
+                const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
-                List<string> buttontext = new List<string> { "Got it!" };
+                List<string> buttontext = new List<string>();
+                Action action = () => Debug.Log("");
+                buttontext.Add("Continue");
+                actions.Add(action);
+                action = () => Application.Quit();
+                buttontext.Add("Quit");
+                actions.Add(action);
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
         }

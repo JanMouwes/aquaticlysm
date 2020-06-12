@@ -51,7 +51,12 @@ public class Think : CompositeGoal
 
 
         // Check if there is need for resting and also that the agent is not currently taking care of it.
-        if (needsRest(_owner.energyLevel)) { return new Rest(_owner); }
+        if (needsRest(_owner.energyLevel)) 
+        {
+           NotificationSystem.Instance.ShowNotification("VillagerNeedsRest", 3);
+
+           return new Rest(_owner);
+        }
 
         return null;
     }
