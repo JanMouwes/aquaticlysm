@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 516862154}
-  m_IndirectSpecularColor: {r: 0.36351293, g: 0.5677382, b: 0.8464597, a: 1}
+  m_IndirectSpecularColor: {r: 0.36344054, g: 0.567706, b: 0.8464634, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -378,14 +378,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 212463425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34048bf1fa5cc004dbc8123688a6920c, type: 3}
+  m_Script: {fileID: 11500000, guid: 34e05ee52ea63534c9fafe450c984c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   driftwoodPrefab: {fileID: 4720651257290461223, guid: 31c855a3811bc1f48b2af63c9d7eda05,
     type: 3}
-  water: {fileID: 1161426540}
-  minTime: 200
-  maxTime: 500
+  water: {fileID: 7166368612852141477, guid: c1d35d4c5a9d6ca418625521efaccc7f, type: 3}
+  minTime: 800
+  maxTime: 1400
 --- !u!1 &291627370
 GameObject:
   m_ObjectHideFlags: 0
