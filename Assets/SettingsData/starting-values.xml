@@ -4,6 +4,6 @@
     <resource name="metal">50</resource>
     <resource name="plastic">50</resource>
     <resource name="water">40</resource>
-    <resource name="food">25</resource>
+    <resource name="food">50</resource>
     <resource name="energy">0</resource>
 </resources>
