@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Events;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RandomEvents : MonoBehaviour
 {
-    public AudioSource StromEffect;
+    public AudioSource StormEffect;
     public AudioSource TradeEffect;
 
     [Tooltip("Min Value for time between events")]
@@ -32,7 +33,7 @@ public class RandomEvents : MonoBehaviour
         else
         {
             EventManager.Instance.CreateEvent(2);
-            StromEffect.Play();
+            StormEffect.Play();
         }
         ResetState();
     }
