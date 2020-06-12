@@ -132,10 +132,10 @@ namespace Events
                               "Plastic: Plastic is used as a building material and can be found by looting barrels found drifting in the sea and exploring.\n\n" +
                               "Food: Food can be gathered by fishing with the boat, or by building a farm and farming with a character. In order to store food you need to build a storage. Farming costs clean water!\n\n" +
                               "House: wood - 25\n" +
-                              "Solar Panel: metal - 35, plastic - 50, wood - 100\n" +
+                              "Solar Panel: metal - 35, plastic - 50, wood - 50\n" +
                               "Dock: wood - 10\n" +
                               "Farm: wood - 30, metal - 5\n" +
-                              "Desalinator: wood - 200, metal - 70, plastic - 35\n" +
+                              "Desalinator: metal - 70, plastic - 35, wood - 50\n" +
                               "Battery: wood - 50, metal - 30, plastic - 10\n";
                 const ButtonStyle buttonStyle = ButtonStyle.TwoOptions;
                 List<Action> actions = new List<Action>();
