@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0196e93dbb1e79544beb9ea98665fa01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StromEffect: {fileID: 925690680}
+  StormEffect: {fileID: 925690680}
   TradeEffect: {fileID: 925690681}
-  minTime: 30
-  maxTime: 300
+  minTime: 10
+  maxTime: 10
 --- !u!114 &1831854511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ead7b37f3b3c545a7929827ffe9b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventOn: 0
 --- !u!114 &1831854510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3469690719191508713}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3377c189db6514f40b9641bb28e366d0, type: 3}
@@ -178,7 +179,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3469690719191508713}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ad17e153f975a624e8484546a5326d22, type: 3}

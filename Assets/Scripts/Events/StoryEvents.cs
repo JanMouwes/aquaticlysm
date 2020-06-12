@@ -25,6 +25,7 @@ public class StoryEvents : MonoBehaviour
 
     private void Update()
     {
+
         if (!_events.Contains("begin"))
         {
             BeginEvent();
@@ -77,10 +78,9 @@ public class StoryEvents : MonoBehaviour
     /// </summary>
     private void GameOverStarved()
     {
-        Debug.Log("Here.");
         EventManager.Instance.CreateEvent(4);
         _events.Add("gameOver");
-        timeToSalvage = 15f;
+        timeToSalvage = 25f;
     }
 
     /// <summary>
@@ -88,9 +88,8 @@ public class StoryEvents : MonoBehaviour
     /// </summary>
     public void ShowHelpEvent()
     {
-        EventManager.Instance.CreateEvent(6);
+        EventManager.Instance.CreateEvent(5);
     }
-
 
     /// <summary>
     /// Resets resources to initial starting-values and loads the starting menu.
