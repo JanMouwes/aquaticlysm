@@ -50,9 +50,9 @@ namespace Events
                                     "To survive you can gather resources with your boat by ordering it to fetch barrels, fish or go on expedicions. Your villagers need" +
                                     "to build everything you put in place, so after setting a new building on the scene, you need to then order someone to construct that building by" +
                                     "selecting a villager you want to use, and then right clicking on the building you've put on it's place." +
-                                    "Your villagers eat on regular bases, so keeping the food supply is important. Your villagers do also get tired and need some rest every now and then." +
+                                    "Your villagers eat on regular bases, so keeping the food supply up is important. Your villagers do also get tired and need some rest every now and then." +
                                     "Farming is a good way to gather food for the settlement. Growing wheat does take some fresh water, so you'll need a desalinator to turn your sea water into" +
-                                    "fresh water. Desalinator works on energy, so you'll need to build solar panels to store energy.\n" +
+                                    "fresh water. Desalinator works on energy, so you'll need to build solar panels to use energy.\n" +
                                     "If you need help, press ? on the right bottom corner of the screen.";
                 const ButtonStyle buttonStyle = ButtonStyle.OneOption;
                 List<Action> actions = new List<Action>();
@@ -114,7 +114,7 @@ namespace Events
                 buttontext.Add("Start over.");
                 CreateEvent(title, text, buttonStyle, buttontext, actions);
             }
-            // 6 : Help screen
+            // 5 : Help screen
             {
                 const string title = "Help";
                 string text = "Move: WASD\n" +

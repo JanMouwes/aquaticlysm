@@ -88,7 +88,7 @@ public class StoryEvents : MonoBehaviour
     /// </summary>
     public void ShowHelpEvent()
     {
-        EventManager.Instance.CreateEvent(6);
+        EventManager.Instance.CreateEvent(5);
     }
 
 
