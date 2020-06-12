@@ -125,11 +125,13 @@ namespace Events
             // 6 : Everyone dead
             {
                 const string title = "Help";
-                string text = "Move: WASD\n" +
+                string text = "Move: WASD / Arrow Keys\n" +
                               "Rotate: QE\n" +
-                              "Zoom: Scroll Up / Scroll Down\n\n" +
+                              "Zoom: Scroll Up / Scroll Down\n" +
+                              "Esc: Cancel building before it is put down.\n\n" +
                               "Holding Shift down: \tDisable building snapping, Queue actions.\n\n" +
-                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat.\n\n" +
+                              "Wood: Wood is used as building resource and can usually be found looting barrels and exploring with the boat. Wood can also" +
+                              "be found randomly drifting on the sea and you can pick it up with the boat.\n\n" +
                               "Metal: Metal is used to build buildings. Metal can be found in some of the barrels drifting in the sea and exploring.\n\n" +
                               "Energy: Energy is used generating clean water. Generating energy can be done by building solar panels, that generate a set amount of energy during the day." +
                                 "Energy can be used as is or it can be stored by building batteries.\n\n" +
